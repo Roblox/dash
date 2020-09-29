@@ -2,6 +2,10 @@
 
 ## assign
 
+<span class="tags">
+	[Mutable](../tags/#mutable) | [Tables](../tags/#tables)
+</span>
+
 ```lua
 assign(target: Table, ...: Args<Table>): Table
 ```
@@ -55,6 +59,10 @@ print(result) --[[
 
 ## cycles
 
+<span class="tags">
+	[Debugging](../tags/#debugging) | [Tables](../tags/#tables)
+</span>
+
 ```lua
 cycles(value: any, initialCycles: Cycles?): Cycles
 ```
@@ -74,6 +82,10 @@ Operates on cyclic structures, and returns a Cycles object for a given _value_ b
 
 ## forEach
 
+<span class="tags">
+	[Arrays](../tags/#arrays) | [Tables](../tags/#tables)
+</span>
+
 ```lua
 forEach(input: Array<Value>, handler: Handler<Value>): ()
 ```
@@ -83,6 +95,10 @@ Iterates through the elements of the [Array](../types/#array) _input_ using the 
 Calls the [Handler](../types/#handler) _handler_ for each entry.
 
 ## forEachArgs
+
+<span class="tags">
+	[Args](../tags/#args) | [Tables](../tags/#tables)
+</span>
 
 ```lua
 forEachArgs(handler: Handler<Value>, ...: Args<Value>): ()
@@ -94,6 +110,10 @@ Calls the [Handler](../types/#handler) _handler_ for each entry.
 
 ## forEachPairs
 
+<span class="tags">
+	[Maps](../tags/#maps) | [Tables](../tags/#tables)
+</span>
+
 ```lua
 forEachPairs(input: Map<Key, Value>, handler: PairHandler<Key, Value>): ()
 ```
@@ -103,6 +123,10 @@ Iterates through the elements of the [Map](../types/#map) _input_ in no guarante
 Calls the [PairHandler](../types/#handler) _handler_ for each entry.
 
 ## freeze
+
+<span class="tags">
+	[Decorators](../tags/#decorators) | [Tables](../tags/#tables)
+</span>
 
 ```lua
 freeze(objectName: string, object: Table, throwIfMissing: boolean?): Table
@@ -137,6 +161,10 @@ print(drink.syrup) --> nil
 
 ## includes
 
+<span class="tags">
+	[Tables](../tags/#tables)
+</span>
+
 ```lua
 includes(source: Table, value: any): boolean
 ```
@@ -144,6 +172,10 @@ includes(source: Table, value: any): boolean
 Returns _true_ if the _item_ exists as a value in the _source_ [Table](../types/#table).
 
 ## join
+
+<span class="tags">
+	[Tables](../tags/#tables)
+</span>
 
 ```lua
 join(...: Args<Table>): Table
@@ -156,6 +188,10 @@ Output a new [Table](../types/#table) from merging all the keys in the [Table](.
 - [assign](#assign)
 
 ## pretty
+
+<span class="tags">
+	[Debugging](../tags/#debugging) | [Tables](../tags/#tables)
+</span>
 
 ```lua
 pretty(object: any, options: PrettyOptions?): string

@@ -1,0 +1,8 @@
+.tags {
+  float: right;
+  margin-top: -40px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  padding: 0 10px;
+  border-radius: 2px;
+}
