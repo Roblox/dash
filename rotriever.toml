@@ -1,0 +1,6 @@
+[package]
+name = "Dash"
+author = "Roblox"
+license = ""
+version = "0.1.0"
+proxy = "https://github.com/roblox/rotriever-proxy-index"
