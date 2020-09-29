@@ -1,4 +1,5 @@
 site_name: Dash
+extra_css: [docs.css]
 theme:
   name: null
   custom_dir: "cinder"
@@ -7,3 +8,4 @@ nav:
   - Classes: classes.md
   - Functions: functions.md
   - Symbols: symbols.md
+  - Types: types.md
