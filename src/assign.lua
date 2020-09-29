@@ -41,6 +41,7 @@
 local Dash = script.Parent
 local None = require(Dash.None)
 local Types = require(Dash.Types)
+local forEachArgs = require(Dash.forEachArgs)
 local forEachPairs = require(Dash.forEachPairs)
 
 -- TODO Luau: Support typing varargs
