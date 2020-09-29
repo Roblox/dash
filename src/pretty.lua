@@ -1,6 +1,6 @@
 --!strict
 --[[
-	Return a pretty string serialization of any Lua value.
+	Return a pretty string serialization of _object_.
 
 	This implementation deals with cycles in tables and can neatly display metatables.
 
@@ -8,28 +8,28 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local getCycles = require(Dash.getCycles)
+local cycles = require(Dash.cycles)
 local assign = require(Dash.assign)
 local includes = require(Dash.includes)
 
 export type PrettyOptions = {
 	-- The maximum depth of ancestors of a table to display
-	depth: number?
-	-- Limit keys to a specific list of types
-	omit: Types.Array<any>,
+	depth: number?,
+	-- An array of keys which should not be visited
+	omit: Types.Array<any>?,
 	-- Whether to use multiple lines (default = false)
 	multiline: boolean?,
 	-- Whether to drop the quotation marks around strings. By default, this is true for table keys
-	noQuotes: boolean?
+	noQuotes: boolean?,
 	-- The indent string to use (default = "\t")
 	indent: string?,
 	-- A set of tables which have already been visited and should be referred to by reference
-	visited: Types.Set<Types.Table>,
-	-- A cycles object returned from `dash.getCycles` to aid reference display
-	cycles: getCycles.Cycles,
+	visited: Types.Set<Types.Table>?,
+	-- A cycles object returned from `cycles` to aid reference display
+	cycles: cycles.Cycles?,
 }
 
-local function pretty(object: any, options: PrettyOptions): string
+local function pretty(object: any, options: PrettyOptions?): string
 	options = options or {}
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively
@@ -39,7 +39,7 @@ local function pretty(object: any, options: PrettyOptions): string
 			-- Depth is reduced until we shouldn't recurse any more
 			depth = options.depth and options.depth - 1 or nil,
 			visited = options.visited or {},
-			cycles = options.cycles or getCycles(object, {
+			cycles = options.cycles or cycles(object, {
 				visited = {},
 				refs = {},
 				nextRef = 0,
