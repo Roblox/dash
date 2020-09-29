@@ -1,6 +1,8 @@
 --!strict
 --[[
-	Return a cycles descriptor table for a given _value_ by walking it recursively.
+	Get information about the number of times references to the same table values appear in a data structure.
+
+	Operates on cyclic structures, and returns a Cycles object for a given _value_ by walking it recursively.
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
@@ -13,7 +15,7 @@ export type Cycles = {
 	refs: Types.Map<Types.Table, number>,
 	-- The number to use for the next unique table visited
 	nextRef: number,
-	-- An array of keys which should be 
+	-- An array of keys which should not be visited
 	omit: Types.Array<any>
 }
 
@@ -26,9 +28,9 @@ local function getDefaultCycles(): Cycles
 	}
 end
 
-local function getCycles(value: any, cycles: Cycles?): Cycles
+local function cycles(value: any, initialCycles: Cycles?): Cycles
 	if type(object) == "table" then
-		local childCycles = cycles or getDefaultCycles()
+		local childCycles = initialCycles or getDefaultCycles()
 		if childCycles.visited[value] then
 			-- We have already visited the table, so check if it has a reference
 			if not childCycles.refs[object] then
@@ -46,8 +48,8 @@ local function getCycles(value: any, cycles: Cycles?): Cycles
 					continue
 				end
 				-- Recurse through both the keys and values of the table
-				getCycles(key, childCycles)
-				getCycles(value, childCycles)
+				cycles(key, childCycles)
+				cycles(value, childCycles)
 			end
 		end
 		return childCycles
@@ -57,4 +59,4 @@ local function getCycles(value: any, cycles: Cycles?): Cycles
 	end
 end
 
-return getCycles
+return cycles

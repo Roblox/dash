@@ -3,7 +3,7 @@
 	Returns a new read-only view of _object_ which prevents any values from being changed.
 
 	@param name The name of the object for improved error message readability.
-	@param throwIfMissing If true then access to a missing key will also throw.
+	@param throwIfMissing If `true` then access to a missing key will also throw.
 	
 	@note
 	Unfortunately you cannot iterate using `pairs` or `ipairs` on frozen objects because Luau

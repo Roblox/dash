@@ -8,9 +8,8 @@
 	The tags table stores serializable information about an error which can be provided when it is
 	thrown, and later passed to a logging endpoint.
 
-	To capture an error's stack trace a developer must explicitly use xpcall, and in situations
-	where errors cascade it is 
-
+	Throwing an error instance captures its stack trace, avoiding the need to explicitly use xpcall.
+	
 	@usage In general, errors should not be used during normal control flow.
 ]]
 local Dash = script.Parent

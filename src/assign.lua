@@ -1,7 +1,6 @@
 --!strict
 --[[
-	Adds new elements to _target_ from subsequent table arguments in order, with elements in later
-	tables replacing earlier ones if their keys alias.
+	Adds new values to _target_ from subsequent Table arguments in left-to-right order.
 	@param ... any number of other tables
 	@example
 	local characters = {
