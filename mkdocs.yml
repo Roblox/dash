@@ -1,22 +1,4 @@
-site_name: Graph UI
+site_name: Dash
 theme: readthedocs
 nav:
   - Home: index.md
-  - 'Getting Started': getting-started.md
-  - 'Basic Example': basic-example.md
-  - 'Atoms and Molecules': atoms-and-molecules.md
-  - 'Component Migration': component-migration.md
-  - Traits: traits.md
-  - Hooks: hooks.md
-  - Sheets: sheets.md
-  - Context: context.md
-  - Modifiers: modifiers.md
-  - Events: events.md
-  - Model: model.md
-  - Style: style.md
-  - Sizing: sizing.md
-  - Layout: layout.md
-  - InstanceProps: instance-props.md
-  - Architecture: architecture.md
-  - 'Advanced Topics': advanced-topics.md
-  - API: api.md
