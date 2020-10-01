@@ -5,7 +5,7 @@ return function()
 		it("should give a unique object", function()
 			local CHEESE = Symbol.new("CHEESE")
 			local FAKE_CHEESE = Symbol.new("CHEESE")
-			local FAKE_CHEESER = {
+			local FAKER_CHEESE = {
 				name = "CHEESE"
 			}
 			local FAKEST_CHEESE = Symbol.new("NOT_EVEN_CHEESE")
@@ -25,8 +25,8 @@ return function()
 			local FAKE_CHEESE = {
 				name = "CHEESE"
 			}
-			expect(Symbol.is(CHEESE)).to.be(true)
-			expect(Symbol.is(FAKE_CHEESE)).to.be(false)
+			expect(Symbol.is(CHEESE)).to.equal(true)
+			expect(Symbol.is(FAKE_CHEESE)).to.equal(false)
 		end)
 	end)
 end
