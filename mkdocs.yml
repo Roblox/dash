@@ -1,8 +1,11 @@
 site_name: Dash
-extra_css: [docs.css]
+extra_css: [extra.css]
 theme:
-  name: null
-  custom_dir: "cinder"
+  name: material
+  palette:
+    scheme: slate
+    primary: blue
+
 nav:
   - Home: index.md
   - Classes: classes.md

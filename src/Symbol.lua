@@ -15,16 +15,14 @@
 	print(tostring(CHEESE)) --> "Symbol.new(CHEESE)"
 ]]
 local Symbol = {}
--- TODO Luau: Define class types automatically
-export type Symbol = typeof(Symbol)
 
 function Symbol:__tostring(): string
 	return ("Symbol(%s)"):format(self.name)
 end
 
-function Symbol:__newindex = function(_, key: any)
+function Symbol:__newindex(_, key: any)
 	error(string.format("ReadonlyKey: Attempt to write to a frozen key %s", key))
-end,
+end
 
 --[[
 	Return true if the value passed in is a Symbol instance.
@@ -40,7 +38,10 @@ function Symbol.new(name: string): Symbol
 	local symbol = {
 		name = name
 	}
-	setmetatable(symbol, Symbol)
+	return setmetatable(symbol, Symbol)
 end
+
+-- TODO Luau: Define class types automatically
+export type Symbol = typeof(Symbol.new(""))
 
 return Symbol

@@ -6,4 +6,4 @@ for _, fn in pairs(script:FindFirstChild("Source"):GetChildren()) do
 	Dash[fn.Name] = require(fn)
 end
 
-return Dash
+return Dash.freeze("Dash", Dash, true)
