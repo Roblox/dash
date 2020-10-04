@@ -22,6 +22,7 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
+local Error = require(Dash.Error)
 local format = require(Dash.format)
 
 local ReadonlyKey = Error.new("ReadonlyKey", "Attempted to write to readonly key {key} (a {keyType}) of frozen object {objectName}")

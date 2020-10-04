@@ -21,10 +21,10 @@ export type Cycles = {
 
 local function getDefaultCycles(): Cycles
 	return {
-		visited = {}
+		visited = {},
 		refs = {},
 		nextRef = 0,
-		omit = {}
+		omit = {},
 	}
 end
 
