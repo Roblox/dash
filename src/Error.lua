@@ -40,12 +40,12 @@ end
 	@param tags Any fixed tags 
 ]]
 function Error.new(name: string, message: string, tags: Types.Table?): Error
-	local Error = {
+	local error = {
 		name = name,
 		message = message,
 		tags = tags
 	}
-	setmetatable(Error, Error)
+	return setmetatable(error, Error)
 end
 
 --[[
