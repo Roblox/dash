@@ -12,7 +12,6 @@ local function append(target, ...)
 			continue
 		end
 		forEach(list, function(value)
-			local pretty = require(Source.Utils.pretty)
 			insert(target, value)
 		end)
 	end
