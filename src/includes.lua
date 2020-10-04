@@ -6,8 +6,8 @@ local Dash = script.Parent
 local Types = require(Dash.Types)
 
 local function includes(source: Types.Table, item: any): boolean
-	for _, child in pairs(input) do
-		if child == value then
+	for _, child in pairs(source) do
+		if child == item then
 			return true
 		end
 	end
