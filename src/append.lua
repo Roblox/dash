@@ -1,7 +1,7 @@
 --!strict
-local Source = script.Parent.Parent
-local forEach = require(Source.Utils.forEach)
-local None = require(Source.Symbols.None)
+local Dash = script.Parent
+local forEach = require(Dash.forEach)
+local None = require(Dash.None)
 local insert = table.insert
 
 local function append(target, ...)
