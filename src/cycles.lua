@@ -29,20 +29,20 @@ local function getDefaultCycles(): Cycles
 end
 
 local function cycles(value: any, initialCycles: Cycles?): Cycles
-	if type(object) == "table" then
+	if typeof(value) == "table" then
 		local childCycles = initialCycles or getDefaultCycles()
 		if childCycles.visited[value] then
 			-- We have already visited the table, so check if it has a reference
-			if not childCycles.refs[object] then
+			if not childCycles.refs[value] then
 				-- If not, create one as it is present at least twice
-				childCycles.refs[object] = childCycles.nextRef
+				childCycles.refs[value] = childCycles.nextRef
 				childCycles.nextRef += 1
 			end
 			return
 		else
 			-- We haven't yet visited the table, so recurse
 			childCycles.visited[value] = true
-			for key, value in pairs(object) do
+			for key, value in pairs(value) do
 				if includes(childCycles.omit, key) then
 					-- Don't visit omitted keys
 					continue
