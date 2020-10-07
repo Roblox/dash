@@ -83,7 +83,7 @@ local function prettyLines(object: any, options: PrettyOptions?): Types.Array<st
 		-- If the table appears multiple times in the output, mark it with a ref prefix so it can
 		-- be identified if it crops up later on
 		local ref = valueOptions.cycles.refs[object]
-		local refTag = ref and ("<" .. ref .. ">") or ""
+		local refTag = ref and ("<%s>"):format(ref) or ""
 		local lines = {refTag .. "{"}
 
 		-- Build the options for the recursive call for the table keys
@@ -134,21 +134,21 @@ local function prettyLines(object: any, options: PrettyOptions?): Types.Array<st
 				local valueTail = slice(valueLines, 2)
 				local indendedValueTail = indentLines(valueTail, valueOptions.indent)
 				-- The last line of the key and first line of the value are concatenated together
-				indentedKey[#indentedKey] = indentedKey[#indentedKey] .. " = " .. valueLines[1]
+				indentedKey[#indentedKey] = ("%s = %s"):format(indentedKey[#indentedKey], valueLines[1])
 				append(lines, indentedKey)
 				append(lines, indendedValueTail)
 			else
-				lines[#lines] = lines[#lines] .. pretty(key, keyOptions) .. " = " .. pretty(value, valueOptions)
+				lines[#lines] = ("%s%s = %s"):format(lines[#lines], pretty(key, keyOptions), pretty(value, valueOptions))
 			end
 		end
 		if valueOptions.multiline then
 			insert(lines, "}")
 		else
-			lines[#lines] = lines[#lines] .. "}"
+			lines[#lines] = ("%s}"):format(lines[#lines])
 		end
 		return lines
 	elseif type(object) == "string" and not options.noQuotes then
-		return {'"' .. object .. '"'}
+		return {('"%s"'):format(object)}
 	else
 		return {tostring(object)}
 	end
