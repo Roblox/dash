@@ -45,6 +45,8 @@ local function indentLines(lines: Types.Array<string>, indent: string)
 	end)
 end
 
+local pretty
+
 local function prettyLines(object: any, options: PrettyOptions?): Types.Array<string>
 	options = options or {}
 	if type(object) == "table" then
@@ -152,7 +154,7 @@ local function prettyLines(object: any, options: PrettyOptions?): Types.Array<st
 	end
 end
 
-local function pretty(object: any, options: PrettyOptions?): string
+pretty = function(object: any, options: PrettyOptions?): string
 	return concat(prettyLines(object, options), "\n")
 end
 
