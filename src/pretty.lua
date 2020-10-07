@@ -142,7 +142,12 @@ local function prettyLines(object: any, options: PrettyOptions?): Types.Array<st
 			end
 		end
 		if valueOptions.multiline then
-			insert(lines, "}")
+			if first then
+				-- An empty table is just represented as {}
+				lines[#lines] = lines[#lines] .. "}"
+			else
+				insert(lines, "}")
+			end
 		else
 			lines[#lines] = ("%s}"):format(lines[#lines])
 		end
