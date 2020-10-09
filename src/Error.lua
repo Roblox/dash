@@ -17,6 +17,7 @@ local Types = require(Dash.Types)
 local join = require(Dash.join)
 
 local Error = {}
+Error.__index = Error
 
 -- TODO Luau: Define class types automatically
 export type Error = typeof(Error)
