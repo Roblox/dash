@@ -117,7 +117,7 @@ local function class(name: string, constructor: Types.Constructor?)
 			car.isInstance(Bike) --> false
 	]]
 	function Class.isInstance(value)
-		local ok, isInstance = pcall(function())
+		local ok, isInstance = pcall(function()
 			local metatable = getmetatable(value)
 			while metatable do
 				if metatable.__index == Class then
