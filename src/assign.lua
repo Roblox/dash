@@ -1,6 +1,9 @@
 --!strict
 --[[
 	Adds new values to _target_ from subsequent Table arguments in left-to-right order.
+
+	The None symbol can be used to remove existing elements in the target.
+
 	@param ... any number of other tables
 	@example
 	local characters = {
@@ -55,7 +58,11 @@ local function assign(target: Types.Table, ...): Types.Table
 		end
 		-- Iterate through each key of the input and assign to target at the same key
 		forEachPairs(input, function(value, key)
-			target[key] = value
+			if value == None then
+				target[key] = nil
+			else
+				target[key] = value
+			end
 		end)
 	end, ...)
 	return target
