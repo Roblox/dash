@@ -1,6 +1,9 @@
 --!strict
 --[[
 	Output a new Table from merging all the keys in the Table arguments in left-to-right order.
+
+	The None symbol can be used to remove existing elements.
+
 	@param ... any number of tables
 ]]
 local Dash = script.Parent
