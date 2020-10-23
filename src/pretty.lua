@@ -58,10 +58,11 @@ local function prettyLines(object: any, options: PrettyOptions?): Types.Array<st
 		}, options, {
 			-- Depth is reduced until we shouldn't recurse any more
 			depth = options.depth and options.depth - 1 or nil,
-			cycles = options.cycles or cycles(object, {
+			cycles = options.cycles or cycles(object, options.depth, {
 				visited = {},
 				refs = {},
 				nextRef = 0,
+				depth = options.depth,
 				omit = options.omit or {}
 			})
 		})
