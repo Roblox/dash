@@ -114,6 +114,9 @@ local function prettyLines(object: any, options: PrettyOptions?): Types.Array<st
 			end
 			maxConsecutiveIndex = index
 		end
+		if #object > 0 then
+			lines[1] = ("(%d) %s"):format(#object, lines[1])
+		end
 		for key, value in pairs(object) do
 			-- We printed a key if it's an index e.g. an integer in the range 1..n.
 			if typeof(key) == "number" and key % 1 == 0 and key >= 1 and key <= maxConsecutiveIndex then
