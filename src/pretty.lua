@@ -40,7 +40,7 @@ export type PrettyOptions = {
 }
 
 local function indentLines(lines: Types.Array<string>, indent: string)
-	return map(lines, function(line)
+	return map(lines, function(line: string)
 		return indent .. line
 	end)
 end
@@ -115,7 +115,7 @@ local function prettyLines(object: any, options: PrettyOptions?): Types.Array<st
 			maxConsecutiveIndex = index
 		end
 		if #object > 0 then
-			lines[1] = ("(%d) %s"):format(#object, lines[1])
+			lines[1] = ("#%d %s"):format(#object, lines[1])
 		end
 		for key, value in pairs(object) do
 			-- We printed a key if it's an index e.g. an integer in the range 1..n.
