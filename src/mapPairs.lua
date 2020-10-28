@@ -1,4 +1,3 @@
---!strict
 local function mapPairs(input, fn)
 	local result = {}
 	for key, child in pairs(input) do

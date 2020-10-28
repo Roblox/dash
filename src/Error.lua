@@ -15,6 +15,7 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local join = require(Dash.join)
+local format = require(Dash.format)
 
 local Error = {}
 Error.__index = Error
@@ -68,6 +69,7 @@ end
 function Error:throw(tags: Types.Table?): never
 	local instance = self:joinTags(tags)
 	instance.stack = debug.traceback()
+	warn("Throw: ", tostring(instance))
 	error(instance)
 end
 
