@@ -19,4 +19,24 @@ local None = require(Dash.None)
 local Types = require(Dash.Types)
 local forEachPairs = require(Dash.forEachPairs)
 local copy = require(Dash.copy)
-return {}
+
+-- TODO Luau: Support typing varargs
+-- TODO Luau: Support function generics
+local function joinDeep(source: Types.Table, delta: Types.Table): Types.Table
+	local result = copy(source)
+	-- Iterate through each key of the input and assign to target at the same key
+	forEachPairs(delta, function(value, key)
+		if typeof(source[key]) == "table" and typeof(value) == "table" then
+			-- Only merge tables
+			result[key] = joinDeep(source[key], value)
+		elseif value == None then
+			-- Remove none values
+			result[key] = nil
+		else
+			result[key] = value
+		end
+	end)
+	return result
+end
+
+return joinDeep
