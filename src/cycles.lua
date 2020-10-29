@@ -1,4 +1,3 @@
---!strict
 --[[
 	Get information about the number of times references to the same table values appear in a data structure.
 
@@ -30,7 +29,7 @@ local function getDefaultCycles(): Cycles
 end
 
 -- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
--- local function cycles(value: any, depth: number?, initialCycles: Cycles?): Cycles
+-- TYPED: local function cycles(value: any, depth: number?, initialCycles: Cycles?): Cycles
 local function cycles(value: any, depth: number?, initialCycles: any): Cycles?
 	if depth == -1 then
 		return initialCycles
@@ -55,12 +54,17 @@ local function cycles(value: any, depth: number?, initialCycles: any): Cycles?
 					-- Don't visit omitted keys
 					continue
 				end
-				-- TODO Luau: Support type narrowring with "and"
-				local anyDepth: any = depth
-				local numberDepth: number = anyDepth
+				-- TODO Luau: support type narrowring with "and"
+				-- TYPED: cycles(key, depth and depth - 1 or nil, childCycles)
+				-- TYPED: cycles(value, depth and depth - 1 or nil, childCycles)
 				-- Recurse through both the keys and values of the table
-				cycles(key, numberDepth and numberDepth - 1 or nil, childCycles)
-				cycles(value, numberDepth and numberDepth - 1 or nil, childCycles)
+				if depth then
+					cycles(key, depth - 1, childCycles)
+					cycles(value, depth - 1, childCycles)
+				else
+					cycles(key, nil, childCycles)
+					cycles(value, nil, childCycles)
+				end
 			end
 		end
 		return childCycles

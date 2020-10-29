@@ -1,4 +1,3 @@
---!strict
 --[[
 	Create an error object with a specified name and message.
 

@@ -1,4 +1,3 @@
---!strict
 --[[
 	Returns _true_ if the _item_ exists as a value in the _source_ table.
 ]]

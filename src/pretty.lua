@@ -1,4 +1,3 @@
---!strict
 --[[
 	Return a pretty string serialization of _object_.
 

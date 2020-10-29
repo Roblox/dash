@@ -1,4 +1,3 @@
---!strict
 --[[
 	Adds new values to _target_ from subsequent Table arguments in left-to-right order.
 

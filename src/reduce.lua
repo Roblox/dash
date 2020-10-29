@@ -1,5 +1,3 @@
-
---!strict
 local Dash = script.Parent
 local Types = require(Dash.Types)
 

@@ -1,4 +1,3 @@
---!strict
 --[[
 	Output a new Table from merging all the keys in the Table arguments in left-to-right order.
 
