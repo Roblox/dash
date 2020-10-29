@@ -51,7 +51,7 @@ local forEachPairs = require(Dash.forEachPairs)
 -- TODO Luau: Support function generics
 local function assign(target: Types.Table, ...): Types.Table
 	-- Iterate through the varags in order
-	forEachArgs(function(input: types.Table?)
+	forEachArgs(function(input: Types.Table?)
 		-- Ignore items which are not defined
 		if input == nil or input == None then
 			return

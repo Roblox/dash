@@ -29,7 +29,9 @@ local function getDefaultCycles(): Cycles
 	}
 end
 
-local function cycles(value: any, depth: number?, initialCycles: Cycles?): Cycles
+-- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
+-- local function cycles(value: any, depth: number?, initialCycles: Cycles?): Cycles
+local function cycles(value: any, depth: number?, initialCycles: any): Cycles?
 	if depth == -1 then
 		return initialCycles
 	end
@@ -44,7 +46,7 @@ local function cycles(value: any, depth: number?, initialCycles: Cycles?): Cycle
 				childCycles.refs[value] = childCycles.nextRef
 				childCycles.nextRef += 1
 			end
-			return
+			return nil
 		else
 			-- We haven't yet visited the table, so recurse
 			childCycles.visited[value] = true
@@ -53,9 +55,12 @@ local function cycles(value: any, depth: number?, initialCycles: Cycles?): Cycle
 					-- Don't visit omitted keys
 					continue
 				end
+				-- TODO Luau: Support type narrowring with "and"
+				local anyDepth: any = depth
+				local numberDepth: number = anyDepth
 				-- Recurse through both the keys and values of the table
-				cycles(key, depth and depth - 1 or nil, childCycles)
-				cycles(value, depth and depth - 1 or nil, childCycles)
+				cycles(key, numberDepth and numberDepth - 1 or nil, childCycles)
+				cycles(value, numberDepth and numberDepth - 1 or nil, childCycles)
 			end
 		end
 		return childCycles

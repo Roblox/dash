@@ -47,7 +47,10 @@ end
 
 local pretty
 
-local function prettyLines(object: any, options: PrettyOptions?): Types.Array<string>
+
+-- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
+-- local function prettyLines(object: any, options: PrettyOptions?): Types.Array<string>
+local function prettyLines(object: any, options: any): Types.Array<string>
 	options = options or {}
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively
@@ -163,7 +166,9 @@ local function prettyLines(object: any, options: PrettyOptions?): Types.Array<st
 	end
 end
 
-pretty = function(object: any, options: PrettyOptions?): string
+-- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
+-- pretty = function(object: any, options: PrettyOptions?): string
+pretty = function(object: any, options: any): string
 	return concat(prettyLines(object, options), "\n")
 end
 

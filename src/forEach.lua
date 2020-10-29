@@ -9,7 +9,7 @@ local Types = require(Dash.Types)
 export type ForEachHandler<Value> = (Value, number) -> ()
 -- TODO Luau: Support function generics
 --local function forEach<Value>(input: Types.Array<Value>, handler: ForEachHandler<Value>)
-local function forEach(input: Types.Array<Value>, handler: ForEachHandler<Value>)
+local function forEach(input: any, handler: any)
 	for key, value in ipairs(input) do
 		handler(value, key)
 	end

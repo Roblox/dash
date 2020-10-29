@@ -6,11 +6,11 @@
 	@param prefix (default = `" "`)
 ]]
 local function leftPad(input: string, length: number, prefix: string?): string
-	prefix = prefix or " "
-	local padLength = length - #input
-	local remainder = padLength % #prefix
-	local repetitions = (padLength - remainder) / #prefix
-	return string.rep(prefix or " ", repetitions) .. prefix:sub(1, remainder) .. input
+	local definedPrefix = prefix or " "
+	local padLength = length - input:len()
+	local remainder = padLength % definedPrefix:len()
+	local repetitions = (padLength - remainder) / definedPrefix:len()
+	return string.rep(definedPrefix or " ", repetitions) .. definedPrefix:sub(1, remainder) .. input
 end
 
 return leftPad

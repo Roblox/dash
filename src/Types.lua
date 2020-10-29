@@ -1,4 +1,3 @@
---!strict
 -- TODO Luau: Support these globally
 -- A table with values of type _Value_ and numeric keys 1..n with no gaps
 export type Array<Value> = {[number]: Value}
@@ -16,9 +15,5 @@ export type Table = {[any]: any}
 export type Class<Object> = {
 	new: () -> Object
 }
--- A class has a constructor returning an instance of _Object_ type parameterized with _Parameter_
-export type GenericClass<Object, Parameter> = {
-	new: () -> Object<Parameter>
-}
 
-return {}
+return nil

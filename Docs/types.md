@@ -59,16 +59,6 @@ new: () -> Object
 
 A class has a constructor returning an instance of _Object_ type
 
-### GenericClass
-
-```lua
-type GenericClass<Object, Parameter> = {
-	new: () -> Object<Parameter>
-}
-```
-
-A class has a constructor returning an instance of _Object_ type parameterized with _Parameter_
-
 ### Handler
 
 ```lua

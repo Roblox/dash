@@ -26,7 +26,12 @@
 		does not restrict this in code.
 	@usage Public fields are recommended when there is no complex access logic e.g. `position.x`
 ]]
-local function class(name: string, constructor: Types.Constructor?)
+local Dash = script.Parent
+local Error = require(Dash.Error)
+
+local NotImplemented = Error.new("NotImplemented", "The method {methodName} is not implemented on the class {className}")
+
+local function class(name: string, constructor: any)
 	constructor = constructor or function()
 		return {}
 	end
@@ -222,7 +227,10 @@ local function class(name: string, constructor: Types.Constructor?)
 		on instances of this class, and can be overridden to provide a custom implementation.
 	]]
 	function Class:__lt(other)
-		return false
+		NotImplemented:throw({
+			methodName = "__lt",
+			className = name
+		})	
 	end
 
 	--[[
@@ -231,7 +239,41 @@ local function class(name: string, constructor: Types.Constructor?)
 		implementation.
 	]]
 	function Class:__le(other)
-		return false
+		NotImplemented:throw({
+			methodName = "__le",
+			className = name
+		})	
+	end
+
+	function Class:__add()
+		NotImplemented:throw({
+			methodName = "__add",
+			className = name
+		})	
+	end
+	function Class:__sub()
+		NotImplemented:throw({
+			methodName = "__sub",
+			className = name
+		})	
+	end
+	function Class:__mul()
+		NotImplemented:throw({
+			methodName = "__mul",
+			className = name
+		})	
+	end
+	function Class:__div()
+		NotImplemented:throw({
+			methodName = "__div",
+			className = name
+		})	
+	end
+	function Class:__mod()
+		NotImplemented:throw({
+			methodName = "__mod",
+			className = name
+		})	
 	end
 
 	return Class

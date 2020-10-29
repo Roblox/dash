@@ -11,15 +11,12 @@
 	* `{#2}` prints the length of the 2nd argument.
 	Display parameters can be combined after a `:` in the curly braces. Any format parameters used
 	in `string.format` can be used here, along with these extras:
-	* `{:?}` formats any value using `dash.serializeDeep`.
-	* `{:#?}` formats any value using `dash.pretty`.
-	* `{:b}` formats a number in its binary representation.
+	* `{:?}` formats any value using `pretty`.
+	* `{:#?}` formats any value using multiline `pretty`.
 	@example
 		local props = {"teeth", "claws", "whiskers", "tail"}
 		format("{:?} is in {:#?}", "whiskers", props)
 		-> '"whiskers" is in {"teeth", "claws", "whiskers", "tail"}'
-	@example
-		format("{} in binary is {1:b}", 125) -> "125 in binary is 110100"
 	@example
 		format("The time is {:02}:{:02}", 2, 4) -> "The time is 02:04"
 	@example
