@@ -1,4 +1,3 @@
---!strict
 --[[
 	Creates a shallow clone of the _source_ Table, and copies the values from the _delta_ Table
 	by key, like the join utility.

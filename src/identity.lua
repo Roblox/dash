@@ -3,6 +3,8 @@
 
 	Can be used to make it clear that a handler returns its inputs.
 ]]
-return function(...)
+local function identity(...)
 	return ...
 end
+
+return identity

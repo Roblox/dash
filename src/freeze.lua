@@ -1,4 +1,3 @@
---!strict
 --[[
 	Returns a new read-only view of _object_ which prevents any values from being changed.
 
@@ -65,7 +64,9 @@ local function freeze(objectName: string, object: Types.Table, throwIfMissing: b
 				return format("Frozen({})", objectName)
 			end,
 			__call = function(_, ...)
-				return object(...)
+				-- TODO Luau: Gated check for if a function has a __call value
+				local callable: any = object
+				return callable(...)
 			end
 		}
 	)

@@ -15,10 +15,13 @@
 -- TODO Luau: Support generic functions
 -- TODO Luau: Support varargs
 --: <A>((...A -> ...A)[]) -> ...A -> A
-function Functions.compose(...)
+local Dash = script.Parent
+local identity = Dash.identity
+
+local function compose(...)
 	local fnCount = select("#", ...)
 	if fnCount == 0 then
-		return Functions.id
+		return identity
 	end
 	local fns = {...}
 	return function(...)
@@ -29,3 +32,5 @@ function Functions.compose(...)
 		return unpack(result)
 	end
 end
+
+return compose
