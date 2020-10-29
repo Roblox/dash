@@ -8,7 +8,7 @@ export type ForEachArgsHandler<Value> = (Value, number) -> ()
 -- TODO Luau: Support function generics
 -- TODO Luau: Support vararg types
 --local function forEachArgs<Value>(handler: ForEachArgsHandler<Value>, ...: Types.Args<Value>)
-local function forEachArgs(handler: ForEachArgsHandler<Value>, ...)
+local function forEachArgs(handler: any, ...)
 	for index = 1, select('#', ...) do
 		handler(select(index, ...), index)
 	end

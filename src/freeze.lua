@@ -23,11 +23,16 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local Error = require(Dash.Error)
+local format = require(Dash.format)
 
-local ReadonlyKey = Error.new("ReadonlyKey", "Attempted to write to readonly key {key} (a {keyType}) of frozen object {objectName}")
-local MissingKey = Error.new("MissingKey", "Attempted to read missing key {key} (a {keyType}) of frozen object {objectName}")
+-- TODO Luau: Improve type inference to make these not need to be any
+local ReadonlyKey: any = Error.new("ReadonlyKey", "Attempted to write to readonly key {key} (a {keyType}) of frozen object {objectName}")
+local MissingKey: any = Error.new("MissingKey", "Attempted to read missing key {key} (a {keyType}) of frozen object {objectName}")
 
-local function freeze(objectName: string, object: Types.Table, throwIfMissing: boolean?): Types.Table
+-- TODO Luau: Support generic functions
+-- TODO Luau: Support generic extends syntax
+--local function freeze<T extends Types.Table>(objectName: string, object: T, throwIfMissing: boolean?): T
+local function freeze(objectName: string, object: Types.Table, throwIfMissing: boolean?)
 	-- We create a proxy so that the underlying object is not affected
 	local proxy = {}
 	setmetatable(
@@ -57,7 +62,7 @@ local function freeze(objectName: string, object: Types.Table, throwIfMissing: b
 				return #object
 			end,
 			__tostring = function()
-				return format("Frozen({})", object)
+				return format("Frozen({})", objectName)
 			end,
 			__call = function(_, ...)
 				return object(...)

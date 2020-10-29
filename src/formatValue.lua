@@ -16,18 +16,10 @@ local function formatValue(value, displayString: string)
 			"%" .. displayString:sub(1, displayTypeStart - 1) .. displayString:sub(displayTypeEnd + 1) .. "s"
 		if displayType == "#?" then
 			-- Multiline print a value
-			return formatAsString:format(pretty(value))
+			return formatAsString:format(pretty(value, {multiline = true}))
 		elseif displayType == "?" then
 			-- Inspect a value
 			return formatAsString:format(pretty(value))
-		elseif displayType == "#b" then
-			-- Print a binary in 0b format
-			local result = decimalToBinary(value)
-			return formatAsString:format("0b" .. result)
-		elseif displayType == "b" then
-			-- Print a binary
-			local result = decimalToBinary(value)
-			return formatAsString:format(result)
 		end
 		return ("%" .. displayString):format(value)
 	else

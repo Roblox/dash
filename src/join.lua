@@ -12,7 +12,7 @@ local assign = require(Dash.assign)
 
 -- TODO Luau: Support typing varargs
 -- TODO Luau: Support function generics
-local function join(...): types.Table
+local function join(...): Types.Table
 	return assign({}, ...)
 end
 

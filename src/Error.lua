@@ -20,9 +20,6 @@ local format = require(Dash.format)
 local Error = {}
 Error.__index = Error
 
--- TODO Luau: Define class types automatically
-export type Error = typeof(Error)
-
 function Error:__tostring(): string
 	return format("{}: {}", self.name, format(self.message, self.tags))
 end
@@ -66,11 +63,14 @@ end
 	If additional tags are provided, a new error is created with the joined tags of
 	this instance.
 ]]
-function Error:throw(tags: Types.Table?): never
+function Error:throw(tags: Types.Table?)
 	local instance = self:joinTags(tags)
 	instance.stack = debug.traceback()
 	warn("Throw: ", tostring(instance))
 	error(instance)
 end
+
+-- TODO Luau: Define class types automatically
+export type Error = typeof(Error.new("", ""))
 
 return Error
