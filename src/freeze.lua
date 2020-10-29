@@ -30,7 +30,7 @@ local MissingKey: any = Error.new("MissingKey", "Attempted to read missing key {
 
 -- TODO Luau: Support generic functions
 -- TODO Luau: Support generic extends syntax
---local function freeze<T extends Types.Table>(objectName: string, object: T, throwIfMissing: boolean?): T
+-- TYPED: local function freeze<T extends Types.Table>(objectName: string, object: T, throwIfMissing: boolean?): T
 local function freeze(objectName: string, object: Types.Table, throwIfMissing: boolean?)
 	-- We create a proxy so that the underlying object is not affected
 	local proxy = {}
