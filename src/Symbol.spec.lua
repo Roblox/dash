@@ -25,8 +25,8 @@ return function()
 			local FAKE_CHEESE = {
 				name = "CHEESE"
 			}
-			expect(Symbol.is(CHEESE)).to.equal(true)
-			expect(Symbol.is(FAKE_CHEESE)).to.equal(false)
+			expect(Symbol.isInstance(CHEESE)).to.equal(true)
+			expect(Symbol.isInstance(FAKE_CHEESE)).to.equal(false)
 		end)
 	end)
 end

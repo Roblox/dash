@@ -13,23 +13,9 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local join = require(Dash.join)
+local class = require(Dash.class)
 local format = require(Dash.format)
-
-local Error = {}
-Error.__index = Error
-
-function Error:__tostring(): string
-	return format("{}: {}", self.name, format(self.message, self.tags))
-end
-
---[[
-	Return true if the value passed in is an Error instance.
-]]
--- TODO Luau: Support type predicates
-function Error.is(value: any): boolean -- value is Error
-	return getmetatable(value) == Error
-end
+local join = require(Dash.join)
 
 --[[
 	Create a new Error instance.
@@ -37,13 +23,17 @@ end
 	@param string A message for the error which will be formatted using Dash.format
 	@param tags Any fixed tags 
 ]]
-function Error.new(name: string, message: string, tags: Types.Table?): Error
-	local error = {
+local Error = class("Error", function(name: string, message: string, tags: Types.Table?)
+	return {
 		name = name,
 		message = message,
 		tags = tags
 	}
-	return setmetatable(error, Error)
+
+end)
+
+function Error:toString(): string
+	return format("{}: {}", self.name, format(self.message, self.tags))
 end
 
 --[[
