@@ -27,9 +27,13 @@
 	@usage Public fields are recommended when there is no complex access logic e.g. `position.x`
 ]]
 local Dash = script.Parent
-local Error = require(Dash.Error)
+local Types = require(Dash.Types)
 
-local NotImplemented = Error.new("NotImplemented", "The method {methodName} is not implemented on the class {className}")
+local function throwNotImplemented(tags: Types.Table)
+	local Error = require(Dash.Error)
+	local notImplemented = Error.new("NotImplemented", "The method {methodName} is not implemented on the class {className}")
+	notImplemented:throw(tags)
+end
 
 local function class(name: string, constructor: any)
 	constructor = constructor or function()
@@ -227,7 +231,7 @@ local function class(name: string, constructor: any)
 		on instances of this class, and can be overridden to provide a custom implementation.
 	]]
 	function Class:__lt(other)
-		NotImplemented:throw({
+		throwNotImplemented({
 			methodName = "__lt",
 			className = name
 		})	
@@ -239,38 +243,38 @@ local function class(name: string, constructor: any)
 		implementation.
 	]]
 	function Class:__le(other)
-		NotImplemented:throw({
+		throwNotImplemented({
 			methodName = "__le",
 			className = name
 		})	
 	end
 
 	function Class:__add()
-		NotImplemented:throw({
+		throwNotImplemented({
 			methodName = "__add",
 			className = name
 		})	
 	end
 	function Class:__sub()
-		NotImplemented:throw({
+		throwNotImplemented({
 			methodName = "__sub",
 			className = name
 		})	
 	end
 	function Class:__mul()
-		NotImplemented:throw({
+		throwNotImplemented({
 			methodName = "__mul",
 			className = name
 		})	
 	end
 	function Class:__div()
-		NotImplemented:throw({
+		throwNotImplemented({
 			methodName = "__div",
 			className = name
 		})	
 	end
 	function Class:__mod()
-		NotImplemented:throw({
+		throwNotImplemented({
 			methodName = "__mod",
 			className = name
 		})	

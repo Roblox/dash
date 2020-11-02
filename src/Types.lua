@@ -16,4 +16,4 @@ export type Class<Object> = {
 	new: () -> Object
 }
 
-return nil
+return {}

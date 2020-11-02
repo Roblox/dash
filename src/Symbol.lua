@@ -14,31 +14,17 @@
 	print(CHEESE == FAKE_CHEESE) --> false
 	print(tostring(CHEESE)) --> "Symbol.new(CHEESE)"
 ]]
-local Symbol = {}
+local Dash = script.Parent
+local class = require(Dash.class)
 
-function Symbol:__tostring(): string
-	return ("Symbol(%s)"):format(self.name)
-end
-
-function Symbol:__newindex(_, key: any)
-	error(string.format("ReadonlyKey: Attempt to write to a frozen key %s", key))
-end
-
---[[
-	Return true if the value passed in is a Symbol instance.
-]]
-function Symbol.is(value: any): boolean -- value is Symbol
-	return getmetatable(value) == Symbol
-end
-
---[[
-	Create a new symbol instance.
-]]
-function Symbol.new(name: string): Symbol
-	local symbol = {
+local Symbol = class("Symbol", function(name: string)
+	return {
 		name = name
 	}
-	return setmetatable(symbol, Symbol)
+end)
+
+function Symbol:toString(): string
+	return ("Symbol(%s)"):format(self.name)
 end
 
 -- TODO Luau: Define class types automatically

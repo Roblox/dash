@@ -1,8 +1,8 @@
-local byte_A = string.byte("A")
+local byte_a = string.byte("a")
 local byte_z = string.byte("z")
 
-local function isLowercaseLetter(input: string)
+local function isLowercase(input: string)
 	local byte = string.byte(input)
-	return byte >= byte_A and byte <= byte_z
+	return byte >= byte_a and byte <= byte_z
 end
-return isLowercaseLetter
+return isLowercase
