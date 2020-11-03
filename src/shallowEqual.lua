@@ -1,24 +1,24 @@
-local function shallowChanged(left, right)
+local function shallowEqual(left, right)
 	if left == right then
-		return false
+		return true
 	end
 	if typeof(left) ~= "table" or typeof(right) ~= "table" or #left ~= #right then
-		return true
+		return false
 	end
 	if left == nil or right == nil then
-		return true
+		return false
 	end
 	for key, value in pairs(left) do
 		if right[key] ~= value then
-			return true
+			return false
 		end
 	end
 	for key, value in pairs(right) do
 		if left[key] ~= value then
-			return true
+			return false
 		end
 	end
-	return false
+	return true
 end
 
-return shallowChanged
+return shallowEqual
