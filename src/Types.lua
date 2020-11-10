@@ -15,5 +15,7 @@ export type Table = {[any]: any}
 export type Class<Object> = {
 	new: () -> Object
 }
+-- Represents a function which takes any arguments and returns any value
+export type AnyFunction = () -> any
 
 return {}
