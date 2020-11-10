@@ -1,5 +1,8 @@
 --!strict
 local function mapOne(input, fn)
+	if input == nil then
+		return nil
+	end
 	for key, child in pairs(input) do
 		local output
 		if fn then

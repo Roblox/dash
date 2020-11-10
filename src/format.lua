@@ -28,7 +28,7 @@
 
 local Dash = script.Parent
 local formatValue = require(Dash.formatValue)
-local split = require(Dash.split)
+local splitOn = require(Dash.splitOn)
 local startsWith = require(Dash.startsWith)
 
 local concat = table.concat
@@ -37,7 +37,7 @@ local insert = table.insert
 local function format(formatString: string, ...)
 	local args = {...}
 	local argIndex = 1
-	local texts, subs = split(formatString, "{[^{}]*}")
+	local texts, subs = splitOn(formatString, "{[^{}]*}")
 	local result = {}
 	-- Iterate through possible curly-brace matches, ignoring escaped and substituting valid ones
 	for i, text in pairs(texts) do
@@ -50,7 +50,7 @@ local function format(formatString: string, ...)
 			local isEscaped = escapeMatch and #escapeMatch % 2 == 1
 			if not isEscaped then
 				-- Split the placeholder into left & right parts pivoting on the central ":"
-				local placeholderSplit = split(placeholder, ":")
+				local placeholderSplit = splitOn(placeholder, ":")
 				local isLength = startsWith(placeholderSplit[1], "#")
 				local argString = isLength and placeholderSplit[1]:sub(2) or placeholderSplit[1]
 				local nextIndex = tonumber(argString)

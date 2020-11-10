@@ -1,6 +1,6 @@
 --!strict
 local function find(input, fn)
-	for key, child in pairs(input) do
+	for key, child in ipairs(input) do
 		if fn(child, key) then
 			return child
 		end

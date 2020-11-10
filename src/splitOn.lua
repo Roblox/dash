@@ -4,7 +4,7 @@
 ]]
 local insert = table.insert
 
-local function split(str: string, pattern: string)
+local function splitOn(str: string, pattern: string)
 	local parts = {}
 	local delimiters = {}
 	local from = 1
@@ -25,4 +25,4 @@ local function split(str: string, pattern: string)
 	return parts, delimiters
 end
 
-return split
+return splitOn

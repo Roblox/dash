@@ -26,6 +26,8 @@ export type PrettyOptions = {
 	omit: Types.Array<any>?,
 	-- Whether to use multiple lines (default = false)
 	multiline: boolean?,
+	-- Whether to show the length of any array in front of its content
+	arrayLength: boolean?,
 	-- The maximum length of a line (default = 80)
 	maxLineLength: number?,
 	-- Whether to drop the quotation marks around strings. By default, this is true for table keys
@@ -116,7 +118,7 @@ local function prettyLines(object: any, options: any): Types.Array<string>
 			end
 			maxConsecutiveIndex = index
 		end
-		if #object > 0 then
+		if #object > 0 and valueOptions.arrayLength then
 			lines[1] = ("#%d %s"):format(#object, lines[1])
 		end
 		for key, value in pairs(object) do

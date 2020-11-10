@@ -43,12 +43,15 @@
 local Dash = script.Parent
 local None = require(Dash.None)
 local Types = require(Dash.Types)
+local assertEqual = require(Dash.assertEqual)
 local forEachArgs = require(Dash.forEachArgs)
 local forEachPairs = require(Dash.forEachPairs)
+
 
 -- TODO Luau: Support typing varargs
 -- TODO Luau: Support function generics
 local function assign(target: Types.Table, ...): Types.Table
+	assertEqual(typeof(target), "table", [[Attempted to call Dash.assign with argument #1 of type {left:?} not {right:?}]])
 	-- Iterate through the varags in order
 	forEachArgs(function(input: Types.Table?)
 		-- Ignore items which are not defined
