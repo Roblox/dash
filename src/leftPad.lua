@@ -5,8 +5,16 @@
 	@example leftPad("toast", 10, ":)") --> ":):):toast"
 	@param prefix (default = `" "`)
 ]]
+local Dash = script.Parent
+local Types = require(Dash.Types)
+
 local function leftPad(input: string, length: number, prefix: string?): string
+	assertEqual(typeof(input), "string", [[Attempted to call Dash.leftPad with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(length), "number", [[Attempted to call Dash.leftPad with argument #2 of type {left:?} not {right:?}]])
+
 	local definedPrefix = prefix or " "
+	assertEqual(typeof(definedPrefix), "string", [[Attempted to call Dash.leftPad with argument #3 of type {left:?} not {right:?}]])
+	
 	local padLength = length - input:len()
 	local remainder = padLength % definedPrefix:len()
 	local repetitions = (padLength - remainder) / definedPrefix:len()

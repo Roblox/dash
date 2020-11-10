@@ -1,4 +1,3 @@
---!strict
 local Dash = {}
 
 -- Require and add the Dash functions to the Dash table

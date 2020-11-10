@@ -5,6 +5,7 @@ theme:
   palette:
     scheme: slate
     primary: blue
+repo_url: https://github.rbx.com/hcollins/Dash
 
 nav:
   - Home: index.md

@@ -170,5 +170,17 @@ return function()
 			assertSnapshot(redBike:getColor(), [["red"]])
 			
 		end)
+
+		it("can use isInstance to detect for class membership", function()
+			local Vehicle = class("Vehicle")
+			local Bike = Vehicle:extend("Bike")
+			local RedBike = Bike:extend("RedBike")
+			local bike = Bike.new()
+			local redBike = RedBike.new()
+			assertSnapshot(RedBike.isInstance(redBike))
+			assertSnapshot(Bike.isInstance(redBike))
+			assertSnapshot(Vehicle.isInstance(redBike))
+			assertSnapshot(RedBike.isInstance(bike))
+		end)
 	end)
 end

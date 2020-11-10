@@ -8,7 +8,12 @@
 	@example rightPad("toast", 10, ":)") --> "toast:):):"
 ]]
 local function rightPad(input: string, length: number, suffix: string?): string
+	assertEqual(typeof(input), "string", [[Attempted to call Dash.rightPad with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(length), "number", [[Attempted to call Dash.rightPad with argument #2 of type {left:?} not {right:?}]])
+
 	local definedSuffix = suffix or " "
+	assertEqual(typeof(definedSuffix), "string", [[Attempted to call Dash.leftPad with argument #3 of type {left:?} not {right:?}]])
+
 	local padLength = length - input:len()
 	local remainder = padLength % definedSuffix:len()
 	local repetitions = (padLength - remainder) / definedSuffix:len()

@@ -26,8 +26,8 @@ local join = require(Dash.join)
 local Error = class("Error", function(name: string, message: string, tags: Types.Table?)
 	return {
 		name = name,
-		message = message,
-		tags = tags
+		message = message or "An error occurred",
+		tags = tags or {}
 	}
 
 end)

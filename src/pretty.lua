@@ -20,7 +20,7 @@ local concat = table.concat
 local insert = table.insert
 
 export type PrettyOptions = {
-	-- The maximum depth of ancestors of a table to display
+	-- The maximum depth of ancestors of a table to display (default = 2)
 	depth: number?,
 	-- An array of keys which should not be visited
 	omit: Types.Array<any>?,
@@ -58,7 +58,8 @@ local function prettyLines(object: any, options: any): Types.Array<string>
 		-- Construct the options for recursive calls for the table values
 		local valueOptions = assign({
 			visited = {},
-			indent = "\t"
+			indent = "\t",
+			depth = 2
 		}, options, {
 			-- Depth is reduced until we shouldn't recurse any more
 			depth = options.depth and options.depth - 1 or nil,

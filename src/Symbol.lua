@@ -1,4 +1,3 @@
---!strict
 --[[
 	Create a symbol with a specified name. We recommend upper snake-case as the symbol is a
 	constant, unless you are linking the symbol conceptually to a different string.

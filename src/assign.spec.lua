@@ -5,10 +5,13 @@ return function()
 
 	describe("assign", function()
 		it("should assign to an empty table", function()
-			assertSnapshot(assign({}, {a = 1}, {b = 2}), [[{
+			local input = {}
+			local output = assign(input, {a = 1}, {b = 2})
+			assertSnapshot(output, [[{
 	a = 1,
 	b = 2
 }]])
+			assertSnapshot(input == output)
 		end)
 
 		it("should assign to a table with existing values, overwriting existing keys", function()

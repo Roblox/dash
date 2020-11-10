@@ -1,4 +1,3 @@
---!strict
 --[[
 	A symbol representing nothing, that can be used in place of nil as a key or value of a table,
 	where nil is illegal.

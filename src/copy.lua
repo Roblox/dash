@@ -3,6 +3,7 @@ local Types = require(Dash.Types)
 local assign = require(Dash.assign)
 
 local function copy(input: Types.Table)
+	assertEqual(typeof(input), "table", [[Attempted to call Dash.copy with argument #1 of type {left:?} not {right:?}]])
 	return assign({}, input)
 end
 return copy

@@ -1,8 +1,15 @@
-local byte_A = string.byte("A")
-local byte_Z = string.byte("Z")
+--[[
+	Returns `true` if the first character of _input_ is an upper-case character.
+
+	Throws if the _input_ is not a string or it is the empty string.
+]]
+local Dash = script.Parent
+local assertEqual = require(Dash.assertEqual)
 
 local function isUppercase(input: string)
-	local byte = string.byte(input)
-	return byte >= byte_A and byte <= byte_Z
+	assertEqual(typeof(input), "string", [[Attempted to call Dash.isUppercase with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(#input > 0, true, [[Attempted to call Dash.isUppercase with an empty string]])
+	local firstLetter = input:sub(1, 1)
+	return firstLetter == firstLetter:upper()
 end
 return isUppercase
