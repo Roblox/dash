@@ -1,20 +1,31 @@
+--[[
+	Adds new elements to the _target_ Array from subsequent Array arguments in left-to-right order.
+	
+	Arguments which are `nil` or None are skipped.
+
+	The target param is mutable to allow if desired
+
+	@mutable target
+]]
+
 local Dash = script.Parent
-local Types = require(Dash.Types)
-local forEach = require(Dash.forEach)
 local None = require(Dash.None)
+local Types = require(Dash.Types)
+local assertEqual = require(Dash.assertEqual)
+local forEachArgs = require(Dash.forEachArgs)
+local forEach = require(Dash.forEach)
 local insert = table.insert
 
 local function append(target: Types.Array<any>, ...): Types.Array<any>
-	local lists = {...}
-	for i = 1, select("#", ...) do
-		local list = lists[i]
+	assertEqual(typeof(target), "table", [[Attempted to call Dash.append with argument #1 of type {left:?} not {right:?}]])
+	forEachArgs(function(list: Types.Table?)
 		if list == None or list == nil then
-			continue
+			return
 		end
-		forEach(list, function(value)
+		forEach(list, function(value: any)
 			insert(target, value)
 		end)
-	end
+	end, ...)
 	return target
 end
 

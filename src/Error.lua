@@ -55,7 +55,6 @@ end
 function Error:throw(tags: Types.Table?)
 	local instance = self:joinTags(tags)
 	instance.stack = debug.traceback()
-	warn("Throw: ", tostring(instance))
 	error(instance)
 end
 

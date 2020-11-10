@@ -4,7 +4,7 @@
 	
 	@example
 		-- Create a simple Vehicle class
-		local Vehicle = class("Vehicle", function(wheelCount) return 
+		local Vehicle = class("Vehicle", function(wheelCount: number) return 
 			{
 				speed = 0,
 				wheelCount = wheelCount
@@ -31,11 +31,13 @@ local Types = require(Dash.Types)
 
 local function throwNotImplemented(tags: Types.Table)
 	local Error = require(Dash.Error)
-	local notImplemented = Error.new("NotImplemented", "The method {methodName} is not implemented on the class {className}")
-	notImplemented:throw(tags)
+	local NotImplemented = Error.new("NotImplemented", [[The method "{methodName}" is not implemented on the class "{className}"]])
+	NotImplemented:throw(tags)
 end
 
-local function class(name: string, constructor: any)
+export type Constructor = () -> Types.Table
+
+local function class(name: string, constructor: Constructor?)
 	constructor = constructor or function()
 		return {}
 	end

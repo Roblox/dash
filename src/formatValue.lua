@@ -6,9 +6,10 @@
 ]]
 
 local Dash = script.Parent
-local pretty = require(Dash.pretty)
 
 local function formatValue(value, displayString: string)
+	-- Inline require to prevent infinite require cycle
+	local pretty = require(Dash.pretty)
 	local displayTypeStart, displayTypeEnd = displayString:find("[A-Za-z#?]+")
 	if displayTypeStart then
 		local displayType = displayString:sub(displayTypeStart, displayTypeEnd)
