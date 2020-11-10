@@ -16,12 +16,15 @@
 local Dash = script.Parent
 local None = require(Dash.None)
 local Types = require(Dash.Types)
+local assertEqual = require(Dash.assertEqual)
 local forEachPairs = require(Dash.forEachPairs)
 local copy = require(Dash.copy)
 
 -- TODO Luau: Support typing varargs
 -- TODO Luau: Support function generics
 local function joinDeep(source: Types.Table, delta: Types.Table): Types.Table
+	assertEqual(typeof(source), "table", [[Attempted to call Dash.joinDeep with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(delta), "table", [[Attempted to call Dash.joinDeep with argument #2 of type {left:?} not {right:?}]])
 	local result = copy(source)
 	-- Iterate through each key of the input and assign to target at the same key
 	forEachPairs(delta, function(value, key)

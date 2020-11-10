@@ -1,20 +1,26 @@
 --[[
 	Format a specific _value_ using the specified _displayString_.
 	@example
-		formatValue(255, ":06X") --> 0000FF
+		formatValue(255, "06X") --> "0000FF"
+	@example
+		formatValue(255.5) --> "255.5"
 	@see `format` - for a full description of valid display strings.
 ]]
 
 local Dash = script.Parent
+local assertEqual = require(Dash.assertEqual)
 
-local function formatValue(value, displayString: string)
+local function formatValue(value: any, displayString: string): string
+	displayString = displayString or ""
+	assertEqual(typeof(displayString), "string", [[Attempted to call Dash.formatValue with argument #1 of type {left:?} not {right:?}]])
 	-- Inline require to prevent infinite require cycle
-	local pretty = require(Dash.pretty)
 	local displayTypeStart, displayTypeEnd = displayString:find("[A-Za-z#?]+")
 	if displayTypeStart then
 		local displayType = displayString:sub(displayTypeStart, displayTypeEnd)
 		local formatAsString =
-			"%" .. displayString:sub(1, displayTypeStart - 1) .. displayString:sub(displayTypeEnd + 1) .. "s"
+		"%" .. displayString:sub(1, displayTypeStart - 1) .. displayString:sub(displayTypeEnd + 1) .. "s"
+		-- Pretty print values
+		local pretty = require(Dash.pretty)
 		if displayType == "#?" then
 			-- Multiline print a value
 			return formatAsString:format(pretty(value, {multiline = true}))

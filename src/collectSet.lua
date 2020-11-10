@@ -1,19 +1,22 @@
 --[[
-	Build a set from the entries of the `input` Table, calling `fn` on entry and using the returned
-	value as an element to enter into the set.
+	Build a set from the entries of the _input_ Table, calling _handler_ on each entry and using
+	the returned value as an element to add to the set.
 
-	If fn is not provided, values in the `input` Table are used as elements.
+	If _handler_ is not provided, values of `input` are used as elements.
 ]]
-local insert = table.insert
+local Dash = script.Parent
+local Types = require(Dash.Types)
 
-local function collectSet(input, fn)
+-- TODO Luau: Support generic functions
+local function collectSet(input: Types.Table, handler: Types.AnyFunction?)
+	assertEqual(typeof(input), "table", [[Attempted to call Dash.collectSet with argument #1 of type {left:?} not {right:?}]])
 	local result = {}
 	for key, child in pairs(input) do
 		local outputValue
-		if fn == nil then
+		if handler == nil then
 			outputValue = child 
 		else
-			outputValue = fn(key, child)
+			outputValue = handler(key, child)
 		end
 		if outputValue ~= nil then
 			result[outputValue] = true

@@ -7,8 +7,8 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
+local assertEqual = require(Dash.assertEqual)
 
-local insert = table.insert
 local insert = table.insert
 
 -- TODO Luau: Support generic functions
