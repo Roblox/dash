@@ -1,5 +1,5 @@
 --[[
-	Create a symbol with a specified name. We recommend upper snake-case as the symbol is a
+	Create a symbol with a specified name. Upper snake-case is recommended as the symbol is a
 	constant, unless you are linking the symbol conceptually to a different string.
 
 	Symbols are useful when you want a value that isn't equal to any other type, for example if you
