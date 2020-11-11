@@ -3,13 +3,12 @@ extra_css: [extra.css]
 theme:
   name: material
   palette:
-    scheme: slate
     primary: blue
 repo_url: https://github.rbx.com/hcollins/Dash
 
 nav:
   - Home: index.md
-  - Classes: classes.md
-  - Functions: functions.md
-  - Symbols: symbols.md
+  - API Reference: api.md
+  - Design Goals: goals.md
   - Types: types.md
+  - Tags: tags.md

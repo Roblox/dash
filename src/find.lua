@@ -15,7 +15,7 @@ local assertEqual = require(Dash.assertEqual)
 -- TODO Luau: support generic function definitions
 export type FindHandler = (any, any) -> boolean
 
-local function find(input: Types.Table, handler: FindHandler)
+local function find(input: Types.Map<any, any>, handler: FindHandler)
 	assertEqual(typeof(input), "table", [[Attempted to call Dash.find with argument #1 of type {left:?} not {right:?}]])
 	assertEqual(typeof(handler), "function", [[Attempted to call Dash.find with argument #2 of type {left:?} not {right:?}]])
 	for key, child in pairs(input) do

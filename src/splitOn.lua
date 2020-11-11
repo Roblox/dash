@@ -7,7 +7,7 @@ local assertEqual = require(Dash.assertEqual)
 
 local insert = table.insert
 
-local function splitOn(input: string, pattern: string)
+local function splitOn(input: string, pattern: string): Types.Array<string>
 	assertEqual(typeof(input), "string", [[Attempted to call Dash.splitOn with argument #1 of type {left:?} not {right:?}]])
 	assertEqual(typeof(pattern), "string", [[Attempted to call Dash.splitOn with argument #2 of type {left:?} not {right:?}]])
 	local parts = {}

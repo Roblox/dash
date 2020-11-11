@@ -3,8 +3,6 @@
 	
 	Arguments which are `nil` or None are skipped.
 
-	The target param is mutable to allow if desired
-
 	@mutable target
 ]]
 

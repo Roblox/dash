@@ -11,7 +11,7 @@ local assertEqual = require(Dash.assertEqual)
 -- TODO Luau: Support generic functions
 export type SomeHandler = (any, any) -> boolean
 
-local function some(input: Types.Array<any>, handler: SomeHandler?)
+local function some(input: Types.Map<any, any>, handler: SomeHandler?): boolean
 	assertEqual(typeof(input), "table", [[Attempted to call Dash.some with argument #1 of type {left:?} not {right:?}]])
 	assertEqual(typeof(handler), "function", [[Attempted to call Dash.some with argument #2 of type {left:?} not {right:?}]])
 	for key, child in pairs(input) do

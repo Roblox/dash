@@ -11,7 +11,6 @@
 		end
 		local prepare = compose(fry, cheesify)
 		prepare("nachos") --> "cheesy fried nachos"
-	@usage Useful for when you want to lazily compute something expensive that doesn't change.
 ]]
 -- TODO Luau: Support generic functions
 -- TODO Luau: Support varargs

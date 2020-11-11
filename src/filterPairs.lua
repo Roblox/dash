@@ -1,5 +1,5 @@
 --[[
-	Filter a table of values by calling the handler on each `(child, key)` pair, preseving keys.
+	Filter a Map by calling the handler on each `(child, key)` pair, preseving keys.
 
 	The handler should return `true` to preserve the value in the resulting table.
 ]]

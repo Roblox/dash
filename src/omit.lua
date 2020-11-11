@@ -11,7 +11,7 @@ local forEachPairs = require(Dash.forEachPairs)
 
 -- TODO Luau: Support generic functions, then substitute type signature
 -- TYPED: local function omit<Key, Value>(input: Types.Map<Key, Value>, keys: Types.Array<Key>): Value
-local function omit(input: Types.Table, keys: Types.Array<any>): Types.Table
+local function omit(input: Types.Map<any, any>, keys: Types.Array<any>): Types.Map<any, any>
 	assertEqual(typeof(input), "table", [[Attempted to call Dash.omit with argument #1 of type {left:?} not {right:?}]])
 	assertEqual(typeof(keys), "table", [[Attempted to call Dash.omit with argument #2 of type {left:?} not {right:?}]])
 	local output = {}
