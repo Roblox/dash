@@ -1,6 +1,6 @@
 return function()
 	local Dash = require(script.Parent)
-	local collectSet = Dash.collectSet
+	local compose = Dash.compose
 
 	describe(
 		"compose",

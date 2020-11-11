@@ -2,7 +2,7 @@
 	Filter an Array of values by calling the handler on each `(child, index)` tuple, preserving
 	array indicies.
 
-	The handler should return `true` to preserve the value in the resulting array.
+	The handler should return truthy to preserve the value in the resulting array.
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)

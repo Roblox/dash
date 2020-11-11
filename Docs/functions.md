@@ -90,7 +90,7 @@ Operates on cyclic structures, and returns a Cycles object for a given _value_ b
 forEach(input: Array<Value>, handler: Handler<Value>): ()
 ```
 
-Iterates through the elements of the [Array](../types/#array) _input_ using the ordered keys 1..n.
+Iterates through the elements of the [Array](../types/#array) _input_ in order 1..n.
 
 Calls the [Handler](../types/#handler) _handler_ for each entry.
 

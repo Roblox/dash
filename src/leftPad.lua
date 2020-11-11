@@ -6,7 +6,7 @@
 	@param prefix (default = `" "`)
 ]]
 local Dash = script.Parent
-local Types = require(Dash.Types)
+local assertEqual = require(Dash.assertEqual)
 
 local function leftPad(input: string, length: number, prefix: string?): string
 	assertEqual(typeof(input), "string", [[Attempted to call Dash.leftPad with argument #1 of type {left:?} not {right:?}]])

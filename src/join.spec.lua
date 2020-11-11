@@ -10,6 +10,7 @@ return function()
 
 		it("should skip nil arguments", function()
 			assertSnapshot(join({a = 1, b = 2}, nil, nil, {c = 3}))
+		end)
 
 		it("should skip None arguments", function()
 			assertSnapshot(join({a = 1, b = 2}, None, None, {c = 3}))

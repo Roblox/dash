@@ -10,7 +10,7 @@ return function()
 			})
 			assertThrows(function()
 				output.red = 256
-			end, [[ReadonlyError: Attempted to write to readonly key "red" of frozen object "MyObject"]])
+			end, [[ReadonlyKey: Attempted to write to readonly key "red" of frozen object "MyObject"]])
 			assertSnapshot(output.blah)
 		end)
 		it("should throw for missing keys if so desired", function()

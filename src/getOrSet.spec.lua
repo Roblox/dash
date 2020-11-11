@@ -4,14 +4,14 @@ return function()
 
 	describe("getOrSet", function()
 		it("should return an existing value", function()
-			local throw()
+			local function throw()
 				error("This should not be called")
 			end
 			assertSnapshot(getOrSet({a = 2}, "a"))
 		end)
 
 		it("should set a new value", function()
-			local getValue(input, key)
+			local function getValue(input, key)
 				return input.a + key
 			end
 			local output = {a = 5}

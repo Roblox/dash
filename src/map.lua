@@ -1,5 +1,5 @@
 --[[
-	Iterates through the elements of the _input_ Array using the ordered keys 1..n.
+	Iterates through the elements of the _input_ Array in order 1..n.
 	Calls the _handler_ for each entry and constructs a new ordered Array from the returned values.
 
 	Values returned by _handler_ must be defined.

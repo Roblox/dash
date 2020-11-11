@@ -12,7 +12,7 @@ local assertEqual = require(Dash.assertEqual)
 
 local function formatValue(value: any, displayString: string): string
 	displayString = displayString or ""
-	assertEqual(typeof(displayString), "string", [[Attempted to call Dash.formatValue with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(displayString), "string", [[Attempted to call Dash.formatValue with argument #2 of type {left:?} not {right:?}]])
 	-- Inline require to prevent infinite require cycle
 	local displayTypeStart, displayTypeEnd = displayString:find("[A-Za-z#?]+")
 	if displayTypeStart then

@@ -11,7 +11,7 @@ return function()
 	a = 1,
 	b = 2
 }]])
-			assertSnapshot(input == output)
+			assertSnapshot(input == output, [[true]])
 		end)
 
 		it("should assign to a table with existing values, overwriting existing keys", function()
@@ -24,16 +24,16 @@ return function()
 		it("should skip nil arguments", function()
 			assertSnapshot(assign({a = 1, b = 2}, nil, nil, {c = 3}), [[{
 	a = 1,
-	c = 3,
-	b = 2
+	b = 2,
+	c = 3
 }]])
 		end)
 
 		it("should skip None arguments", function()
 			assertSnapshot(assign({a = 1, b = 2}, None, None, {c = 3}), [[{
 	a = 1,
-	c = 3,
-	b = 2
+	b = 2,
+	c = 3
 }]])
 		end)
 

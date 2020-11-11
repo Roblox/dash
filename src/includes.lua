@@ -9,7 +9,7 @@ local assertEqual = require(Dash.assertEqual)
 
 -- TODO Luau: Support generic functions
 local function includes(input: Types.Table, item: any): boolean
-	assertEqual(typeof(object), "table", [[Attempted to call Dash.includes with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(input), "table", [[Attempted to call Dash.includes with argument #1 of type {left:?} not {right:?}]])
 	if item == nil then
 		return false
 	end

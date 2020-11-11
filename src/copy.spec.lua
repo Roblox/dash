@@ -14,7 +14,7 @@ return function()
 
 		it("ensures an input of the correct type", function()
 			assertThrows(function()
-				collect()
+				copy()
 			end, [[AssertError: Attempted to call Dash.copy with argument #1 of type "nil" not "table"]])
 		end)
 

@@ -5,8 +5,9 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local forEach = require(Dash.forEach)
+local append = require(Dash.append)
 local assertEqual = require(Dash.assertEqual)
+local forEach = require(Dash.forEach)
 
 -- TODO Luau: Support function generics
 local function flat(input: Types.Array<Types.Array<any>>): Types.Array<any>

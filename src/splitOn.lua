@@ -1,27 +1,32 @@
 --[[
-	Splits `str` into parts based on a pattern delimiter and returns a table of the parts, followed
-	by a table of the matched delimiters.
+	Splits _input_ into parts based on a _pattern_ delimiter and returns a Table of the parts,
+	followed by a Table of the matched delimiters.
 ]]
+local Dash = script.Parent
+local assertEqual = require(Dash.assertEqual)
+
 local insert = table.insert
 
-local function splitOn(str: string, pattern: string)
+local function splitOn(input: string, pattern: string)
+	assertEqual(typeof(input), "string", [[Attempted to call Dash.splitOn with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(pattern), "string", [[Attempted to call Dash.splitOn with argument #2 of type {left:?} not {right:?}]])
 	local parts = {}
 	local delimiters = {}
 	local from = 1
 	if not pattern then
-		for i = 1, #str do
-			insert(parts, str:sub(i, i))
+		for i = 1, #input do
+			insert(parts, input:sub(i, i))
 		end
 		return parts
 	end
-	local delimiterStart, delimiterEnd = str:find(pattern, from)
+	local delimiterStart, delimiterEnd = input:find(pattern, from)
 	while delimiterStart do
-		insert(delimiters, str:sub(delimiterStart, delimiterEnd))
-		insert(parts, str:sub(from, delimiterStart - 1))
+		insert(delimiters, input:sub(delimiterStart, delimiterEnd))
+		insert(parts, input:sub(from, delimiterStart - 1))
 		from = delimiterEnd + 1
-		delimiterStart, delimiterEnd = str:find(pattern, from)
+		delimiterStart, delimiterEnd = input:find(pattern, from)
 	end
-	insert(parts, str:sub(from))
+	insert(parts, input:sub(from))
 	return parts, delimiters
 end
 

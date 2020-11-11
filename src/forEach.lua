@@ -1,5 +1,5 @@
 --[[
-	Iterates through the elements of the _input_ Array using the ordered keys 1..n.
+	Iterates through the elements of the _input_ Array in order 1..n.
 	Calls the _handler_ for each entry.
 ]]
 local Dash = script.Parent

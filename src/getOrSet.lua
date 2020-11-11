@@ -14,7 +14,7 @@ local format = require(Dash.format)
 export type GetValueHandler = (any) -> any
 
 local function getOrSet(input: Types.Table, key: any, getValue: GetValueHandler)
-	assertEqual(typeof(object), "table", [[Attempted to call Dash.getOrSet with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(input), "table", [[Attempted to call Dash.getOrSet with argument #1 of type {left:?} not {right:?}]])
 	assertEqual(key == nil, false, [[Attempted to call Dash.getOrSet with a nil key argument]])
 	assertEqual(typeof(getValue), "function", [[Attempted to call Dash.getOrSet with argument #3 of type {left:?} not {right:?}]])
 	if input[key] == nil then

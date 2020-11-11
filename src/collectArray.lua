@@ -14,6 +14,7 @@ local insert = table.insert
 -- TODO Luau: Support generic functions
 local function collectArray(input: Types.Table, handler: Types.AnyFunction)
 	assertEqual(typeof(input), "table", [[Attempted to call Dash.collectArray with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(handler), "function", [[Attempted to call Dash.collectArray with argument #2 of type {left:?} not {right:?}]])
 	local result = {}
 	for key, child in pairs(input) do
 		local outputValue = handler(key, child)
