@@ -10,7 +10,12 @@ return function()
 				return value .. "=" .. key
 			end)
 			sort(output)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	"10=a",
+	"20=b",
+	"30=c",
+	"50=d"
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

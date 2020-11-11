@@ -8,8 +8,18 @@ return function()
 		it("should reverse the order of an array without modifying the input", function()
 			local input = {10, 20, 30, 40}
 			local output = reverse(input)
-			assertSnapshot(input)
-			assertSnapshot(output)
+			assertSnapshot(input, [[{
+	10,
+	20,
+	30,
+	40
+}]])
+			assertSnapshot(output, [[{
+	40,
+	30,
+	20,
+	10
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

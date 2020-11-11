@@ -21,7 +21,12 @@ return function()
 			local output = collect(input, function(key, value)
 				return value + 1, key .. "!"
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	11 = "a!",
+	21 = "b!",
+	31 = "c!",
+	51 = "d!"
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

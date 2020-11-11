@@ -7,36 +7,64 @@ return function()
 			local output = keyBy({}, function(child, index)
 				return 5
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{}]])
 		end)
 
 		it("should return the most recent value for aliased keys", function()
 			local output = keyBy({1, 2, 3, 4, 5}, function(child, index)
 				return index % 2
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	5,
+	0 = 4
+}]])
 		end)
 
 		it("should return a table with a separate entries for unique keys", function()
 			local output = keyBy({1, 2, 3, 4, 5}, function(child, key)
 				return key
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	1,
+	2,
+	3,
+	4,
+	5
+}]])
 		end)
 
 		it("should perform assignment for maps and a getKey string", function()
 			local output = keyBy({
 				bike = {
-					name = "blue"
+					name = "bike",
+					color = "blue"
 				},
 				car = {
-					name = "red"
+					name = "car",
+					color = "red"
 				},
 				van = {
+					name = "van",
 					color = "white"
+				},
+				ghost = {
+					name = "ghost"
 				}
 			}, "color")
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	blue = {
+		color = "blue",
+		name = "bike"
+	},
+	red = {
+		color = "red",
+		name = "car"
+	},
+	white = {
+		color = "white",
+		name = "van"
+	}
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

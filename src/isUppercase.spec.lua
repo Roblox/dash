@@ -9,10 +9,11 @@ return function()
 				__call = function()
 				end
 			})
-			assertSnapshot(isUppercase("hello"))
-			assertSnapshot(isUppercase("Hello"))
-			assertSnapshot(isUppercase("êcho"))
-			assertSnapshot(isUppercase("Êcho"))
+			assertSnapshot(isUppercase("hello"), [[false]])
+			assertSnapshot(isUppercase("Hello"), [[true]])
+			-- Unfortunately not supported in the current version of Lua
+			-- assertSnapshot(isUppercase("êcho"), [[false]])
+			-- assertSnapshot(isUppercase("Êcho"), [[true]])
 		end)
 
 		it("ensures an input of the correct type", function()

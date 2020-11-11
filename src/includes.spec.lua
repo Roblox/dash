@@ -4,17 +4,17 @@ return function()
 
 	describe("includes", function()
 		it("should return the expected value for arrays", function()
-			assertSnapshot(includes({1, 2, 3, 4, 5}, 5))
-			assertSnapshot(includes({1, 2, 3, 4, 5}, 6))
+			assertSnapshot(includes({1, 2, 3, 4, 5}, 5), [[true]])
+			assertSnapshot(includes({1, 2, 3, 4, 5}, 6), [[false]])
 		end)
 
 		it("should return the expected value for maps", function()
-			assertSnapshot(includes({a = 1, b = 5, c = 3}, 5))
-			assertSnapshot(includes({a = 1, b = 5, c = 3}, 6))
+			assertSnapshot(includes({a = 1, b = 5, c = 3}, 5), [[true]])
+			assertSnapshot(includes({a = 1, b = 5, c = 3}, 6), [[false]])
 		end)
 
 		it("should return false for nil", function()
-			assertSnapshot(includes({a = nil}, nil))
+			assertSnapshot(includes({a = nil}, nil), [[false]])
 		end)
 
 		it("ensures an input of the correct type", function()

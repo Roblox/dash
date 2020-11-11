@@ -12,7 +12,7 @@ return function()
 					return nil
 				end
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[130]])
 		end)
 
 		it("ensures an input of the correct type", function()

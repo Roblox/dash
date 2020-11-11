@@ -6,7 +6,16 @@ return function()
 		it("should flatten an array correctly", function()
 			local input = {{10, 20}, {30, 40}, {50, {60}}}
 			local output = flat(input)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	10,
+	20,
+	30,
+	40,
+	50,
+	{
+		60
+	}
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

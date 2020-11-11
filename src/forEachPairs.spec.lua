@@ -3,6 +3,7 @@ return function()
 	local forEachPairs = Dash.forEachPairs
 
 	local insert = table.insert
+	local sort = table.sort
 
 	describe("forEachPairs", function()
 		it("should iterate through elements of an array", function()
@@ -10,7 +11,12 @@ return function()
 			forEachPairs({a = 1, b = 2, c = 3}, function(value, key)
 				insert(output, key .. "=" .. value)
 			end)
-			assertSnapshot(output)
+			sort(output)
+			assertSnapshot(output, [[{
+	"a=1",
+	"b=2",
+	"c=3"
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

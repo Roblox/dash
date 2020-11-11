@@ -8,7 +8,12 @@ return function()
 			local output = map(input, function(value, key)
 				return key .. "=" .. value
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	"1=10",
+	"2=20",
+	"3=30",
+	"4=50"
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()
