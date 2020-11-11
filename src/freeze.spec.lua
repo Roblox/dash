@@ -14,27 +14,26 @@ return function()
 			assertSnapshot(output.blah, [[nil]])
 		end)
 		it("should throw for missing keys if so desired", function()
-			local output = freeze("MyObject", {
-				name = "myName",
-				red = 255
-			}, true)
 			assertThrows(function()
+				local output = freeze("MyObject", {
+					name = "myName",
+					red = 255
+				}, true)
 				return output.blue
 			end, [[MissingKey: Attempted to read missing key "blue" of frozen object "MyObject"]])
-			assertSnapshot(output.blah)
 		end)
 
 		it("should print the key used to a reasonable depth", function()
-			local output = freeze("MyObject", {
-				name = "myName",
-				red = 255
-			}, true)
 			assertThrows(function()
+				local output = freeze("MyObject", {
+					name = "myName",
+					red = 255
+				}, true)
+
 				local key = {name = "key", child = {name = "child", deep = { deeper = { element = 6 }}}}
 				key.child.child = key
 				return output[key]
 			end, [[MissingKey: Attempted to read missing key <0>{child = {child = &0, deep = {deeper = ...}, name = "child"}, name = "key"} of frozen object "MyObject"]])
-			assertSnapshot(output.blah)
 		end)
 
 		it("ensures an objectName of correct type", function()

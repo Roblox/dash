@@ -7,6 +7,9 @@ local Dash = script.Parent
 local Types = require(Dash.Types)
 local includes = require(Dash.includes)
 local join = require(Dash.join)
+local keys = require(Dash.keys)
+
+local sort = table.sort
 
 export type Cycles = {
 	-- A set of tables which were visited recursively
@@ -30,26 +33,36 @@ end
 
 -- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
 -- TYPED: local function cycles(value: any, depth: number?, initialCycles: Cycles?): Cycles
-local function cycles(value: any, depth: number?, initialCycles: any): Cycles?
+local function cycles(input: any, depth: number?, initialCycles: any): Cycles?
 	if depth == -1 then
 		return initialCycles
 	end
 
-	if typeof(value) == "table" then
+	if typeof(input) == "table" then
 		local childCycles = initialCycles or getDefaultCycles()
 
-		if childCycles.visited[value] then
+		if childCycles.visited[input] then
 			-- We have already visited the table, so check if it has a reference
-			if not childCycles.refs[value] then
+			if not childCycles.refs[input] then
 				-- If not, create one as it is present at least twice
-				childCycles.refs[value] = childCycles.nextRef
+				childCycles.refs[input] = childCycles.nextRef
 				childCycles.nextRef += 1
 			end
 			return nil
 		else
 			-- We haven't yet visited the table, so recurse
-			childCycles.visited[value] = true
-			for key, value in pairs(value) do
+			childCycles.visited[input] = true
+			-- Visit in order to preserve reference consistency
+			local inputKeys = keys(input)
+			sort(inputKeys, function(left, right)
+				if typeof(left) == "number" and typeof(right) == "number" then
+					return left < right
+				else
+					return tostring(left) < tostring(right)
+				end
+			end)
+			for _, key in ipairs(inputKeys) do
+				local value = input[key]
 				if includes(childCycles.omit, key) then
 					-- Don't visit omitted keys
 					continue
