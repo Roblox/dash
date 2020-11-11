@@ -11,7 +11,7 @@ return function()
 			assertThrows(function()
 				output.red = 256
 			end, [[ReadonlyKey: Attempted to write to readonly key "red" of frozen object "MyObject"]])
-			assertSnapshot(output.blah)
+			assertSnapshot(output.blah, [[nil]])
 		end)
 		it("should throw for missing keys if so desired", function()
 			local output = freeze("MyObject", {
@@ -30,10 +30,10 @@ return function()
 				red = 255
 			}, true)
 			assertThrows(function()
-				local key = {name = "key", child = {name = "child", deep = {}}}
+				local key = {name = "key", child = {name = "child", deep = { deeper = { element = 6 }}}}
 				key.child.child = key
 				return output[key]
-			end, [[MissingKey: Attempted to read missing key <1>{child = {child = &1, name = "child"}, deep = ..., name = "key"} of frozen object "MyObject"]])
+			end, [[MissingKey: Attempted to read missing key <0>{child = {child = &0, deep = {deeper = ...}, name = "child"}, name = "key"} of frozen object "MyObject"]])
 			assertSnapshot(output.blah)
 		end)
 

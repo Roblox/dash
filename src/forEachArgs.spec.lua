@@ -13,7 +13,13 @@ return function()
 				end, ...)
 			end
 			test(1, 2, 3, 4, 5)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	2,
+	4,
+	6,
+	8,
+	10
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

@@ -21,12 +21,12 @@ return function()
 			assertThrows(function()
 				local MyError = Error.new("MyError", "An error happened for {name} due to {reason:?}")
 				MyError:throw({
-					name = "Digbert",
+					name = "Eggbert",
 					reason = {
 						hunger = 10
 					}
 				})
-			end, [[An error happened for Digbert due to {hunger=10}]])
+			end, [[MyError: An error happened for Eggbert due to {hunger = 10}]])
 		end)
 
 		it("should capture a stack trace", function()

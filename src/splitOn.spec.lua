@@ -3,13 +3,22 @@ return function()
 	local splitOn = Dash.splitOn
 
 	describe("splitOn", function()
-		it("should return an empty array for an empty string", function()
+		it("should return a array with a single element for an empty string", function()
 			local output = splitOn("", "[.:()]")
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	""
+}]])
 		end)
 		it("should split a string based on a pattern", function()
 			local output = splitOn("zombie.Head.Part:Connect()", "[.:()]")
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	"zombie",
+	"Head",
+	"Part",
+	"Connect",
+	"",
+	""
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

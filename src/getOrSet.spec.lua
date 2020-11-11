@@ -7,7 +7,7 @@ return function()
 			local function throw()
 				error("This should not be called")
 			end
-			assertSnapshot(getOrSet({a = 2}, "a"))
+			assertSnapshot(getOrSet({a = 2}, "a"), [[2]])
 		end)
 
 		it("should set a new value", function()
@@ -15,8 +15,11 @@ return function()
 				return input.a + key
 			end
 			local output = {a = 5}
-			assertSnapshot(getOrSet(output, 8))
-			assertSnapshot(output)
+			assertSnapshot(getOrSet(output, 8), [[13]])
+			assertSnapshot(output, [[{
+	8 = 13,
+	a = 5
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

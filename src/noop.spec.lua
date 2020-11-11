@@ -4,7 +4,7 @@ return function()
 
 	describe("noop", function()
 		it("should run without error and return nil", function()
-			assertSnapshot(noop())
+			assertSnapshot(noop(), [[nil]])
 		end)
 	end)
 end

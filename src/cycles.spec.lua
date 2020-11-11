@@ -3,9 +3,9 @@ return function()
 	local cycles = Dash.cycles
 
 	describe("cycles", function()
-		it("should return a cycles breakdown for a primitive value", function()
+		it("should return nil for a primitive value", function()
 			local output = cycles(57)
-			assertSnapshot(output)
+			assertSnapshot(output, [[nil]])
 		end)
 
 		it("should return a cycles breakdown for a non-cyclic table", function()

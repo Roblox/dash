@@ -8,7 +8,7 @@ return function()
 			local output = some(input, function(value, key)
 				return key == "c" or value == 3000
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[true]])
 		end)
 
 		it("should return false if no element matches", function()
@@ -16,7 +16,7 @@ return function()
 			local output = some(input, function(value, key)
 				return key == "No such key"	
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[false]])
 		end)
 
 		it("ensures an input of the correct type", function()

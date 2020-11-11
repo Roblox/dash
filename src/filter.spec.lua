@@ -8,7 +8,10 @@ return function()
 			local output = filter(input, function(index, value)
 				return index == 2 or value == 3
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	2,
+	3
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

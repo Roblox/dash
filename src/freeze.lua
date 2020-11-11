@@ -45,8 +45,7 @@ local function freeze(objectName: string, object: Types.Table, throwIfMissing: b
 				if value == nil and throwIfMissing then
 					-- Tried to read a key which isn't present in the underlying object
 					MissingKey:throw({
-						key = tostring(key),
-						keyType = typeof(key),
+						key = key,
 						objectName = objectName
 					})
 				end
@@ -55,8 +54,7 @@ local function freeze(objectName: string, object: Types.Table, throwIfMissing: b
 			__newindex = function(_, key: any)
 				-- Tried to write to any key
 				ReadonlyKey:throw({
-					key = tostring(key),
-					keyType = typeof(key),
+					key = key,
 					objectName = objectName
 				})
 			end,

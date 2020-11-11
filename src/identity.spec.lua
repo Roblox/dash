@@ -9,7 +9,7 @@ return function()
 			assertSnapshot(identity(5) == 5)
 			assertSnapshot(identity(true) == true)
 			assertSnapshot(identity("hula") == "hula")
-			assertSnapshot(identity(nil) == nil)
+			assertSnapshot(identity(nil) == nil, [[true]])
 		end)
 	end)
 end

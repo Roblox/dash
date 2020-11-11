@@ -4,9 +4,9 @@ return function()
 
 	describe("endsWith", function()
 		it("should correctly test the string ending", function()
-			assertSnapshot(endsWith("Roblox Games", "Games"))
-			assertSnapshot(endsWith("Roblox Games", "Hard Work"))
-			assertSnapshot(endsWith("Roblox Games", "A string that is longer than the input"))
+			assertSnapshot(endsWith("Roblox Games", "Games"), [[true]])
+			assertSnapshot(endsWith("Roblox Games", "Hard Work"), [[false]])
+			assertSnapshot(endsWith("Roblox Games", "A string that is longer than the input"), [[false]])
 		end)
 
 		it("ensures arguments of correct type", function()

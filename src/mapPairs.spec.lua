@@ -8,7 +8,12 @@ return function()
 			local output = mapPairs(input, function(value, key)
 				return key .. "=" .. value
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	a = "a=10",
+	b = "b=20",
+	c = "c=30",
+	d = "d=50"
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

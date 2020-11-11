@@ -10,13 +10,13 @@ return function()
 					return key
 				end
 			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [["b"]])
 		end)
 
 		it("should return any element if the handler is not defined", function()
 			local input = {a = 6}
 			local output = mapOne(input)
-			assertSnapshot(output)
+			assertSnapshot(output, [[6]])
 		end)
 
 		it("ensures an input of the correct type", function()

@@ -3,20 +3,15 @@ return function()
 	local filterPairs = Dash.filterPairs
 
 	describe("filterPairs", function()
-		it("should filter an element in a table by key", function()
+		it("should filter an element in a table by key or value", function()
 			local input = {a = 10, b = 20, c = 30, d = 50}
-			local output = filterPairs(input, function(key, value)
-				return key == "b"
+			local output = filterPairs(input, function(value, key)
+				return key == "b" or value == 30
 			end)
-			assertSnapshot(output)
-		end)
-
-		it("should filter an element in a table by value", function()
-			local input = {a = 10, b = 20, c = 30, d = 50}
-			local output = filterPairs(input, function(key, value)
-				return value == 20
-			end)
-			assertSnapshot(output)
+			assertSnapshot(output, [[{
+	b = 20,
+	c = 30
+}]])
 		end)
 
 		it("ensures an input of the correct type", function()

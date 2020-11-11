@@ -27,7 +27,7 @@ local function groupBy(input: Dash.Table, getKey: any)
 			groupKey = child[getKey]
 		end
 		if groupKey ~= nil then
-			if result[groupKey] then
+			if result[groupKey] ~= nil then
 				insert(result[groupKey], child)
 			else
 				result[groupKey] = {child}
