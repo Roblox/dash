@@ -23,7 +23,7 @@ return function()
 		it("ensures an input of the correct type", function()
 			assertThrows(function()
 				format({})
-			end, [[AssertError: Attempted to call Dash.format with argument #2 of type "table" not "string"]])
+			end, [[AssertError: Attempted to call Dash.format with argument #1 of type "table" not "string"]])
 		end)
 	end)
 end

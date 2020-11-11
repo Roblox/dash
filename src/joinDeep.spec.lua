@@ -66,7 +66,7 @@ return function()
 				},
 				tyres = None
 			}
-			local result = joinDeep(input, {a = 3, b = 2})
+			local result = joinDeep(source, delta)
 			assertSnapshot(result.lights.brake == source.lights.brake)
 		end)
 	end)

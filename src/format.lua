@@ -36,7 +36,7 @@ local concat = table.concat
 local insert = table.insert
 
 local function format(formatString: string, ...)
-	assertEqual(typeof(formatString), "string", [[Attempted to call Dash.forEach with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(formatString), "string", [[Attempted to call Dash.format with argument #1 of type {left:?} not {right:?}]])
 	local args = {...}
 	local argIndex = 1
 	local texts, subs = splitOn(formatString, "{[^{}]*}")

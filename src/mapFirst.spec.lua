@@ -26,13 +26,5 @@ return function()
 				mapFirst({})
 			end, [[AssertError: Attempted to call Dash.mapFirst with argument #2 of type "nil" not "function"]])
 		end)
-
-		it("ensures handler does not return nil", function()
-			assertThrows(function()
-				mapFirst({1}, function()
-					return nil
-				end)
-			end, [[AssertError: Returned nil from a Dash.mapFirst handler]])
-		end)
 	end)
 end

@@ -9,15 +9,15 @@ return function()
 				name = "CHEESE"
 			}
 			local FAKEST_CHEESE = Symbol.new("NOT_EVEN_CHEESE")
-			expect(CHEESE).to.equal(CHEESE)
-			expect(CHEESE).never.to.equal(FAKE_CHEESE)
-			expect(CHEESE).never.to.equal(FAKER_CHEESE)
-			expect(CHEESE).never.to.equal(FAKEST_CHEESE)
+			assertSnapshot(CHEESE == CHEESE, [[true]])
+			assertSnapshot(CHEESE == FAKE_CHEESE, [[false]])
+			assertSnapshot(CHEESE == FAKER_CHEESE, [[false]])
+			assertSnapshot(CHEESE == FAKEST_CHEESE, [[false]])
 		end)
 
 		it("should have a string representation", function()
 			local CHEESE = Symbol.new("CHEESE")
-			expect(tostring(CHEESE)).to.equal("Symbol(CHEESE)")
+			assertSnapshot(tostring(CHEESE), [["Symbol(CHEESE)"]])
 		end)
 
 		it("should be a Symbol instance", function()
@@ -25,8 +25,8 @@ return function()
 			local FAKE_CHEESE = {
 				name = "CHEESE"
 			}
-			expect(Symbol.isInstance(CHEESE)).to.equal(true)
-			expect(Symbol.isInstance(FAKE_CHEESE)).to.equal(false)
+			assertSnapshot(Symbol.isInstance(CHEESE), [[true]])
+			assertSnapshot(Symbol.isInstance(FAKE_CHEESE), [[false]])
 		end)
 	end)
 end

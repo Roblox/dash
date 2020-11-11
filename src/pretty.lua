@@ -14,10 +14,12 @@ local cycles = require(Dash.cycles)
 local includes = require(Dash.includes)
 local join = require(Dash.join)
 local map = require(Dash.map)
+local keys = require(Dash.keys)
 local slice = require(Dash.slice)
 
 local concat = table.concat
 local insert = table.insert
+local sort = table.sort
 
 export type PrettyOptions = {
 	-- The maximum depth of ancestors of a table to display (default = 2)
@@ -122,7 +124,11 @@ local function prettyLines(object: any, options: any): Types.Array<string>
 		if #object > 0 and valueOptions.arrayLength then
 			lines[1] = ("#%d %s"):format(#object, lines[1])
 		end
-		for key, value in pairs(object) do
+		-- Ensure keys are printed in order to guarantee consistency
+		local objectKeys = keys(object)
+		sort(objectKeys)
+		for _, key in ipairs(object) do
+			local value = object[key]
 			-- We printed a key if it's an index e.g. an integer in the range 1..n.
 			if typeof(key) == "number" and key % 1 == 0 and key >= 1 and key <= maxConsecutiveIndex then
 				continue

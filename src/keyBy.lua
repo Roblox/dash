@@ -15,7 +15,7 @@ local insert = table.insert
 
 -- TODO Luau: Support generic functions
 local function keyBy(input: Types.Table, getKey: any): Types.Table
-	assertEqual(typeof(object), "table", [[Attempted to call Dash.keyBy with argument #1 of type {left:?} not {right:?}]])
+	assertEqual(typeof(input), "table", [[Attempted to call Dash.keyBy with argument #1 of type {left:?} not {right:?}]])
 	assertEqual(getKey == nil, false, [[Attempted to call Dash.keyBy with a nil getKey argument]])
 
 	return collect(input, function(key, child)

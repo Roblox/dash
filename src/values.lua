@@ -11,6 +11,7 @@ local insert = table.insert
 
 -- TODO Luau: Support generic functions
 local function values(input: Types.Table): Types.Table
+	assertEqual(typeof(input), "table", [[Attempted to call Dash.values with argument #1 of type {left:?} not {right:?}]])
 	local result = {}
 	for _, value in pairs(input) do
 		insert(result, value)

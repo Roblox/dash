@@ -3,8 +3,8 @@ return function()
 	local map = Dash.map
 
 	describe("map", function()
-		it("should map elements from a map into a new array", function()
-			local input = {a = 10, b = 20, c = 30, d = 50}
+		it("should map elements into a new array", function()
+			local input = {10, 20, 30, 50}
 			local output = map(input, function(value, key)
 				return key .. "=" .. value
 			end)

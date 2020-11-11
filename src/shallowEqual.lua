@@ -1,4 +1,8 @@
-local function shallowEqual(left, right)
+--[[
+	Returns `true` if the _left_ and _right_ values are equal (by the equality operator) or the
+	inputs are tables, and all their keys are equal.
+]]
+local function shallowEqual(left: any, right: any)
 	if left == right then
 		return true
 	end

@@ -6,6 +6,7 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
+local assertEqual = require(Dash.assertEqual)
 
 -- TODO Luau: Support generic functions
 local function collectSet(input: Types.Table, handler: Types.AnyFunction?)

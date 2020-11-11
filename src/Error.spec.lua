@@ -35,8 +35,8 @@ return function()
 				MyError:throw()
 			end
 			local ok, problem = pcall(throwError)
-			assertSnapshot(ok)
-			assertSnapshot(problem.stack)
+			assertSnapshot(ok, [[false]])
+			assertSnapshot(typeof(problem.stack), [["string"]])
 		end)
 
 	end)

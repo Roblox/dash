@@ -2,6 +2,8 @@ return function()
 	local Dash = require(script.Parent)
 	local keys = Dash.keys
 
+	local sort = table.sort
+
 	describe("keys", function()
 		it("should return an empty table for an empty map", function()
 			local output = keys({})
@@ -23,7 +25,7 @@ return function()
 		it("ensures an input of the correct type", function()
 			assertThrows(function()
 				keys(355)
-			end, [[AssertError: Attempted to call Dash.keyBy with argument #1 of type "number" not "table"]])
+			end, [[AssertError: Attempted to call Dash.keys with argument #1 of type "number" not "table"]])
 		end)
 	end)
 end

@@ -11,7 +11,7 @@ return function()
 
 		it("ensures an input of the correct type", function()
 			assertThrows(function()
-				findIndex()
+				flat()
 			end, [[AssertError: Attempted to call Dash.flat with argument #1 of type "nil" not "table"]])
 		end)
 	end)

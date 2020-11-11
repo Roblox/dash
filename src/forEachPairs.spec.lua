@@ -8,7 +8,7 @@ return function()
 		it("should iterate through elements of an array", function()
 			local output = {}
 			forEachPairs({a = 1, b = 2, c = 3}, function(value, key)
-				insert(output, key + value)
+				insert(output, key .. "=" .. value)
 			end)
 			assertSnapshot(output)
 		end)
