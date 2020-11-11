@@ -127,7 +127,7 @@ local function prettyLines(object: any, options: any): Types.Array<string>
 		-- Ensure keys are printed in order to guarantee consistency
 		local objectKeys = keys(object)
 		sort(objectKeys)
-		for _, key in ipairs(object) do
+		for _, key in ipairs(objectKeys) do
 			local value = object[key]
 			-- We printed a key if it's an index e.g. an integer in the range 1..n.
 			if typeof(key) == "number" and key % 1 == 0 and key >= 1 and key <= maxConsecutiveIndex then
