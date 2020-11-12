@@ -14,6 +14,7 @@ local forEachArgs = require(Dash.forEachArgs)
 local forEach = require(Dash.forEach)
 local insert = table.insert
 
+-- TODO Luau: Add varags typings
 local function append(target: Types.Array<any>, ...): Types.Array<any>
 	assertEqual(typeof(target), "table", [[Attempted to call Dash.append with argument #1 of type {left:?} not {right:?}]])
 	forEachArgs(function(list: Types.Table?)
