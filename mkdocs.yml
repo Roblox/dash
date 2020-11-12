@@ -9,6 +9,5 @@ repo_url: https://github.rbx.com/hcollins/Dash
 nav:
   - Home: index.md
   - API Reference: api.md
-  - Design Goals: goals.md
   - Types: types.md
   - Tags: tags.md

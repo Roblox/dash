@@ -105,7 +105,7 @@ print(tostring(CHEESE)) --> "Symbol.new(CHEESE)"
 append<T>(target: Types.Array<T>, ...: Types.Array<T>): Types.Array<T>
 ```
 
-Adds new elements to the _target_ [Array](../types/#arrays) from subsequent [Array](../types/#arrays) arguments in left-to-right order.
+Adds new elements to the _target_ [Array](../types/#array) from subsequent [Array](../types/#array) arguments in left-to-right order.
 
 Arguments which are `nil` or None are skipped.
 
@@ -132,7 +132,7 @@ The `left` and `right` values are available to be referenced in the formatted me
 assign(target: Table, ...: Args<Table>): Table
 ```
 
-Adds new values to _target_ from subsequent [Table](../types/#table) arguments in left-to-right order.
+Adds new values to _target_ from subsequent [Table](../types/#tables) arguments in left-to-right order.
 
 **Examples**
 
@@ -241,7 +241,7 @@ car.speed --> 10
 collect(input: Types.Table, handler: CollectHandler): Types.Map<any, any>
 ```
 
-Collect returns a new Table derived from _input_ by iterating through its pairs and calling
+Collect returns a new [Table](../types#table) derived from _input_ by iterating through its pairs and calling
 the handler on each `(key, child)` tuple.
 
 The handler should return a new `(newKey, value)` tuple to be inserted into the returned Table,
@@ -257,7 +257,7 @@ or `nil` if no value should be added.
 collectArray(input: Types.Table, handler: Types.AnyFunction)
 ```
 
-Collect returns a new Array derived from _input_ by iterating through its pairs and calling
+Collect returns a new [Array](../types/#array) derived from _input_ by iterating through its pairs and calling
 the handler on each `(key, child)` tuple.
 
 The handler should return a new value to be pushed onto the end of the result array, or `nil`
@@ -371,9 +371,9 @@ endsWith("Bad Roblox Memes", "Games") --> false
 filter(input: Types.Table, handler: FilterHandler): Types.Array<any>
 ```
 
-Filter the _input_ Table by calling the handler on each `(child, index)` tuple.
+Filter the _input_ [Table](../types#table) by calling the handler on each `(child, index)` tuple.
 
-For an Array input, the order of elements is prevered in the output.
+For an [Array](../types/#array) input, the order of elements is prevered in the output.
 
 The handler should return truthy to preserve the value in the resulting Table.
 
@@ -387,7 +387,7 @@ The handler should return truthy to preserve the value in the resulting Table.
 find(input: Types.Table, handler: FindHandler)
 ```
 
-Returns an element in the _input_ Table that the handler returns `true` for, when passed the
+Returns an element in the _input_ [Table](../types#table) that the handler returns `true` for, when passed the
 `(child, key)` entry.
 
 Returns nil if no entires satisfy the condition.
@@ -397,7 +397,7 @@ For a Map, an arbitrary matching element is returned if it exists.
 
 **See**
 
-- [Dash.first](#first) for a function which returns the first element of an Array matching a condition.
+- [Dash.first](#first) for a function which returns the first element of an [Array](../types/#array) matching a condition.
 
 ## findIndex
 
@@ -409,7 +409,7 @@ For a Map, an arbitrary matching element is returned if it exists.
 findIndex(input: Types.Array<any>, handler: FindHandler)
 ```
 
-Returns the index of the first element in the _input_ Array that the handler returns `true` for,
+Returns the index of the first element in the _input_ [Array](../types/#array) that the handler returns `true` for,
 when passed the `(child, key)` entry.
 
 Returns nil if no entires satisfy the condition.
@@ -425,7 +425,7 @@ flat(input: Types.Array<Types.Array<any>>): Types.Array<any>
 ```
 
 Flattens the input array by a single level.
-Outputs a new Array of elements merged from the _input_ Array arguments in left-to-right order.
+Outputs a new [Array](../types/#array) of elements merged from the _input_ [Array](../types/#array) arguments in left-to-right order.
 
 ## forEach
 
@@ -578,9 +578,9 @@ print(drink.syrup) --> nil
 getOrSet(input: Types.Table, key: any, getValue: GetValueHandler)
 ```
 
-Returns a value of the _input_ Table at the _key_ provided.
+Returns a value of the _input_ [Table](../types#table) at the _key_ provided.
 If the key is missing, the value is acquired from the _getValue_ handler,
-added to the _input_ Table and returned.
+added to the _input_ [Table](../types#table) and returned.
 
 ## groupBy
 
@@ -592,9 +592,9 @@ added to the _input_ Table and returned.
 groupBy(input: Dash.Table, getKey: any)
 ```
 
-Groups values in the _input_ Table by their _getKey_ value.
+Groups values in the _input_ [Table](../types#table) by their _getKey_ value.
 
-Each value of the result Table is an Array of values from the _input_ Table which were assigned
+Each value of the result [Table](../types#table) is an [Array](../types/#array) of values from the _input_ [Table](../types#table) which were assigned
 the corresponding key.
 
 If _getKey_ is a function, it is called with each `(child, key)` entry and uses the return
@@ -669,7 +669,7 @@ Can be used to make it clear that a handler returns its inputs.
 includes(source: Table, value: any): boolean
 ```
 
-Returns _true_ if the _item_ exists as a value in the _source_ [Table](../types/#table).
+Returns _true_ if the _item_ exists as a value in the _source_ [Table](../types/#tables).
 
 ## isCallable
 
@@ -814,7 +814,7 @@ Output: {
 keyBy(input: Types.Table, getKey: any): Types.Table
 ```
 
-Assigns values in the _input_ Table by their _getKey_ value.
+Assigns values in the _input_ [Table](../types#table) by their _getKey_ value.
 
 If _getKey_ is a function, it is called with each `(child, key)` entry and uses the return
 value as the corresponding key to assign to in the result Table. Otherwise, the _getKey_ value
@@ -867,7 +867,7 @@ Output: {
 keys(input: Types.Table): Types.Array<any>
 ```
 
-Returns an Array of the keys in the _input_ Table.
+Returns an [Array](../types/#array) of the keys in the _input_ Table.
 
 If the input is an Array, ordering is preserved.
 
@@ -883,7 +883,7 @@ If the input is a Map, elements are keys in an arbitrary order.
 last(input: Types.Table): Types.Array<any>
 ```
 
-Returns the last element in the _input_ Array that the handler returns `true` for, when
+Returns the last element in the _input_ [Array](../types/#array) that the handler returns `true` for, when
 passed the `(child, index)` entry.
 
 Returns nil if no entires satisfy the condition.
@@ -932,11 +932,11 @@ map(input: Types.Array<any>, handler: MapHandler): Types.Array<any>
 
 Iterates through the elements of the _input_ Table.
 
-For an Array input, the elements are visted in order 1..n.
+For an [Array](../types/#array) input, the elements are visted in order 1..n.
 
-For a Map input, the elements are visited in an arbitrary order.
+For a [Map](../types/#map) input, the elements are visited in an arbitrary order.
 
-Calls the _handler_ for each entry and constructs a new Table using the same keys but replacing
+Calls the _handler_ for each entry and constructs a new [Table](../types#table) using the same keys but replacing
 the values with new ones returned from the handler.
 
 Values returned by _handler_ must be defined.
@@ -944,7 +944,6 @@ Values returned by _handler_ must be defined.
 **See**
 
 - [Dash.collectArray](#collectArray) if you want to return nil values.
-- [Dash.mapPairs](#mapPairs) if you want to iterate through a Map.
 
 ## mapFirst
 
@@ -956,7 +955,7 @@ Values returned by _handler_ must be defined.
 mapFirst(input: Types.Array<any>, handler: MapHandler)
 ```
 
-Iterates through the elements of the _input_ Array in order 1..n.
+Iterates through the elements of the _input_ [Array](../types/#array) in order 1..n.
 
 Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
 
@@ -970,7 +969,7 @@ Calls the _handler_ for each entry and returns the first non-nil value returned 
 mapLast(input: Types.Array<any>, handler: MapHandler)
 ```
 
-Iterates through the elements of the _input_ Array in reverse in order n..1.
+Iterates through the elements of the _input_ [Array](../types/#array) in reverse in order n..1.
 
 Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
 
@@ -984,28 +983,11 @@ Calls the _handler_ for each entry and returns the first non-nil value returned 
 mapOne(input: Types.Array<any>, handler: MapHandler?)
 ```
 
-Iterates through the elements of the _input_ Table in no particular order.
+Iterates through the elements of the _input_ [Table](../types#table) in no particular order.
 
 Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
 
 If _handler_ is `nil`, the first value visited is returned.
-
-## mapPairs
-
-<span class="tags">
-	[Maps](../tags/#maps)
-</span>
-
-```lua
-mapPairs(input: Types.Array<any>, handler: MapHandler): Types.Array<any>
-```
-
-Iterates through the elements of the _input_ Table in no particular order.
-
-Returns a new Table where the input keys are mapped to the values returned from calling the
-_handler_ on each `(child, key)` pair.
-
-Values returned by _handler_ must be defined.
 
 ## noop
 
@@ -1031,7 +1013,7 @@ Can be used to make it clear that a handler has no function.
 omit(input: Types.Table, keys: Types.Array<any>): Types.Table
 ```
 
-Return a new Table made from entries in the _input_ Table whose key is not in the _keys_ Array.
+Return a new [Table](../types#table) made from entries in the _input_ [Table](../types#table) whose key is not in the _keys_ Array.
 
 If the input is an Array, ordering is preserved.
 
@@ -1079,7 +1061,7 @@ Optionally use an indented multiline string, limit the depth of tables, omit or 
 reduce(input: Types.Array<any>, handler: ReduceHandler, initial: any)
 ```
 
-Iterate through the elements of the _input_ Array in order 1..n.
+Iterate through the elements of the _input_ [Array](../types/#array) in order 1..n.
 
 Call the _handler_ for each element, passing the return of the previous call as the first argument.
 
@@ -1148,7 +1130,7 @@ inputs are tables, and all their keys are equal.
 slice(input: Types.Array<any>, left: number?, right: number?)
 ```
 
-Return a portion of the _input_ Array starting with the element at the _left_ index and ending
+Return a portion of the _input_ [Array](../types/#array) starting with the element at the _left_ index and ending
 with the element at the _right_ index (i.e. an inclusive range)
 
 If _left_ is not defined, it defaults to 1.
@@ -1169,7 +1151,7 @@ An empty array is returned if the slice has no or negative length.
 some(input: Types.Map<any, any>, handler: SomeHandler?): boolean
 ```
 
-Iterates through the elements of the _input_ Table in no particular order.
+Iterates through the elements of the _input_ [Table](../types#table) in no particular order.
 
 Calls the _handler_ for each entry and returns `true` if the handler returns truthy for any
 element which it is called with.
@@ -1184,8 +1166,8 @@ element which it is called with.
 splitOn(input: string, pattern: string): Types.Array<string>
 ```
 
-Splits _input_ into parts based on a _pattern_ delimiter and returns a Table of the parts,
-followed by a Table of the matched delimiters.
+Splits _input_ into parts based on a _pattern_ delimiter and returns a [Table](../types#table) of the parts,
+followed by a [Table](../types#table) of the matched delimiters.
 
 ## startsWith
 
@@ -1231,7 +1213,7 @@ Remove any whitespace at the start and end of the _input_ string.
 values(input: Types.Map<any, any>): Types.Array<any>
 ```
 
-Returns an Array of the values in the _input_ Table.
+Returns an [Array](../types/#array) of the values in the _input_ Table.
 
 If the input is an Array, ordering is preserved.
 
