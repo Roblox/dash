@@ -32,14 +32,6 @@ type Set<Key> = {[Key]: boolean}
 
 A table with keys of a fixed type _Key_ and a boolean value representing membership of the set (default is false)
 
-### Dictionary
-
-```lua
-type Dictionary<Value> = {[string]: Value}
-```
-
-A table with string keys
-
 ### Table
 
 ```lua
