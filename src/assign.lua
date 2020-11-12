@@ -44,8 +44,8 @@ local Dash = script.Parent
 local None = require(Dash.None)
 local Types = require(Dash.Types)
 local assertEqual = require(Dash.assertEqual)
+local forEach = require(Dash.forEach)
 local forEachArgs = require(Dash.forEachArgs)
-local forEachPairs = require(Dash.forEachPairs)
 
 
 -- TODO Luau: Support typing varargs
@@ -59,7 +59,7 @@ local function assign(target: Types.Table, ...): Types.Table
 			return
 		end
 		-- Iterate through each key of the input and assign to target at the same key
-		forEachPairs(input, function(value, key)
+		forEach(input, function(value, key)
 			if value == None then
 				target[key] = nil
 			else
