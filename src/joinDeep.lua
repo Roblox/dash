@@ -14,7 +14,7 @@ local Dash = script.Parent
 local None = require(Dash.None)
 local Types = require(Dash.Types)
 local assertEqual = require(Dash.assertEqual)
-local forEachPairs = require(Dash.forEachPairs)
+local forEach = require(Dash.forEach)
 local copy = require(Dash.copy)
 
 -- TODO Luau: Support typing varargs
@@ -24,7 +24,7 @@ local function joinDeep(source: Types.Table, delta: Types.Table): Types.Table
 	assertEqual(typeof(delta), "table", [[Attempted to call Dash.joinDeep with argument #2 of type {left:?} not {right:?}]])
 	local result = copy(source)
 	-- Iterate through each key of the input and assign to target at the same key
-	forEachPairs(delta, function(value, key)
+	forEach(delta, function(value, key)
 		if typeof(source[key]) == "table" and typeof(value) == "table" then
 			-- Only merge tables
 			result[key] = joinDeep(source[key], value)

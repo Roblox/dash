@@ -364,48 +364,36 @@ endsWith("Bad Roblox Memes", "Games") --> false
 ## filter
 
 <span class="tags">
-	[Arrays](../tags/#arrays)
+	[Tables](../tags/#tables)
 </span>
 
 ```lua
-filter(input: Types.Array<any>, handler: FilterHandler)
+filter(input: Types.Table, handler: FilterHandler): Types.Array<any>
 ```
 
-Filter an Array of values by calling the handler on each `(child, index)` tuple, preserving
-array indicies.
+Filter the _input_ Table by calling the handler on each `(child, index)` tuple.
 
-The handler should return truthy to preserve the value in the resulting array.
+For an Array input, the order of elements is prevered in the output.
 
-## filterPairs
-
-<span class="tags">
-	[Maps](../tags/#maps)
-</span>
-
-```lua
-filterPairs(input: Types.Table, handler: FilterHandler)
-```
-
-Filter a Map by calling the handler on each `(child, key)` pair, preseving keys.
-
-The handler should return `true` to preserve the value in the resulting table.
+The handler should return truthy to preserve the value in the resulting Table.
 
 ## find
 
 <span class="tags">
-	[Maps](../tags/#maps)
+	[Tables](../tags/#tables)
 </span>
 
 ```lua
-find(input: Types.Map<any, any>, handler: FindHandler)
+find(input: Types.Table, handler: FindHandler)
 ```
 
-Returns an element in the _input_ Map that the handler returns `true` for, when passed the
+Returns an element in the _input_ Table that the handler returns `true` for, when passed the
 `(child, key)` entry.
 
 Returns nil if no entires satisfy the condition.
 
-If there are multiple entries matching the condition, one is returned arbitrarily.
+For an Array, this first matching element is returned.
+For a Map, an arbitrary matching element is returned if it exists.
 
 **See**
 
@@ -425,27 +413,6 @@ Returns the index of the first element in the _input_ Array that the handler ret
 when passed the `(child, key)` entry.
 
 Returns nil if no entires satisfy the condition.
-
-## first
-
-<span class="tags">
-	[Arrays](../tags/#arrays)
-</span>
-
-```lua
-first(input: Types.Array<any>, handler: FindHandler?)
-```
-
-Returns the first element in the _input_ Array that the handler returns `true` for, when
-passed the `(child, index)` entry.
-
-Returns nil if no entires satisfy the condition.
-
-If handler is not defined, the function simply returns the first element of the Array.
-
-**See**
-
-- [Dash.find](#find) for a function which returns an element of a Map matching a condition.
 
 ## flat
 
@@ -467,12 +434,16 @@ Outputs a new Array of elements merged from the _input_ Array arguments in left-
 </span>
 
 ```lua
-forEach(input: Array<Value>, handler: Handler<Value>): ()
+forEach(input: Types.Table, handler: Handler<Value>): ()
 ```
 
-Iterates through the elements of the [Array](../types/#arrays) _input_ in order 1..n.
+Iterates through the elements of the _input_ Table.
 
-Calls the [Handler](../types/#handler) _handler_ for each entry.
+If the table is an Array, it iterates in order 1..n.
+
+If the table is a Map, the keys are visited in an arbitrary order.
+
+Calls the _handler_ for each entry.
 
 ## forEachArgs
 
@@ -487,20 +458,6 @@ forEachArgs(handler: Handler<Value>, ...: Args<Value>): ()
 Iterates through the tail arguments in order, including nil values up to the argument list length.
 
 Calls the [Handler](../types/#handler) _handler_ for each entry.
-
-## forEachPairs
-
-<span class="tags">
-	[Maps](../tags/#maps)
-</span>
-
-```lua
-forEachPairs(input: Map<Key, Value>, handler: PairHandler<Key, Value>): ()
-```
-
-Iterates through the elements of the [Map](../types/#map) _input_ in no guaranteed order.
-
-Calls the [PairHandler](../types/#handler) _handler_ for each entry.
 
 ## format
 
@@ -912,7 +869,9 @@ keys(input: Types.Table): Types.Array<any>
 
 Returns an Array of the keys in the _input_ Table.
 
-Ordering is not guaranteed.
+If the input is an Array, ordering is preserved.
+
+If the input is a Map, elements are keys in an arbitrary order.
 
 ## last
 
@@ -964,15 +923,21 @@ leftPad("toast", 10, ":)") --> ":):):toast"
 ## map
 
 <span class="tags">
-	[Arrays](../tags/#arrays)
+	[Tables](../tags/#tables)
 </span>
 
 ```lua
 map(input: Types.Array<any>, handler: MapHandler): Types.Array<any>
 ```
 
-Iterates through the elements of the _input_ Array in order 1..n.
-Calls the _handler_ for each entry and constructs a new ordered Array from the returned values.
+Iterates through the elements of the _input_ Table.
+
+For an Array input, the elements are visted in order 1..n.
+
+For a Map input, the elements are visited in an arbitrary order.
+
+Calls the _handler_ for each entry and constructs a new Table using the same keys but replacing
+the values with new ones returned from the handler.
 
 Values returned by _handler_ must be defined.
 
@@ -1059,16 +1024,18 @@ Can be used to make it clear that a handler has no function.
 ## omit
 
 <span class="tags">
-	[Maps](../tags/#maps)
+	[Tables](../tags/#tables)
 </span>
 
 ```lua
-omit(input: Types.Map<any, any>, keys: Types.Array<any>): Types.Map<any, any>
+omit(input: Types.Table, keys: Types.Array<any>): Types.Table
 ```
 
 Return a new Table made from entries in the _input_ Table whose key is not in the _keys_ Array.
 
-Ordering is not guaranteed.
+If the input is an Array, ordering is preserved.
+
+If the input is a Map, elements are returned in an arbitrary order.
 
 ## pretty
 
@@ -1266,4 +1233,6 @@ values(input: Types.Map<any, any>): Types.Array<any>
 
 Returns an Array of the values in the _input_ Table.
 
-Ordering is not guaranteed.
+If the input is an Array, ordering is preserved.
+
+If the input is a Map, values are returned in an arbitrary order.
