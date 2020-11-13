@@ -1,7 +1,7 @@
 [package]
-name = "Dash"
+name = "roblox/Dash"
 author = "hcollins"
 license = ""
-version = "0.1.0"
+version = "0.1.1"
 proxy = "https://github.com/roblox/rotriever-proxy-index"
 content_root = "src"
