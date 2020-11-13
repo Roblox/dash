@@ -1,7 +1,8 @@
 return function()
 	local Dash = require(script.Parent)
 	local filter = Dash.filter
-	local sort = Dash.sort
+	
+	local sort = table.sort
 
 	describe("filter", function()
 		it("should filter elements in an array", function()
