@@ -1,3 +1,15 @@
 ## v0.1.0
 
-Initial release of Dash
+- Initial release of Dash
+
+## v0.1.1
+
+- Attempt to fix rotriever package definition
+
+## v0.1.2
+
+- Attempt to fix rotriever package definition
+
+## v0.1.3
+
+- Add iterate and iterable to allow utilities to accept both maps and arrays
