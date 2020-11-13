@@ -13,3 +13,8 @@
 ## v0.1.3
 
 - Add iterate and iterable to allow utilities to accept both maps and arrays
+
+## v0.1.4
+
+- collect utilities use iterator
+- added Dash.pick
