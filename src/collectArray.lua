@@ -8,6 +8,7 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local assertEqual = require(Dash.assertEqual)
+local iterator = require(Dash.iterator)
 
 local insert = table.insert
 
@@ -16,7 +17,7 @@ local function collectArray(input: Types.Table, handler: Types.AnyFunction)
 	assertEqual(typeof(input), "table", [[Attempted to call Dash.collectArray with argument #1 of type {left:?} not {right:?}]])
 	assertEqual(typeof(handler), "function", [[Attempted to call Dash.collectArray with argument #2 of type {left:?} not {right:?}]])
 	local result = {}
-	for key, child in pairs(input) do
+	for key, child in iterator(input) do
 		local outputValue = handler(key, child)
 		if outputValue ~= nil then
 			insert(result, outputValue)
