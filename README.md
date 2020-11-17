@@ -10,5 +10,5 @@ Dash can be installed using rotriever. For example:
 
 ```toml
 [dependencies]
-Dash = { git = "https://github.rbx.com/hcollins/Dash", rev = "v0.1.0" }
+Dash = "github.com/roblox/dash"
 ```
