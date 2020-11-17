@@ -2,6 +2,6 @@
 name = "roblox/dash"
 author = "hcollins"
 license = ""
-version = "0.1.4"
+version = "0.1.5"
 proxy = "https://github.com/roblox/rotriever-proxy-index"
 content_root = "src"
