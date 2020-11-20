@@ -29,11 +29,10 @@ local Error = class("Error", function(name: string, message: string, tags: Types
 		message = message or "An error occurred",
 		tags = tags or {}
 	}
-
 end)
 
 function Error:toString(): string
-	return format("{}: {}", self.name, format(self.message, self.tags))
+	return format("{}: {}\n{}", self.name, format(self.message, self.tags), self.stack)
 end
 
 --[[

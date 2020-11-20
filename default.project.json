@@ -1,6 +1,6 @@
 {
-  "name": "TestHarness",
-  "tree": {
-    "$path": "src"
-  }
+	"name": "TestHarness",
+	"tree": {
+		"$path": "src"
+	}
 }

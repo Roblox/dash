@@ -27,17 +27,6 @@ return function()
 		end)
 
 		it("should skip nil arguments", function()
-			assertSnapshot(append({1, 2}, {3}, {4, 5, 6}), [[{
-	1,
-	2,
-	3,
-	4,
-	5,
-	6
-}]])
-		end)
-
-		it("should skip None arguments", function()
 			assertSnapshot(append({1, 2}, nil, nil, {4, 5, 6}), [[{
 	1,
 	2,
@@ -45,6 +34,22 @@ return function()
 	5,
 	6
 }]])
+		end)
+
+		it("should skip None arguments", function()
+			assertSnapshot(append({1, 2}, None, None, {4, 5, 6}), [[{
+	1,
+	2,
+	4,
+	5,
+	6
+}]])
+		end)
+
+		it("should share a reference between input and output", function()
+			local input = {1, 2}
+			local output = append(input, {1, 2, 3}, {4, 5, 6})
+			assertSnapshot(input == output, [[true]])
 		end)
 
 		it("should throw with a missing target", function()
