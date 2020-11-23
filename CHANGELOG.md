@@ -22,3 +22,7 @@
 ## v0.1.5
 
 - Move to Roblox repository
+
+## v0.1.6
+
+- Move tests to separate folder so they are not included in runtime build
