@@ -1,0 +1,7 @@
+[package]
+name = "roblox/dash"
+author = "hcollins"
+license = ""
+version = "0.1.7"
+proxy = "https://github.com/roblox/rotriever-proxy-index"
+content_root = "src"

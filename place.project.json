@@ -1,0 +1,12 @@
+{
+	"name": "Dash Test Place",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"Dash": {
+				"$path": "src"
+			}
+		}
+	}
+}
