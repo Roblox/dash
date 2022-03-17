@@ -12,7 +12,9 @@ export type AnyFunction = Types.AnyFunction
 
 -- Require and add the Dash functions to the Dash table
 for _, fn in pairs(script:GetChildren()) do
-	Dash[fn.Name] = require(fn)
+	if fn.ClassName == 'ModuleScript' then
+		Dash[fn.Name] = require(fn)
+	end
 end
 
 return Dash.freeze("Dash", Dash, true)
