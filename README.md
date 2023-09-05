@@ -2,7 +2,7 @@
 
 A collection of core utilities expanding the capabilities of Lua in Roblox.
 
-[Read the docs](https://github.rbx.com/pages/hcollins/Dash)
+[Read the docs](https://github.com/Roblox/Dash)
 
 ## Install
 

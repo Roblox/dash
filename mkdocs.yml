@@ -4,7 +4,7 @@ theme:
   name: material
   palette:
     primary: blue
-repo_url: https://github.rbx.com/hcollins/Dash
+repo_url: https://github.com/Roblox/Dash
 
 nav:
   - Home: index.md
