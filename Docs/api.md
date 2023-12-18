@@ -65,23 +65,11 @@ A class has a constructor returning an instance of _Object_ type
 
 <hr>
 
-### Handler
-
+### AnyFunction
 ```lua
-type Handler<Value> = (Value, number) -> ()
+type AnyFunction = () -> any
 ```
-
-A callback function for an `ipairs` iteration which is called with a value and index.
-
-<hr>
-
-### PairsHandler
-
-```lua
-type PairsHandler<Key, Value> = (Value, Key) -> ()
-```
-
-A callback function for a `pairs` iteration which is called with a value and key.
+Represents a function which takes any arguments and returns any value
 
 <hr>
 
@@ -98,11 +86,13 @@ These utilities operate on [Tables](#table) of any kind.
 </span>
 
 ```lua
+type CollectHandler = (Key, Value) -> (any, any)?
+
 collect(input: Types.Table, handler: CollectHandler): Types.Map<any, any>
 ```
 
 Collect returns a new [Table](#table) derived from _input_ by iterating through its pairs and calling
-the handler on each `(key, child)` tuple.
+the handler on each `(key, value)` tuple.
 
 The handler should return a new `(newKey, value)` tuple to be inserted into the returned Table,
 or `nil` if no value should be added.
@@ -116,11 +106,13 @@ or `nil` if no value should be added.
 </span>
 
 ```lua
-collectArray(input: Types.Table, handler: Types.AnyFunction)
+type CollectHandler = (Key, Value) -> any?
+
+collectArray(input: Types.Table, handler: Types.AnyFunction): Types.Array<any>
 ```
 
 Collect returns a new [Array](#array) derived from _input_ by iterating through its pairs and calling
-the handler on each `(key, child)` tuple.
+the handler on each `(key, value)` tuple.
 
 The handler should return a new value to be pushed onto the end of the result array, or `nil`
 if no value should be added.
@@ -134,7 +126,9 @@ if no value should be added.
 </span>
 
 ```lua
-collectSet(input: Types.Table, handler: Types.AnyFunction?)
+type CollectHandler = (Key, Value) -> any?
+
+collectSet(input: Types.Table, handler: Types.AnyFunction?): Types.Set<any>
 ```
 
 Build a set from the entries of the _input_ Table, calling _handler_ on each entry and using
@@ -165,10 +159,12 @@ Returns a shallow copy of the _input_ Table.
 </span>
 
 ```lua
+type FilterHandler = (Value, Key) -> boolean
+
 filter(input: Types.Table, handler: FilterHandler): Types.Array<any>
 ```
 
-Filter the _input_ [Table](#table) by calling the handler on each `(child, index)` tuple.
+Filter the _input_ [Table](#table) by calling the handler on each `(value, key)` tuple.
 
 For an [Array](#array) input, the order of elements is prevered in the output.
 
@@ -183,11 +179,13 @@ The handler should return truthy to preserve the value in the resulting Table.
 </span>
 
 ```lua
-find(input: Types.Table, handler: FindHandler)
+type FindHandler = (Value, Key) -> boolean
+
+find(input: Types.Table, handler: FindHandler) -> value?
 ```
 
 Returns an element in the _input_ [Table](#table) that the handler returns `true` for, when passed the
-`(child, key)` entry.
+`(value, key)` entry.
 
 Returns nil if no entires satisfy the condition.
 
@@ -207,7 +205,9 @@ For a Map, an arbitrary matching element is returned if it exists.
 </span>
 
 ```lua
-forEach(input: Types.Table, handler: Handler<Value>): ()
+type ForEachHandler = (Value, Key) -> ()
+
+forEach(input: Types.Table, handler: ForEachHandler): ()
 ```
 
 Iterates through the elements of the _input_ Table.
@@ -227,7 +227,7 @@ Calls the _handler_ for each entry.
 </span>
 
 ```lua
-groupBy(input: Dash.Table, getKey: any)
+groupBy(input: Types.Table, getKey: any): Types.Table
 ```
 
 Groups values in the _input_ [Table](#table) by their _getKey_ value.
@@ -235,7 +235,7 @@ Groups values in the _input_ [Table](#table) by their _getKey_ value.
 Each value of the result [Table](#table) is an [Array](#array) of values from the _input_ [Table](#table) which were assigned
 the corresponding key.
 
-If _getKey_ is a function, it is called with each `(child, key)` entry and uses the return
+If _getKey_ is a function, it is called with each `(value, key)` entry and uses the return
 value as the corresponding key to insert at in the result Table. Otherwise, the _getKey_ value
 is used directly as the key itself.
 
@@ -311,7 +311,7 @@ keyBy(input: Types.Table, getKey: any): Types.Table
 
 Assigns values in the _input_ [Table](#table) by their _getKey_ value.
 
-If _getKey_ is a function, it is called with each `(child, key)` entry and uses the return
+If _getKey_ is a function, it is called with each `(value, key)` entry and uses the return
 value as the corresponding key to assign to in the result Table. Otherwise, the _getKey_ value
 is used directly as the key itself.
 
@@ -379,6 +379,8 @@ If the input is a Map, elements are keys in an arbitrary order.
 </span>
 
 ```lua
+type MapHandler = (Value, Key) -> any
+
 map(input: Types.Table, handler: MapHandler): Types.Table
 ```
 
@@ -406,6 +408,8 @@ Values returned by _handler_ must be defined.
 </span>
 
 ```lua
+type MapHandler = (Value, Key) -> any?
+
 mapOne(input: Types.Table, handler: MapHandler?)
 ```
 
@@ -442,7 +446,7 @@ If the input is a Map, elements are returned in an arbitrary order.
 </span>
 
 ```lua
-shallowEqual(left: any, right: any)
+shallowEqual(left: any, right: any): boolean
 ```
 
 Returns `true` if the _left_ and _right_ values are equal (by the equality operator) or the
@@ -479,11 +483,13 @@ Arguments which are `nil` or None are skipped.
 </span>
 
 ```lua
-findIndex(input: Types.Array<any>, handler: FindHandler)
+type FindHandler = (Value, Key) -> boolean
+
+findIndex(input: Types.Array<any>, handler: FindHandler): value?
 ```
 
 Returns the index of the first element in the _input_ [Array](#array) that the handler returns `true` for,
-when passed the `(child, key)` entry.
+when passed the `(value, key)` entry.
 
 Returns nil if no entires satisfy the condition.
 
@@ -511,11 +517,13 @@ Outputs a new [Array](#array) of elements merged from the _input_ [Array](#array
 </span>
 
 ```lua
-last(input: Types.Table): Types.Array<any>
+type FindHandler = (Value, Key) -> boolean
+
+last(input: Types.Table, handler: FindHandler?): Value?
 ```
 
 Returns the last element in the _input_ [Array](#array) that the handler returns `true` for, when
-passed the `(child, index)` entry.
+passed the `(value, key)` entry.
 
 Returns nil if no entires satisfy the condition.
 
@@ -530,6 +538,8 @@ If handler is not defined, the function simply returns the last element of the A
 </span>
 
 ```lua
+type MapHandler = (Value, Key) -> any?
+
 mapFirst(input: Types.Array<any>, handler: MapHandler)
 ```
 
@@ -546,6 +556,8 @@ Calls the _handler_ for each entry and returns the first non-nil value returned 
 </span>
 
 ```lua
+type MapHandler = (Value, Key) -> any?
+
 mapLast(input: Types.Array<any>, handler: MapHandler)
 ```
 
@@ -562,7 +574,11 @@ Calls the _handler_ for each entry and returns the first non-nil value returned 
 </span>
 
 ```lua
-reduce(input: Types.Array<any>, handler: ReduceHandler, initial: any)
+type Accumulator = any
+
+type ReduceHandler = (Accumulator, Value, Key) -> any
+
+reduce(input: Types.Array<any>, handler: ReduceHandler, initial: Accumulator)
 ```
 
 Iterate through the elements of the _input_ [Array](#array) in order 1..n.
@@ -594,7 +610,7 @@ Reverse the order of the elements in the _input_ Array.
 </span>
 
 ```lua
-slice(input: Types.Array<any>, left: number?, right: number?)
+slice(input: Types.Array<any>, left: number?, right: number?): Types.Array<any>
 ```
 
 Return a portion of the _input_ [Array](#array) starting with the element at the _left_ index and ending
@@ -623,7 +639,7 @@ These utilities operate on [Maps](#map), tables with arbitrary keys.
 </span>
 
 ```lua
-assign(target: Table, ...: Args<Table>): Table
+assign(target: Types.Table, ...: Args<Table>): Types.Table
 ```
 
 Adds new values to _target_ from subsequent [Table](#table) arguments in left-to-right order.
@@ -682,7 +698,7 @@ print(result) --[[
 </span>
 
 ```lua
-freeze(objectName: string, object: Table, throwIfMissing: boolean?): Table
+freeze(objectName: string, object: Types.Table, throwIfMissing: boolean?): Types.Table
 ```
 
 Returns a new read-only view of _object_ which prevents any values from being changed.
@@ -721,7 +737,9 @@ print(drink.syrup) --> nil
 </span>
 
 ```lua
-getOrSet(input: Types.Table, key: any, getValue: GetValueHandler)
+type GetValueHandler = (Types.Table, Key) -> Value
+
+getOrSet(input: Types.Table, key: Key, getValue: GetValueHandler): Value
 ```
 
 Returns a value of the _input_ [Table](#table) at the _key_ provided.
@@ -826,7 +844,9 @@ Output: {
 </span>
 
 ```lua
-some(input: Types.Map<any, any>, handler: SomeHandler?): boolean
+type SomeHandler = (Value, Key) -> boolean
+
+some(input: Types.Map<Key, Value>, handler: SomeHandler): boolean
 ```
 
 Iterates through the elements of the _input_ [Table](#table) in no particular order.
@@ -869,7 +889,7 @@ These utilities are helpful for working with strings.
 </span>
 
 ```lua
-endsWith(input: string, suffix: string)
+endsWith(input: string, suffix: string): boolean
 ```
 
 Checks if _input_ ends with the string _suffix_.
@@ -1082,12 +1102,12 @@ prepare("nachos") --> "cheesy fried nachos"
 </span>
 
 ```lua
-forEachArgs(handler: Handler<Value>, ...: Args<Value>): ()
+forEachArgs(handler: Types.AnyFunction, ...: Args<Value>): ()
 ```
 
 Iterates through the tail arguments in order, including nil values up to the argument list length.
 
-Calls the [Handler](#handler) _handler_ for each entry.
+Calls the _handler_ for each entry.
 
 <hr>
 
@@ -1315,7 +1335,7 @@ These utilities assist with debugging Lua code.
 </span>
 
 ```lua
-assertEqual(left: any, right: any, formattedErrorMessage: string?)
+assertEqual(left: any, right: any, formattedErrorMessage: string?): ()
 ```
 
 Performs a simple equality check and throws an error if _left_ is not equal to _right_.
@@ -1359,7 +1379,7 @@ Operates on cyclic structures, and returns a Cycles object for a given _value_ b
 </span>
 
 ```lua
-format(formatString: string, ...)
+format(formatString: string, ...): string
 ```
 
 Returns the _format_ string with placeholders `{...}` substituted with readable representations
