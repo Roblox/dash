@@ -14,8 +14,16 @@ local iterator = require(Dash.iterator)
 export type CollectHandler = () -> (any, any)
 
 local function collect(input: Types.Table, handler: CollectHandler): Types.Map<any, any>
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.collect with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(handler), "function", [[Attempted to call Dash.collect with argument #2 of type {left:?} not {right:?}]])
+	assertEqual(
+		typeof(input),
+		"table",
+		[[Attempted to call Dash.collect with argument #1 of type {left:?} not {right:?}]]
+	)
+	assertEqual(
+		typeof(handler),
+		"function",
+		[[Attempted to call Dash.collect with argument #2 of type {left:?} not {right:?}]]
+	)
 	local result = {}
 	for key, child in iterator(input) do
 		local outputKey, outputValue = handler(key, child)
