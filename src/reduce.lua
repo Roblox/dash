@@ -9,16 +9,25 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local assertEqual = require(Dash.assertEqual)
+local iterator = require(Dash.iterator)
 
 -- TODO Luau: Support generic functions
 export type ReduceHandler = (any, any, any) -> any
 
-local function reduce(input: Types.Array<any>, handler: ReduceHandler, initial: any)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.reduce with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(handler), "function", [[Attempted to call Dash.reduce with argument #2 of type {left:?} not {right:?}]])
+local function reduce(input: Types.Table, handler: ReduceHandler, initial: any)
+	assertEqual(
+		typeof(input),
+		"table",
+		[[Attempted to call Dash.reduce with argument #1 of type {left:?} not {right:?}]]
+	)
+	assertEqual(
+		typeof(handler),
+		"function",
+		[[Attempted to call Dash.reduce with argument #2 of type {left:?} not {right:?}]]
+	)
 	local result = initial
-	for i = 1, #input do
-		result = handler(result, input[i], i)
+	for key, value in iterator(input) do
+		result = handler(result, value, key)
 	end
 	return result
 end
