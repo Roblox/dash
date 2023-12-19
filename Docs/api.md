@@ -702,6 +702,43 @@ Output: false
 
 <hr>
 
+### some
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```lua
+type SomeHandler = (Value, Key) -> boolean
+
+some(input: Types.Map<Key, Value>, handler: SomeHandler): boolean
+```
+
+Iterates through the elements of the _input_ [Table](#table) in no particular order.
+
+Calls the _handler_ for each entry and returns `true` if the handler returns truthy for any
+element which it is called with.
+
+**Example**
+
+```lua
+-- Does there exist a red fruit?
+Dash.some(
+	{
+		{Type = "Cherry", Color = "Red"}, 
+		{Type = "Strawberry", Color = "Red"}, 
+		{Type = "Blueberry", Color = "Blue"}
+	}, 
+	function(fruit) return fruit.Color == "Red" end
+)
+
+--[[
+Output: true
+]]
+```
+
+<hr>
+
 ## Arrays
 
 These utilities operate on [Arrays](#array), tables with ordered keys 1..n.
@@ -1323,45 +1360,6 @@ Output: {
 }
 ]]
 ```
-
-<hr>
-
-### some
-
-<span class="tags">
-	[Maps](#maps)
-</span>
-
-```lua
-type SomeHandler = (Value, Key) -> boolean
-
-some(input: Types.Map<Key, Value>, handler: SomeHandler): boolean
-```
-
-Iterates through the elements of the _input_ [Table](#table) in no particular order.
-
-Calls the _handler_ for each entry and returns `true` if the handler returns truthy for any
-element which it is called with.
-
-**Example**
-
-```lua
--- Does there exist a red fruit?
-Dash.some(
-	{
-		{Type = "Cherry", Color = "Red"}, 
-		{Type = "Strawberry", Color = "Red"}, 
-		{Type = "Blueberry", Color = "Blue"}
-	}, 
-	function(fruit) return fruit.Color == "Red" end
-)
-
---[[
-Output: true
-]]
-```
-
-**TODO**: This should be available for all tables (and the example proves it's possible). Why is this Map only?
 
 <hr>
 
