@@ -1,5 +1,7 @@
 # API Reference
 
+**Disclaimer**: These are not the official docs and the new functions are not available for use. It would be nice if someone helped me add them though.
+
 ## Types
 
 ### Array
@@ -84,6 +86,47 @@ Represents a function which takes any arguments and returns any value
 These utilities operate on [Tables](#table) of any kind.
 
 <hr>
+
+### all (new!)
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```lua
+type AllHandler = (Value, Key) -> boolean
+
+all(input: types.Table, handler: AllHandler?): boolean
+```
+
+Iterates through all elements of the _input_ [Table](#table).
+
+Calls the _handler_ for each entry and returns `false` if the handler returns falsy for any element which it is called with. Otherwise, all elements were truthy so return `true`.
+
+If the handler is not provided, use the truthiness of the values in the table.
+
+**Examples**
+
+```lua
+-- These are the only falsy values in Lua
+Dash.all({nil, false}) --> false
+```
+
+```lua
+Dash.all({true, 0, "0"}) --> true
+```
+
+```lua
+-- Do all words start with 'ro'?
+Dash.all(
+	{"roblox", "roact", "rodux"}, 
+	function(word) return Dash.startsWith(word, "ro") 
+end)
+--[[
+Output: true
+]]
+
+```
 
 ### collect
 
@@ -235,6 +278,51 @@ Output: {
 ```
 <hr>
 
+### count (new!)
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```lua
+type CountHandler = (Value, Key) -> boolean
+
+count(input: types.Table, handler: CountHandler?): number
+```
+
+If no _handler_ is provided, return the number of elements in the _input_ [Table](#table).
+
+If the _handler_ is provided, increase the count for each element for which the handler returns true on the `(value, key)` pair.
+
+**Examples**
+
+```lua
+Dash.count({1, 2, 3, 4, 5}) --> 5
+```
+
+```lua
+-- Count the number of ids that start with 1
+Dash.count(
+	{[12] = true, [24] = true, [153] = true, [199] = true}, 
+	function(value, id) return tostring(id):sub(1, 1) == "1" 
+end)
+
+--[[
+Output: 3
+]]
+```
+
+```lua
+-- Count the number of numbers divisible by 5
+Dash.count(
+	{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}, 
+	function(num) return num % 5 == 0
+end)
+
+--[[
+Output: 2
+]]
+```
 ### filter
 
 <span class="tags">
@@ -355,6 +443,58 @@ Dash.forEach({"Item 1", "Item 2", "Item 3"}, function(value) print(value) end)
 Output: Item 1
 Item 2
 Item 3	
+]]
+```
+
+<hr>
+
+### frequencies (new!)
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```lua
+type FrequenciesHandler = (Value, Key) -> any
+
+frequencies(input: Types.Table)
+```
+
+If no handler is provided, returns a [Map](#map) with keys as unique values of the _input_ [Table](#table) and values as the count of each value.
+
+If a handler is provided, returns a [Map](#map) with keys as unique elements given by the _handler_ and values as the count of each mapped key.
+
+**Examples**
+
+```lua
+Dash.frequencies({"Red", "Black", "Orange", "Red"})
+
+--[[
+Output:{
+	["Black"] = 1,
+	["Orange"] = 1,
+	["Red"] = 2
+} 
+]]
+```
+
+```lua
+-- Count colors by simple definition of neutral and non-neutral
+function toNeutral(color) 
+	return if Dash.includes({"Black", "Gray", "White"}, color) 
+		then "Neutral" 
+		else "Non-neutral"
+end
+Dash.frequencies(
+	{"Black", "Orange", "Blue", "Gray", "White"}, 
+	function(color) return toNeutral(color) 
+end)
+
+--[[
+Output: {
+	["Neutral"] = 3,
+	["Non-neutral"] = 2
+}
 ]]
 ```
 
@@ -676,8 +816,10 @@ Call the _handler_ for each element, passing the return of the previous call as 
 The _initial_ value is passed into the first call, and the final value returned by the function.
 
 **Examples**
+
 ```lua
 -- Count occurences of each element in array and output a table of counts
+-- See Dash.frequencies
 Dash.reduce(
 	{"Red", "Black", "Red", "Red", "Black"}, 
 	function(acc, color)
@@ -1059,6 +1201,27 @@ Output: O
 
 <hr>
 
+### product (new!)
+
+<span class="tags">
+	[Arrays](#arrays)
+</span>
+
+```lua
+product(input: Types.Array<number>): number
+```
+
+Multiplies together all of the numbers in the _input_ [Array](#array).
+
+If the _input_ has no elements, return `1`.
+
+**Example**
+```lua
+Dash.product({3, 3, 2}) --> 18
+```
+
+<hr>
+
 ### reverse
 
 <span class="tags">
@@ -1143,6 +1306,27 @@ Output: {
 	[4] = 4
 }
 ]]
+```
+
+<hr>
+
+### sum (new!)
+
+<span class="tags">
+	[Arrays](#arrays)
+</span>
+
+```lua
+sum(input: Types.Array<number>): number
+```
+
+Adds together all of the numbers in the _input_ [Array](#array).
+
+If the input Array has no elements, return `0`.
+
+**Example**
+```lua
+Dash.sum({3, 2, 1}) --> 6
 ```
 
 <hr>
