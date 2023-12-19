@@ -65,6 +65,12 @@ A class has a constructor returning an instance of _Object_ type
 
 <hr>
 
+### Handlers
+
+Some functions such as [filter](#filter) will require handlers. There will be a `Key` and `Value` type to denote whether the key or value argument is passed first, but they are both `any` type unless otherwise specified.
+
+<hr>
+
 ### AnyFunction
 ```lua
 type AnyFunction = () -> any
@@ -97,6 +103,23 @@ the handler on each `(key, value)` tuple.
 The handler should return a new `(newKey, value)` tuple to be inserted into the returned Table,
 or `nil` if no value should be added.
 
+**Example**
+
+```lua
+-- Invert keys and values of a table
+Dash.collect({a = "1", b = "2", c = 3}, function(key, value) 
+	return value, key 
+end)
+
+--[[
+Output: {
+	[3] = "c"
+	["1"] = "a", 
+	["2"] = "b", 
+}
+]]
+```
+
 <hr>
 
 ### collectArray
@@ -116,6 +139,25 @@ the handler on each `(key, value)` tuple.
 
 The handler should return a new value to be pushed onto the end of the result array, or `nil`
 if no value should be added.
+
+**Example**
+
+```lua
+-- Double all elements, ignoring results that are multiples of three
+Dash.collectArray({1, 2, 3, 4, 5, 6}, function(key, value)
+	local newValue = value * 2
+	return if newValue % 3 == 0 then nil else newValue
+end)
+
+--[[
+Output: {
+[1] = 2,
+[2] = 4,
+[3] = 8,
+[4] = 10
+}
+]]
+```
 
 <hr>
 
@@ -138,6 +180,35 @@ If _handler_ is not provided, values of `input` are used as elements.
 
 <hr>
 
+**Examples**
+```lua
+-- Convert Array to Set
+Dash.collectSet({"toast", "bagel", "donut"})
+
+--[[
+Output: {
+	["bagel"] = true,
+	["donut"] = true,
+	["toast"] = true
+}
+]]
+```
+
+```lua
+-- Create set of first letters of each word
+Dash.collectSet({"toast", "bagel", "donut", "bread"}, function(key, value)
+	return value:sub(1, 1)
+end)
+
+--[[
+Output: {
+	["b"] = true,
+	["d"] = true,
+	["t"] = true
+}
+]]
+```
+
 ### copy
 
 <span class="tags">
@@ -150,6 +221,18 @@ copy(input: Types.Table): Types.Table
 
 Returns a shallow copy of the _input_ Table.
 
+**Example**
+
+```lua
+Dash.copy({a = 1, b = 3})
+
+--[[
+Output: {
+	["a"] = 1,
+	["b"] = 3
+}
+]]
+```
 <hr>
 
 ### filter
@@ -169,6 +252,25 @@ Filter the _input_ [Table](#table) by calling the handler on each `(value, key)`
 For an [Array](#array) input, the order of elements is prevered in the output.
 
 The handler should return truthy to preserve the value in the resulting Table.
+
+**Example**
+
+```lua
+-- Take only the elements whose values begin with "r"
+Dash.filter(
+	{place = "roblox", packages = "rotriever", ide = "studio"}, 
+	function(word) return Dash.startsWith(word, "r") 
+end)
+
+--[[
+Output: {
+	[1] = "roblox",
+	[2] = "rotriever"
+}
+]]
+```
+
+**TODO**: Why does this return an Array? It can be made to return a Table.
 
 <hr>
 
@@ -191,6 +293,32 @@ Returns nil if no entires satisfy the condition.
 
 For an Array, this first matching element is returned.
 For a Map, an arbitrary matching element is returned if it exists.
+
+**Examples**
+
+```lua
+-- Check if there's the "ExtraSettings" key and get the value of that key if so
+Dash.find(
+	{Id = 145, IsReady = false, ExtraSettings = {AutoReady = true}}, 
+	function(value, key) return key == "ExtraSettings" end
+)
+
+--[[
+Output: {
+	["AutoReady"] = true
+}
+]]
+
+
+Dash.find({Id = 145, IsReady = false}, 
+	function(value, key) return key == "ExtraSettings" end
+)
+--[[
+Output: nil
+]]
+
+```
+
 
 **See**
 
@@ -217,6 +345,18 @@ If the table is an Array, it iterates in order 1..n.
 If the table is a Map, the keys are visited in an arbitrary order.
 
 Calls the _handler_ for each entry.
+
+**Example**
+```lua
+-- Print all values of table
+Dash.forEach({"Item 1", "Item 2", "Item 3"}, function(value) print(value) end)
+
+--[[
+Output: Item 1
+Item 2
+Item 3	
+]]
+```
 
 <hr>
 
@@ -297,6 +437,16 @@ includes(source: Types.Table, value: any): boolean
 
 Returns _true_ if the _item_ exists as a value in the _source_ [Table](#table).
 
+**Example**
+```lua
+-- Does the table include 100?
+Dash.includes({1, 10, 100, 1000}, 100)
+
+--[[
+Output: true
+]]
+```
+
 <hr>
 
 ### keyBy
@@ -370,6 +520,23 @@ If the input is an Array, ordering is preserved.
 
 If the input is a Map, elements are keys in an arbitrary order.
 
+**Example**:
+```lua
+Dash.keys({
+	Color = "Purple",
+	Type = "Fruit",
+	Shape = "Round"
+})
+
+--[[
+Output: {
+	[1] = "Color",
+	[2] = "Type",
+	[3] = "Shape"
+}
+]]
+```
+
 <hr>
 
 ### map
@@ -395,6 +562,20 @@ the values with new ones returned from the handler.
 
 Values returned by _handler_ must be defined.
 
+**Example**
+```lua
+-- Map characters to their ASCII
+Dash.map({"a", "b", "c"}, function(char) return string.byte(char) end)
+
+--[[
+Output: {
+	[1] = 97,
+	[2] = 98,
+	[3] = 99
+}
+]]
+```
+
 **See**
 
 - [Dash.collectArray](#collectArray) if you want to return nil values.
@@ -419,6 +600,23 @@ Calls the _handler_ for each entry and returns the first non-nil value returned 
 
 If _handler_ is `nil`, the first value visited is returned.
 
+**Example**
+
+```lua
+-- Get any message that's not hidden and return its id.
+Dash.mapOne({
+	{Id = 1, IsHidden = true},
+	{Id = 3, IsHidden = false},
+	{Id = 2, IsHidden = false},
+}, function(message) 
+	return if message.IsHidden then nil else message.Id 
+end)
+
+--[[
+Output: 3
+]]
+```
+
 <hr>
 
 ### omit
@@ -437,6 +635,24 @@ If the input is an Array, ordering is preserved.
 
 If the input is a Map, elements are returned in an arbitrary order.
 
+**Example**
+
+```lua
+-- Remove the ShouldShow key/value pair from the table
+Dash.omit({
+	ShouldShow = true,
+	Text = "Hello World!",
+	Title = "Greetings!",
+}, {"ShouldShow"})
+
+--[[
+Output: {
+	["Text"] = "Hello World!",
+	["Title"] = "Greetings!"
+}
+]]
+```
+
 <hr>
 
 ### shallowEqual
@@ -451,6 +667,38 @@ shallowEqual(left: any, right: any): boolean
 
 Returns `true` if the _left_ and _right_ values are equal (by the equality operator) or the
 inputs are tables, and all their keys are equal.
+
+**Examples**
+
+```lua
+Dash.shallowEqual({
+	A = 1, 
+	B = 2
+}, {
+	A = 1,
+	B = 2,
+})
+
+--[[
+Output: true
+]]
+```
+
+```lua
+Dash.shallowEqual({
+	A = 1, 
+	B = 2,
+	C = 3
+}, {
+	A = 1,
+	B = 2,
+	D = 3
+})
+
+--[[
+Output: false
+]]
+```
 
 <hr>
 
@@ -474,6 +722,21 @@ Adds new elements to the _target_ [Array](#array) from subsequent [Array](#array
 
 Arguments which are `nil` or None are skipped.
 
+**Example**
+```lua
+Dash.append({1, 2}, {3, 4}, {5})
+
+--[[
+Output: {
+	[1] = 1,
+	[2] = 2,
+	[3] = 3,
+	[4] = 4,
+	[5] = 5
+}
+]]
+```
+
 <hr>
 
 ### findIndex
@@ -493,6 +756,31 @@ when passed the `(value, key)` entry.
 
 Returns nil if no entires satisfy the condition.
 
+**Examples**
+
+```lua
+-- Find index of "Clementine" fruit if it exists in the Array
+Dash.findIndex(
+	{"Apple", "Banana", "Clementine"}, 
+	function(fruit) return fruit == "Clementine" end
+)
+
+--[[
+Output: 3
+]]
+```
+
+```lua
+Dash.findIndex(
+	{"Apple", "Banana"}, 
+	function(fruit) return fruit == "Clementine" end
+)
+
+--[[
+Output: nil
+]]
+```
+
 <hr>
 
 ### flat
@@ -507,6 +795,26 @@ flat(input: Types.Array<Types.Array<any>>): Types.Array<any>
 
 Flattens the input array by a single level.
 Outputs a new [Array](#array) of elements merged from the _input_ [Array](#array) arguments in left-to-right order.
+
+**Example**
+
+```lua
+-- Flatten a partition of numbers in the range 1-5
+Dash.flat({
+	{1, 2, 3}, 
+	{4, 5}
+})
+
+--[[
+Output:  {
+	[1] = 1,
+	[2] = 2,
+	[3] = 3,
+	[4] = 4,
+	[5] = 5
+}
+]]
+```
 
 <hr>
 
@@ -529,6 +837,25 @@ Returns nil if no entires satisfy the condition.
 
 If handler is not defined, the function simply returns the last element of the Array.
 
+**Examples**
+
+```lua
+Dash.last({3, 2, 1})
+
+--[[
+Output: 1
+]]
+```
+
+```lua
+-- Get last odd number
+Dash.last({4, 3, 2}, function(num) return num % 2 == 1 end)
+
+--[[
+Output: 3
+]]
+```
+
 <hr>
 
 ### mapFirst
@@ -546,6 +873,22 @@ mapFirst(input: Types.Array<any>, handler: MapHandler)
 Iterates through the elements of the _input_ [Array](#array) in order 1..n.
 
 Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
+
+**Example**
+
+```lua
+-- Get first color that's 6 letters and return its first letter
+Dash.mapFirst(
+	{"Red", "Yellow", "Orange", "Blue"}, 
+	function(color)
+		return if color:len() == 6 then color:sub(1, 1) else nil
+	end
+)
+
+--[[
+Output: Y
+]]
+```
 
 <hr>
 
@@ -565,6 +908,22 @@ Iterates through the elements of the _input_ [Array](#array) in reverse in order
 
 Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
 
+**Example**
+
+```lua
+-- Get last color that's 6 letters and return its first letter
+Dash.mapLast(
+	{"Red", "Yellow", "Orange", "Blue"}, 
+	function(color)
+		return if color:len() == 6 then color:sub(1, 1) else nil
+	end
+)
+
+--[[
+Output: O
+]]
+```
+
 <hr>
 
 ### reduce
@@ -576,7 +935,7 @@ Calls the _handler_ for each entry and returns the first non-nil value returned 
 ```lua
 type Accumulator = any
 
-type ReduceHandler = (Accumulator, Value, Key) -> any
+type ReduceHandler = (Accumulator, Value, Key) -> Accumulator
 
 reduce(input: Types.Array<any>, handler: ReduceHandler, initial: Accumulator)
 ```
@@ -586,6 +945,43 @@ Iterate through the elements of the _input_ [Array](#array) in order 1..n.
 Call the _handler_ for each element, passing the return of the previous call as the first argument.
 
 The _initial_ value is passed into the first call, and the final value returned by the function.
+
+**Examples**
+```lua
+-- Count occurences of each element in array and output a table of counts
+Dash.reduce(
+	{"Red", "Black", "Red", "Red", "Black"}, 
+	function(acc, color)
+		if acc[color] == nil then
+			acc[color] = 1
+		else
+			acc[color] += 1
+		end
+		return acc
+	end, {}
+)
+
+--[[
+Output: {
+	["Black"] = 2,
+	["Red"] = 3
+} 
+]]
+```
+
+```lua
+-- Sum up elements, doubling even indices and halving odd indices
+-- Expected: 0.5 + 4 + 1.5 + 8 + 2.5 = 16.5
+Dash.reduce(
+	{1, 2, 3, 4, 5},
+	function(acc, num, index)
+		return acc + if index % 2 == 0 then num * 2 else num / 2
+	end, 0
+)
+--[[
+Output: 16.5
+]]
+```
 
 <hr>
 
@@ -600,6 +996,19 @@ reverse(input: Types.Array<any>): Types.Array<any>
 ```
 
 Reverse the order of the elements in the _input_ Array.
+
+**Example**
+```lua
+Dash.reverse({3, 2, 1})
+
+--[[
+Output: {
+	[1] = 1,
+	[2] = 2,
+	[3] = 3
+}
+]]
+```
 
 <hr>
 
@@ -623,6 +1032,44 @@ If _left_ is `-n`, the slice starts with the element `n` places from the last on
 If _right_ is `-n`, the slice ends with the element `n` places from the last one.
 
 An empty array is returned if the slice has no or negative length.
+
+**Examples**
+```lua
+Dash.slice({1, 2, 3, 4, 5}, 2, 4)
+
+--[[
+Output: {
+	[1] = 2,
+	[2] = 3,
+	[3] = 4
+}
+]]
+```
+
+```lua
+Dash.slice({1, 2, 3, 4, 5}, 3)
+
+--[[
+Output: {
+	[1] = 3,
+	[2] = 4,
+	[3] = 5
+}
+]]
+```
+
+```lua
+Dash.slice({1, 2, 3, 4, 5}, nil, -1)
+
+--[[
+Output: {
+	[1] = 1,
+	[2] = 2,
+	[3] = 3,
+	[4] = 4
+}
+]]
+```
 
 <hr>
 
@@ -746,6 +1193,32 @@ Returns a value of the _input_ [Table](#table) at the _key_ provided.
 If the key is missing, the value is acquired from the _getValue_ handler,
 added to the _input_ [Table](#table) and returned.
 
+**Examples**
+
+```lua
+Dash.getOrSet(
+	{Item = "Gummy Bear", Color = "Lime"}, 
+	"Color", 
+	function() return "Yellow" end
+)
+
+--[[
+Output: Lime
+]]
+```
+
+```lua
+Dash.getOrSet(
+	{Item = "Gummy Bear"}, 
+	"Color", 
+	function() return "Yellow" end
+)
+
+--[[
+Output: Yellow
+]]
+```
+
 <hr>
 
 ### join
@@ -759,6 +1232,22 @@ join(...): Types.Map<any, any>
 ```
 
 Output a new [Map](#map) from merging all the keys in the [Map](#map) arguments in left-to-right order.
+
+**Example**
+```lua
+Dash.join(
+	{Text = "Hello World!", Color = "Sky Blue"}, 
+	{Title = "Greetings!", Color = "Indigo"}
+)
+
+--[[
+Output: {
+	["Color"] = "Indigo",
+	["Text"] = "Hello World!",
+	["Title"] = "Greetings!"
+} 
+]]
+```
 
 **See**
 
@@ -854,6 +1343,26 @@ Iterates through the elements of the _input_ [Table](#table) in no particular or
 Calls the _handler_ for each entry and returns `true` if the handler returns truthy for any
 element which it is called with.
 
+**Example**
+
+```lua
+-- Does there exist a red fruit?
+Dash.some(
+	{
+		{Type = "Cherry", Color = "Red"}, 
+		{Type = "Strawberry", Color = "Red"}, 
+		{Type = "Blueberry", Color = "Blue"}
+	}, 
+	function(fruit) return fruit.Color == "Red" end
+)
+
+--[[
+Output: true
+]]
+```
+
+**TODO**: This should be available for all tables (and the example proves it's possible). Why is this Map only?
+
 <hr>
 
 ### values
@@ -871,6 +1380,25 @@ Returns an [Array](#array) of the values in the _input_ Table.
 If the input is an Array, ordering is preserved.
 
 If the input is a Map, values are returned in an arbitrary order.
+
+**Example**
+```lua
+Dash.values({
+	Type = "Cherry", 
+	Color = "Red", 
+	Price = "Expensive", 
+	EnjoymentLevel = "High"
+})
+
+--[[
+Output: {
+	[1] = "Red",
+	[2] = "Cherry",
+	[3] = "High",
+	[4] = "Expensive"
+}
+]]
+```
 
 <hr>
 
@@ -924,6 +1452,16 @@ Our current version of Lua unfortunately does not support upper or lower-case de
 the english alphabet. This function has been implemented to return the expected result once
 this has been corrected.
 
+**Examples**
+
+```lua
+Dash.isLowercase("abcdef") --> true
+```
+
+```lua
+Dash.isLowercase("Title") --> false
+```
+
 <hr>
 
 ### isUppercase
@@ -943,6 +1481,16 @@ Throws if the _input_ is not a string or it is the empty string.
 Our current version of Lua unfortunately does not support upper or lower-case detection outside
 the english alphabet. This function has been implemented to return the expected result once
 this has been corrected.
+
+**Examples**
+
+```lua
+Dash.isUppercase("ABCDEF") --> true
+```
+
+```lua
+Dash.isUppercase("rObLoX") --> false
+```
 
 <hr>
 
@@ -1021,6 +1569,44 @@ splitOn(input: string, pattern: string): Types.Array<string>
 Splits _input_ into parts based on a _pattern_ delimiter and returns a [Table](#table) of the parts,
 followed by a [Table](#table) of the matched delimiters.
 
+**Example**
+
+```lua
+local parts, delimeters = Dash.splitOn(
+	"The quick brown fox jumps over the lazy dog", 
+	" "
+)
+
+print(parts)
+--[[
+Output: {
+	[1] = "The",
+	[2] = "quick",
+	[3] = "brown",
+	[4] = "fox",
+	[5] = "jumps",
+	[6] = "over",
+	[7] = "the",
+	[8] = "lazy",
+	[9] = "dog"
+}
+]]
+
+print(delimeters)
+--[[
+{
+	[1] = " ",
+	[2] = " ",
+	[3] = " ",
+	[4] = " ",
+	[5] = " ",
+	[6] = " ",
+	[7] = " ",
+	[8] = " "
+}
+]]
+```
+
 <hr>
 
 ### startsWith
@@ -1058,6 +1644,11 @@ trim(input: string): string
 ```
 
 Remove any whitespace at the start and end of the _input_ string.
+
+**Example**
+```lua
+Dash.trim("\n\t\rhello world   ") --> "hello world"
+```
 
 <hr>
 
