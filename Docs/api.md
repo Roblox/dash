@@ -669,7 +669,7 @@ type ReduceHandler = (Accumulator, Value, Key) -> Accumulator
 reduce(input: Types.Table, handler: ReduceHandler, initial: Accumulator)
 ```
 
-Iterate through the elements of the _input_ [Table](#table), preserving order if it is an [Array](#array)
+Iterate through the elements of the _input_ [Table](#table), preserving order if it is an [Array](#array).
 
 Call the _handler_ for each element, passing the return of the previous call as the first argument.
 
