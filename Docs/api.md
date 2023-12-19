@@ -798,6 +798,43 @@ Output: true
 
 <hr>
 
+### values
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```lua
+values(input: Types.Map<any, any>): Types.Array<any>
+```
+
+Returns an [Array](#array) of the values in the _input_ Table.
+
+If the input is an Array, ordering is preserved.
+
+If the input is a Map, values are returned in an arbitrary order.
+
+**Example**
+```lua
+Dash.values({
+	Type = "Cherry", 
+	Color = "Red", 
+	Price = "Expensive", 
+	EnjoymentLevel = "High"
+})
+
+--[[
+Output: {
+	[1] = "Red",
+	[2] = "Cherry",
+	[3] = "High",
+	[4] = "Expensive"
+}
+]]
+```
+
+<hr>
+
 ## Arrays
 
 These utilities operate on [Arrays](#array), tables with ordered keys 1..n.
@@ -1357,43 +1394,6 @@ Output: {
 		}
 	},
 	name = "bike"
-}
-]]
-```
-
-<hr>
-
-### values
-
-<span class="tags">
-	[Maps](#maps)
-</span>
-
-```lua
-values(input: Types.Map<any, any>): Types.Array<any>
-```
-
-Returns an [Array](#array) of the values in the _input_ Table.
-
-If the input is an Array, ordering is preserved.
-
-If the input is a Map, values are returned in an arbitrary order.
-
-**Example**
-```lua
-Dash.values({
-	Type = "Cherry", 
-	Color = "Red", 
-	Price = "Expensive", 
-	EnjoymentLevel = "High"
-})
-
---[[
-Output: {
-	[1] = "Red",
-	[2] = "Cherry",
-	[3] = "High",
-	[4] = "Expensive"
 }
 ]]
 ```
