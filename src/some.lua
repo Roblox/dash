@@ -7,14 +7,19 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local assertEqual = require(Dash.assertEqual)
+local iterator = require(Dash.iterator)
 
 -- TODO Luau: Support generic functions
 export type SomeHandler = (any, any) -> boolean
 
-local function some(input: Types.Map<any, any>, handler: SomeHandler?): boolean
+local function some(input: Types.Map<any, any>, handler: SomeHandler): boolean
 	assertEqual(typeof(input), "table", [[Attempted to call Dash.some with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(handler), "function", [[Attempted to call Dash.some with argument #2 of type {left:?} not {right:?}]])
-	for key, child in pairs(input) do
+	assertEqual(
+		typeof(handler),
+		"function",
+		[[Attempted to call Dash.some with argument #2 of type {left:?} not {right:?}]]
+	)
+	for key, child in iterator(input) do
 		if handler(child, key) then
 			return true
 		end
