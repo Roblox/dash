@@ -128,6 +128,8 @@ Output: true
 
 ```
 
+<hr>
+
 ### collect
 
 <span class="tags">
@@ -323,6 +325,9 @@ end)
 Output: 2
 ]]
 ```
+
+<hr>
+
 ### filter
 
 <span class="tags">
