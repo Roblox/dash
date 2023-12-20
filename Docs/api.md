@@ -587,6 +587,10 @@ Output: true
 ]]
 ```
 
+**See**
+
+For a stronger version of `Dash.includes`, use [Dash.some](#some).
+
 <hr>
 
 ### keyBy
