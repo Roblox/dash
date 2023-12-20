@@ -830,7 +830,7 @@ Returns the minimum value in the _input_ [Table](#table). By default, this retur
 
 If a _handler_ is provided, elements will first be transformed by `handler(value, key)` before being used for comparison.
 
-Elements will be compared using the _comparator_ if it is provided. The comparator should take two elements and return `true` if the first one is greater than the second one, and `false` otherwise.
+Elements will be compared using the _comparator_ if it is provided. The comparator should take two elements and return `true` if the first one is less than the second one, and `false` otherwise.
 
 If the provided _input_ has no elements, return `nil`.
 
