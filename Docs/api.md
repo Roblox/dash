@@ -763,6 +763,96 @@ Output: 3
 
 <hr>
 
+### max (new!)
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```lua
+type MaxComparator = (any, any) -> boolean
+type MaxHandler = (Value, Key) -> any
+
+max(input: Types.Table, handler: MaxHandler?, comparator: MaxComparator): any
+```
+
+Returns the maximum value in the _input_ [Table](#table). By default, this returns the greatest value in the table as defined by the `>` operator.
+
+If a _handler_ is provided, elements will first be transformed by `handler(value, key)` before being used for comparison.
+
+Elements will be compared using the _comparator_ if it is provided. The comparator should take two elements and return `true` if the first one is greater than the second one, and `false` otherwise.
+
+If the provided _input_ has no elements, return `nil`.
+
+**Examples**
+
+```lua
+Dash.max({1, 2, 3}) --> 3
+```
+
+```lua
+Dash.max({"1", "2", "10"}) --> "2"
+```
+
+```lua
+Dash.max({1, 2, 3}, function(num) return -num end) --> 1
+```
+
+```lua
+Dash.max(
+	{"blue", "red", "orange"}, 
+	nil, 
+	function(word1, word2) return word1:len() > word2:len() end
+) --> "orange"
+```
+
+<hr>
+
+### min (new!)
+
+<span class="tags">
+	[Table](#tables)
+</span>
+
+```lua
+type MinComparator = (any, any) -> boolean
+type MinHandler = (Value, Key) -> any
+
+min(input: Types.Table, handler: MinHandler?, comparator: MinComparator): any
+```
+
+Returns the minimum value in the _input_ [Table](#table). By default, this returns the least value in the table as defined by the `<` operator.
+
+If a _handler_ is provided, elements will first be transformed by `handler(value, key)` before being used for comparison.
+
+Elements will be compared using the _comparator_ if it is provided. The comparator should take two elements and return `true` if the first one is greater than the second one, and `false` otherwise.
+
+If the provided _input_ has no elements, return `nil`.
+
+**Examples**
+
+```lua
+Dash.min({1, 2, 3}) --> 1
+```
+
+```lua
+Dash.min({"2", "20", "10"}) --> "10"
+```
+
+```lua
+Dash.min({3, 2, 1}, function(num) return -num end) --> 3
+```
+
+```lua
+Dash.min(
+	{"blue", "red", "orange"}, 
+	nil, 
+	function(word1, word2) return word1:len() < word2:len() end
+) --> "red"
+```
+
+<hr>
+
 ### omit
 
 <span class="tags">
