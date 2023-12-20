@@ -342,7 +342,7 @@ filter(input: Types.Table, handler: FilterHandler): Types.Array<any>
 
 Filter the _input_ [Table](#table) by calling the handler on each `(value, key)` tuple.
 
-For an [Array](#array) input, the order of elements is prevered in the output.
+For an [Array](#array) input, the order of elements is preserved in the output.
 
 The handler should return truthy to preserve the value in the resulting Table.
 
