@@ -363,8 +363,6 @@ Output: {
 ]]
 ```
 
-**TODO**: Why does this return an Array? It can be made to return a Table.
-
 <hr>
 
 ### find
