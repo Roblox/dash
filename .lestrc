@@ -1,0 +1,8 @@
+{
+    "testsPath": "$configDir/suites",
+    "testRunner": "robloxdev-cli",
+    "fastFlags": ["default"],
+    "build": false,
+    "rerun": 0,
+    "showPrefix": true
+}
