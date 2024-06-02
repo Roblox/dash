@@ -17,17 +17,5 @@ return function()
 	"50=d"
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				collectArray()
-			end, [[AssertError: Attempted to call Dash.collectArray with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures a handler of correct type", function()
-			assertThrows(function()
-				collectArray({})
-			end, [[AssertError: Attempted to call Dash.collectArray with argument #2 of type "nil" not "function"]])
-		end)
 	end)
 end

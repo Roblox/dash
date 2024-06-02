@@ -11,8 +11,6 @@ local assertEqual = require(Dash.assertEqual)
 export type MapHandler = (any, number) -> any
 
 local function mapFirst(input: Types.Array<any>, handler: MapHandler)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.mapFirst with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(handler), "function", [[Attempted to call Dash.mapFirst with argument #2 of type {left:?} not {right:?}]])
 	for index, child in ipairs(input) do
 		local output = handler(child, index)
 		if output ~= nil then

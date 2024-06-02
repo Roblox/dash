@@ -32,11 +32,5 @@ return function()
 			end)
 			assertSnapshot(output, [[nil]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				last()
-			end, [[AssertError: Attempted to call Dash.last with argument #1 of type "nil" not "table"]])
-		end)
 	end)
 end

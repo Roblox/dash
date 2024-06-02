@@ -3,7 +3,7 @@
 	of the subsequent arguments.
 	This function is a simpler & more powerful version of `string.format`, inspired by `format!`
 	in Rust.
-	
+
 	* `{}` formats and prints the next argument using `:format()` if available, or a suitable
 		default representation depending on its type.
 	* `{blah}` formats and prints the key "blah" of the 1st argument
@@ -27,7 +27,6 @@
 ]]
 
 local Dash = script.Parent
-local assertEqual = require(Dash.assertEqual)
 local formatValue = require(Dash.formatValue)
 local splitOn = require(Dash.splitOn)
 local startsWith = require(Dash.startsWith)
@@ -36,7 +35,6 @@ local concat = table.concat
 local insert = table.insert
 
 local function format(formatString: string, ...)
-	assertEqual(typeof(formatString), "string", [[Attempted to call Dash.format with argument #1 of type {left:?} not {right:?}]])
 	local args = {...}
 	local argIndex = 1
 	local texts, subs = splitOn(formatString, "{[^{}]*}")

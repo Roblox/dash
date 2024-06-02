@@ -35,17 +35,5 @@ return function()
 				return output[key]
 			end, [[MissingKey: Attempted to read missing key <0>{child = {child = &0, deep = {deeper = ...}, name = "child"}, name = "key"} of frozen object "MyObject"]])
 		end)
-
-		it("ensures an objectName of correct type", function()
-			assertThrows(function()
-				freeze()
-			end, [[AssertError: Attempted to call Dash.freeze with argument #1 of type "nil" not "string"]])
-		end)
-
-		it("ensures an object of correct type", function()
-			assertThrows(function()
-				freeze("example")
-			end, [[AssertError: Attempted to call Dash.freeze with argument #2 of type "nil" not "table"]])
-		end)
 	end)
 end

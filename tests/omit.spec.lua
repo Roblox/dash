@@ -11,17 +11,5 @@ return function()
 	d = 50
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				omit()
-			end, [[AssertError: Attempted to call Dash.omit with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures the keys array has the correct type", function()
-			assertThrows(function()
-				omit({})
-			end, [[AssertError: Attempted to call Dash.omit with argument #2 of type "nil" not "table"]])
-		end)
 	end)
 end

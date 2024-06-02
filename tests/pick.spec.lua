@@ -13,17 +13,5 @@ return function()
 	c = 30
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				pick()
-			end, [[AssertError: Attempted to call Dash.pick with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures a handler of correct type", function()
-			assertThrows(function()
-				pick({})
-			end, [[AssertError: Attempted to call Dash.pick with argument #2 of type "nil" not "function"]])
-		end)
 	end)
 end

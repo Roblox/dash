@@ -25,8 +25,6 @@ export type MapHandler = (any, number) -> any
 -- TYPED: local function map<Input, Output>(input: Types.Array<Input>, fn: MapFn<Input, Output>)<Output>
 
 local function map(input: Types.Array<any>, handler: MapHandler): Types.Array<any>
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.map with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(handler), "function", [[Attempted to call Dash.map with argument #2 of type {left:?} not {right:?}]])
 	local result = {}
 	for key, child in iterator(input) do
 		local value = handler(child, key)

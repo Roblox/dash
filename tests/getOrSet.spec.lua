@@ -21,23 +21,5 @@ return function()
 	a = 5
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				getOrSet()
-			end, [[AssertError: Attempted to call Dash.getOrSet with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures a key of correct type", function()
-			assertThrows(function()
-				getOrSet({})
-			end, [[AssertError: Attempted to call Dash.getOrSet with a nil key argument]])
-		end)
-
-		it("ensures a handler of correct type", function()
-			assertThrows(function()
-				getOrSet({}, "key")
-			end, [[AssertError: Attempted to call Dash.getOrSet with argument #3 of type "nil" not "function"]])
-		end)
 	end)
 end

@@ -16,12 +16,6 @@ return function()
 			-- assertSnapshot(isLowercase("Êcho"), [[false]])
 		end)
 
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				isLowercase(58)
-			end, [[AssertError: Attempted to call Dash.isLowercase with argument #1 of type "number" not "string"]])
-		end)
-
 		it("ensures input is not an empty string", function()
 			assertThrows(function()
 				isLowercase("")

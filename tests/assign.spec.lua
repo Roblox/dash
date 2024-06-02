@@ -37,17 +37,11 @@ return function()
 }]])
 		end)
 
-		it("should throw with a missing target", function()
-			assertThrows(function()
-				assign()
-			end, [[AssertError: Attempted to call Dash.assign with argument #1 of type "nil" not "table"]])
+		it("should remove exisintg elements when new value is None", function()
+			assertSnapshot(assign({a = 1, b = 2}, {b = None}), [[{
+	a = 1,
+	b = nil
+}]])
 		end)
-
-		it("should throw with a target of the wrong type", function()
-			assertThrows(function()
-				assign(true)
-			end, [[AssertError: Attempted to call Dash.assign with argument #1 of type "boolean" not "table"]])
-		end)
-
 	end)
 end

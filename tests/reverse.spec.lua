@@ -21,11 +21,5 @@ return function()
 	10
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				reverse()
-			end, [[AssertError: Attempted to call Dash.reverse with argument #1 of type "nil" not "table"]])
-		end)
 	end)
 end

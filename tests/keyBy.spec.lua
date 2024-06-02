@@ -66,17 +66,5 @@ return function()
 	}
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				keyBy()
-			end, [[AssertError: Attempted to call Dash.keyBy with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures a key of correct type", function()
-			assertThrows(function()
-				keyBy({})
-			end, [[AssertError: Attempted to call Dash.keyBy with a nil getKey argument]])
-		end)
 	end)
 end

@@ -18,11 +18,5 @@ return function()
 			local output = mapOne(input)
 			assertSnapshot(output, [[6]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				mapOne()
-			end, [[AssertError: Attempted to call Dash.mapOne with argument #1 of type "nil" not "table"]])
-		end)
 	end)
 end

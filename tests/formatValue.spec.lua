@@ -20,11 +20,5 @@ return function()
 	}
 }"]])
 		end)
-
-		it("ensures a displayString of correct type", function()
-			assertThrows(function()
-				formatValue({}, 309)
-			end, [[AssertError: Attempted to call Dash.formatValue with argument #2 of type "number" not "string"]])
-		end)
 	end)
 end

@@ -17,11 +17,5 @@ return function()
 	}
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				flat()
-			end, [[AssertError: Attempted to call Dash.flat with argument #1 of type "nil" not "table"]])
-		end)
 	end)
 end

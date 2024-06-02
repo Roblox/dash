@@ -106,17 +106,5 @@ return function()
 	}
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				groupBy()
-			end, [[AssertError: Attempted to call Dash.groupBy with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures a key of correct type", function()
-			assertThrows(function()
-				groupBy({})
-			end, [[AssertError: Attempted to call Dash.groupBy with a nil getKey argument]])
-		end)
 	end)
 end

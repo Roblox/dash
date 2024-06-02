@@ -1,7 +1,7 @@
 return function()
 	local Dash = require(script.Parent)
 	local filter = Dash.filter
-	
+
 	local sort = table.sort
 
 	describe("filter", function()
@@ -26,18 +26,6 @@ return function()
 	20,
 	30
 }]])
-		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				filter()
-			end, [[AssertError: Attempted to call Dash.filter with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures a handler of correct type", function()
-			assertThrows(function()
-				filter({})
-			end, [[AssertError: Attempted to call Dash.filter with argument #2 of type "nil" not "function"]])
 		end)
 	end)
 end
