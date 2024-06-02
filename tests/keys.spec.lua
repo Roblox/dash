@@ -33,11 +33,5 @@ return function()
 	"e"
 }]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				keys(355)
-			end, [[AssertError: Attempted to call Dash.keys with argument #1 of type "number" not "table"]])
-		end)
 	end)
 end

@@ -7,15 +7,12 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 local iterator = require(Dash.iterator)
 
 -- TODO Luau: support generic function definitions
 export type FilterHandler = (any, any) -> boolean
 
 local function filter(input: Types.Table, handler: FilterHandler): Types.Array<any>
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.filter with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(handler), "function", [[Attempted to call Dash.filter with argument #2 of type {left:?} not {right:?}]])
 	local result = {}
 	for index, child in iterator(input) do
 		if handler(child, index) then

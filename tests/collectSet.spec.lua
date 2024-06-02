@@ -27,11 +27,5 @@ return function()
 }]])
 		end)
 
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				collectSet()
-			end, [[AssertError: Attempted to call Dash.collectSet with argument #1 of type "nil" not "table"]])
-		end)
-
 	end)
 end

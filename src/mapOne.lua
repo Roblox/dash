@@ -7,13 +7,11 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 
 -- TODO Luau: Support generic functions
 export type MapHandler = (any, number) -> any
 
 local function mapOne(input: Types.Table, handler: MapHandler?)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.mapOne with argument #1 of type {left:?} not {right:?}]])
 	for key, child in pairs(input) do
 		local output
 		if handler then

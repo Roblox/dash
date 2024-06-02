@@ -26,17 +26,5 @@ return function()
 			end)
 			assertSnapshot(output, [[nil]])
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				findIndex()
-			end, [[AssertError: Attempted to call Dash.findIndex with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures a handler of correct type", function()
-			assertThrows(function()
-				findIndex({})
-			end, [[AssertError: Attempted to call Dash.findIndex with argument #2 of type "nil" not "function"]])
-		end)
 	end)
 end

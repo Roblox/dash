@@ -3,7 +3,7 @@
 
 	@param name The name of the object for improved error message readability.
 	@param throwIfMissing If `true` then access to a missing key will also throw.
-	
+
 	@note
 	Unfortunately you cannot iterate using `pairs` or `ipairs` on frozen objects because Luau
 	doesn't support defining these custom iterators in metatables.
@@ -22,7 +22,6 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local Error = require(Dash.Error)
-local assertEqual = require(Dash.assertEqual)
 local format = require(Dash.format)
 
 -- TODO Luau: Improve type inference to make these not need to be any
@@ -33,8 +32,6 @@ local MissingKey: any = Error.new("MissingKey", "Attempted to read missing key {
 -- TODO Luau: Support generic extends syntax
 -- TYPED: local function freeze<T extends Types.Table>(objectName: string, object: T, throwIfMissing: boolean?): T
 local function freeze(objectName: string, object: Types.Table, throwIfMissing: boolean?)
-	assertEqual(typeof(objectName), "string", [[Attempted to call Dash.freeze with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(object), "table", [[Attempted to call Dash.freeze with argument #2 of type {left:?} not {right:?}]])
 	-- We create a proxy so that the underlying object is not affected
 	local proxy = {}
 	setmetatable(
