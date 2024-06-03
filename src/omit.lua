@@ -7,15 +7,12 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 local collectSet = require(Dash.collectSet)
 local forEach = require(Dash.forEach)
 
 -- TODO Luau: Support generic functions, then substitute type signature
 -- TYPED: local function omit<Key, Value>(input: Types.Map<Key, Value>, keys: Types.Array<Key>): Value
 local function omit(input: Types.Table, keys: Types.Array<any>): Types.Table
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.omit with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(keys), "table", [[Attempted to call Dash.omit with argument #2 of type {left:?} not {right:?}]])
 	local output = {}
 	local keySet = collectSet(keys)
 	-- TYPED: forEach(input, function(child: Value, key: Key)

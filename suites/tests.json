@@ -1,0 +1,15 @@
+{
+  "run": "${configFolder}/run-tests.lua",
+  "load": {
+    "place": "${configFolder}/unit-test-place.rbxp",
+    "asRobloxScript": true
+  },
+  "lua": {
+    "globals": [
+      "__DEV__=true"
+    ]
+  },
+  "testService": {
+    "errorExitCode": 201
+  }
+}

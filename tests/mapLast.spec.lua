@@ -1,30 +1,22 @@
-return function()
-	local Dash = require(script.Parent)
-	local mapLast = Dash.mapLast
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	describe("mapLast", function()
-		it("should return the first element that the handler does not return nil for", function()
-			local input = {12, 13, 14, 15, 16}
-			local output = mapLast(input, function(value, key)
-				if value < 14 then
-					return value * 10
-				else
-					return nil
-				end
-			end)
-			assertSnapshot(output, [[130]])
-		end)
+local Dash = require(Packages.Dash)
+local mapLast = Dash.mapLast
 
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				mapLast()
-			end, [[AssertError: Attempted to call Dash.mapLast with argument #1 of type "nil" not "table"]])
+describe("mapLast", function()
+	it("should return the first element that the handler does not return nil for", function()
+		local input = { 12, 13, 14, 15, 16 }
+		local output = mapLast(input, function(value, key)
+			if value < 14 then
+				return value * 10
+			else
+				return nil
+			end
 		end)
-
-		it("ensures a handler of correct type", function()
-			assertThrows(function()
-				mapLast({})
-			end, [[AssertError: Attempted to call Dash.mapLast with argument #2 of type "nil" not "function"]])
-		end)
+		expect(output).toEqual(130)
 	end)
-end
+end)

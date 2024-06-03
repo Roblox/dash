@@ -1,15 +1,19 @@
-return function()
-	local Dash = require(script.Parent)
-	local identity = Dash.identity
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	describe("identity", function()
-		it("should return the input", function()
-			local output = {}
-			assertSnapshot(identity(output) == output, [[true]])
-			assertSnapshot(identity(5) == 5, [[true]])
-			assertSnapshot(identity(true) == true, [[true]])
-			assertSnapshot(identity("hula") == "hula", [[true]])
-			assertSnapshot(identity(nil) == nil, [[true]])
-		end)
+local Dash = require(Packages.Dash)
+local identity = Dash.identity
+
+describe("identity", function()
+	it("should return the input", function()
+		local output = {}
+		expect(identity(output)).toEqual(output)
+		expect(identity(5)).toEqual(5)
+		expect(identity(true)).toEqual(true)
+		expect(identity("hula")).toEqual("hula")
+		expect(identity(nil)).toBeNil()
 	end)
-end
+end)

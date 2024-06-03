@@ -5,14 +5,11 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 
 -- TODO Luau: Support generic functions
 export type MapHandler = (any, number) -> any
 
 local function mapLast(input: Types.Array<any>, handler: MapHandler)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.mapLast with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(handler), "function", [[Attempted to call Dash.mapLast with argument #2 of type {left:?} not {right:?}]])
 	for key = #input, 1, -1 do
 		local child = input[key]
 		local output = handler(child, key)

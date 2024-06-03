@@ -11,7 +11,6 @@ local Dash = script.Parent
 local assertEqual = require(Dash.assertEqual)
 
 local function isUppercase(input: string)
-	assertEqual(typeof(input), "string", [[Attempted to call Dash.isUppercase with argument #1 of type {left:?} not {right:?}]])
 	assertEqual(#input > 0, true, [[Attempted to call Dash.isUppercase with an empty string]])
 	local firstLetter = input:sub(1, 1)
 	return firstLetter == firstLetter:upper()
