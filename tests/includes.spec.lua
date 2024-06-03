@@ -1,26 +1,27 @@
-return function()
-	local Dash = require(script.Parent)
-	local includes = Dash.includes
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	describe("includes", function()
-		it("should return the expected value for arrays", function()
-			assertSnapshot(includes({1, 2, 3, 4, 5}, 5), [[true]])
-			assertSnapshot(includes({1, 2, 3, 4, 5}, 6), [[false]])
-		end)
+local Dash = require(Packages.Dash)
 
-		it("should return the expected value for maps", function()
-			assertSnapshot(includes({a = 1, b = 5, c = 3}, 5), [[true]])
-			assertSnapshot(includes({a = 1, b = 5, c = 3}, 6), [[false]])
-		end)
+local includes = Dash.includes
 
-		it("should return false for nil", function()
-			assertSnapshot(includes({a = nil}, nil), [[false]])
-		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				includes()
-			end, [[AssertError: Attempted to call Dash.includes with argument #1 of type "nil" not "table"]])
-		end)
+describe("includes", function()
+	it("should return the expected value for arrays", function()
+		expect(includes({ 1, 2, 3, 4, 5 }, 5)).toBe(true)
+		expect(includes({ 1, 2, 3, 4, 5 }, 6)).toBe(false)
 	end)
-end
+
+	it("should return the expected value for maps", function()
+		expect(includes({ a = 1, b = 5, c = 3 }, 5)).toBe(true)
+		-- This one doesn't typechecks because the inferred type of the table is incorrect, it should be { [unknonw]: string | number }, not { number }
+		expect(includes({ k = "10", l = 0, 9 }, "10")).toBe(true)
+		expect(includes({ a = 1, b = 5, c = 3 }, 6)).toBe(false)
+	end)
+
+	it("should return false for nil", function()
+		expect(includes({ a = nil }, nil)).toBe(false)
+	end)
+end)

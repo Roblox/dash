@@ -1,37 +1,41 @@
-return function()
-	local Dash = require(script.Parent)
-	local keys = Dash.keys
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	local sort = table.sort
+local Dash = require(Packages.Dash)
+local keys = Dash.keys
 
-	describe("keys", function()
-		it("should return an empty table for an empty map", function()
-			local output = keys({})
-			assertSnapshot(output, [[{}]])
-		end)
+local sort = table.sort
 
-		it("should return a list of the keys of an array", function()
-			local output = keys({10, 20, 30, 40, 50})
-			sort(output)
-			assertSnapshot(output, [[{
-	1,
-	2,
-	3,
-	4,
-	5
-}]])
-		end)
-
-		it("should return a list of the keys of a map", function()
-			local output = keys({a = 10, b = 20, c = 30, d = 40, e = 50})
-			sort(output)
-			assertSnapshot(output, [[{
-	"a",
-	"b",
-	"c",
-	"d",
-	"e"
-}]])
-		end)
+describe("keys", function()
+	it("should return an empty table for an empty map", function()
+		local output = keys({})
+		expect(output).toEqual({})
 	end)
-end
+
+	it("should return a list of the keys of an array", function()
+		local output = keys({ 10, 20, 30, 40, 50 })
+		sort(output)
+		expect(output).toEqual({
+			1,
+			2,
+			3,
+			4,
+			5,
+		})
+	end)
+
+	it("should return a list of the keys of a map", function()
+		local output = keys({ a = 10, b = 20, c = 30, d = 40, e = 50 })
+		sort(output)
+		expect(output).toEqual({
+			"a",
+			"b",
+			"c",
+			"d",
+			"e",
+		})
+	end)
+end)
