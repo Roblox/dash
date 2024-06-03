@@ -9,5 +9,3 @@ repo_url: https://github.com/Roblox/Dash
 nav:
   - Home: index.md
   - API Reference: api.md
-  - Types: types.md
-  - Tags: tags.md
