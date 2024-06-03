@@ -45,6 +45,6 @@ describe("find", function()
 		local output = find(input, function(_value, key)
 			return key == "f"
 		end)
-		expect(output).toEqual(nil)
+		expect(output).toBeNil()
 	end)
 end)
