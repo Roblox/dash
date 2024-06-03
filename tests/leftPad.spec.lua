@@ -1,12 +1,16 @@
-return function()
-	local Dash = require(script.Parent)
-	local leftPad = Dash.leftPad
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	describe("leftPad", function()
-		it("should run correctly for a range of inputs", function()
-			assertSnapshot(leftPad("toast", 6), [[" toast"]])
-			assertSnapshot(leftPad("2", 2, "0"), [["02"]])
-			assertSnapshot(leftPad("toast", 10, ":)"), [[":):):toast"]])
-		end)
+local Dash = require(Packages.Dash)
+local leftPad = Dash.leftPad
+
+describe("leftPad", function()
+	it("should run correctly for a range of inputs", function()
+		expect(leftPad("toast", 6)).toEqual(" toast")
+		expect(leftPad("2", 2, "0")).toEqual("02")
+		expect(leftPad("toast", 10, ":)")).toEqual(":):):toast")
 	end)
-end
+end)

@@ -1,34 +1,36 @@
-return function()
-	local Dash = require(script.Parent)
-	local cycles = Dash.cycles
-	local pretty = Dash.pretty
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	describe("cycles", function()
-		it("should return nil for a primitive value", function()
-			local output = cycles(57)
-			assertSnapshot(output, [[nil]])
-		end)
+local Dash = require(Packages.Dash)
+local cycles = Dash.cycles
 
-		it("should return a cycles breakdown for a non-cyclic table", function()
-			local tableA = {a = 2}
-			local tableB = {a = 2, b = 4, c = tableB}
-			local output = cycles({a = 2, b = 4, c = {a = 2}})
-			assertSnapshot(output.nextRef, [[1]])
-			assertSnapshot(output.refs, [[{}]])
-		end)
-
-		it("should return a cycles breakdown for a cyclic table", function()
-			local tableA = {a = 2, b = 4}
-			local tableB = {x = 5}
-			local tableC = {a = 5, child = tableB}
-			tableA.c = tableC
-			tableC.a = tableA
-			local output = cycles({a = tableA, c = tableC})
-			assertSnapshot(output.nextRef, [[3]])
-			assertSnapshot(output.refs[tableA], [[1]])
-			assertSnapshot(output.refs[tableB], [[nil]])
-			assertSnapshot(output.refs[tableC], [[2]])
-		end)
-
+describe("cycles", function()
+	it("should return nil for a primitive value", function()
+		local output = cycles(57)
+		expect(output).toEqual(nil)
 	end)
-end
+
+	it("should return a cycles breakdown for a non-cyclic table", function()
+		local tableA = { a = 2 }
+		local tableB = { a = 2, b = 4, c = tableB }
+		local output = cycles({ a = 2, b = 4, c = { a = 2 } })
+		expect(output.nextRef).toEqual(1)
+		expect(output.refs).toEqual({})
+	end)
+
+	it("should return a cycles breakdown for a cyclic table", function()
+		local tableA = { a = 2, b = 4 }
+		local tableB = { x = 5 }
+		local tableC = { a = 5, child = tableB }
+		tableA.c = tableC
+		tableC.a = tableA
+		local output = cycles({ a = tableA, c = tableC })
+		expect(output.nextRef).toEqual(3)
+		expect(output.refs[tableA]).toEqual(1)
+		expect(output.refs[tableB]).toEqual(nil)
+		expect(output.refs[tableC]).toEqual(2)
+	end)
+end)
