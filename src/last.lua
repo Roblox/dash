@@ -8,13 +8,11 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 
 -- TODO Luau: support generic function definitions
 export type FindHandler = (any, any) -> boolean
 
 local function last(input: Types.Array<any>, handler: FindHandler?)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.last with argument #1 of type {left:?} not {right:?}]])
 	for index = #input, 1, -1 do
 		local child = input[index]
 		if not handler then
