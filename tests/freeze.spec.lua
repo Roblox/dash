@@ -19,7 +19,7 @@ describe("freeze", function()
 		expect(function()
 			output.red = 256
 		end).toThrowWithMessage([[ReadonlyKey: Attempted to write to readonly key "red" of frozen object "MyObject"]])
-		expect(output.blah).toEqual(nil)
+		expect(output.blah).toBeNil()
 	end)
 	it("should throw for missing keys if so desired", function()
 		expect(function()

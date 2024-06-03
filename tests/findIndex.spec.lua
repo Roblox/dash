@@ -29,6 +29,6 @@ describe("findIndex", function()
 		local output = findIndex(input, function(_value, index)
 			return index == 10
 		end)
-		expect(output).toEqual(nil)
+		expect(output).toBeNil()
 	end)
 end)
