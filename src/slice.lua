@@ -12,19 +12,15 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 
 local insert = table.insert
 
 local function slice(input: Types.Array<any>, left: number?, right: number?)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.slice with argument #1 of type {left:?} not {right:?}]])
 	local output = {}
 
 	-- Default values
 	left = left or 1
 	right = right or #input
-	assertEqual(typeof(left), "number", [[Attempted to call Dash.slice with argument #2 of type {left:?} not {right:?}]])
-	assertEqual(typeof(right), "number", [[Attempted to call Dash.slice with argument #3 of type {left:?} not {right:?}]])
 
 	if left < 0 then
 		left = #input + left

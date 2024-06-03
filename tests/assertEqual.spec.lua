@@ -1,14 +1,20 @@
-return function()
-	local Dash = require(script.Parent)
-	local assertEqual = Dash.assertEqual
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	describe("assertEqual", function()
-		it("should run correctly", function()
-			assertEqual(510, 510)
-			assertThrows(function()
-				assertEqual("duck", "goose")
-			end, [[AssertError: Left "duck" does not equal right "goose"]])
-		end)
+local Dash = require(Packages.Dash)
+local assertEqual = Dash.assertEqual
 
+local customMatchers = require(script.Parent.customMatchers)
+expect.extend(customMatchers)
+
+describe("assertEqual", function()
+	it("should run correctly", function()
+		assertEqual(510, 510)
+		expect(function()
+			assertEqual("duck", "goose")
+		end).toThrowWithMessage('AssertError: Left "duck" does not equal right "goose"')
 	end)
-end
+end)

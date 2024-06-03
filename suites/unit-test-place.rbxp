@@ -1,0 +1,24 @@
+{
+	"fileVersion": 1,
+	"instanceHierarchy": {
+		"name": "Dash Test Place",
+		"tree": {
+			"$className": "DataModel",
+			"ReplicatedStorage": {
+				"$className": "ReplicatedStorage",
+				"Packages": {
+					"$path": "../Packages",
+					"Dash": {
+						"$path": "../src",
+						"jest.config": {
+							"$path": "jest.config.lua"
+						},
+						"Tests": {
+							"$path": "../tests"
+						}
+					}
+				}
+			}
+		}
+	}
+}

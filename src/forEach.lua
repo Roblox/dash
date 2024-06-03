@@ -8,16 +8,11 @@
 	Calls the _handler_ for each entry.
 ]]
 local Dash = script.Parent
-local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 local iterator = require(Dash.iterator)
 
 export type ForEachHandler<Value> = (Value, number) -> ()
--- TODO Luau: Support function generics
---local function forEach<Value>(input: Types.Array<Value>, handler: ForEachHandler<Value>)
-local function forEach(input: Types.Table, handler: Types.AnyFunction)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.forEach with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(typeof(handler), "function", [[Attempted to call Dash.forEach with argument #2 of type {left:?} not {right:?}]])
+
+local function forEach<Value>(input: {Value}, handler: ForEachHandler<Value>)
 	for key, value in iterator(input) do
 		handler(value, key)
 	end

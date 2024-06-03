@@ -1,0 +1,13 @@
+std = "roblox"
+
+exclude = [
+	".git/*",
+	"Docs/",
+]
+
+[config]
+high_cyclomatic_complexity = { maximum_complexity = 20 }
+empty_if = { comments_count = true }
+unused_variable = { ignore_pattern = "result|ok|^_" }
+shadowing = { ignore_pattern = "result|ok|^_" }
+global_usage = { ignore_pattern = "^__" }

@@ -5,3 +5,7 @@ license = ""
 version = "0.1.9"
 proxy = "https://github.com/roblox/rotriever-proxy-index"
 content_root = "src"
+
+[dev_dependencies]
+JestGlobals = "github.com/Roblox/jest-roblox@3.8.0"
+Jest = "github.com/roblox/jest-roblox@3.8.0"
