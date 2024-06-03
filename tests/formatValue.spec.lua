@@ -17,7 +17,6 @@ describe("formatValue", function()
 		expect(formatValue(255, "s")).toEqual("255")
 		expect(formatValue(255, "06X")).toEqual("0000FF")
 		expect(formatValue({ a = 2, b = { 2, 3 } }, "?")).toEqual("{a = 2, b = {2, 3}}")
-		-- // TODO (AleksandrSl 02/06/2024): Can I drop [[
 		expect(formatValue({ a = 2, b = { 2, 3 } }, "#?")).toEqual([[{
 	a = 2,
 	b = {
