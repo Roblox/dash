@@ -3,8 +3,7 @@
 
 	Can be used to make it clear that a handler returns its inputs.
 ]]
--- TODO Luau: Support typing generic return tuple
-local function identity(...)
+local function identity<T...>(...: T...): T...
 	return ...
 end
 
