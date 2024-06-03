@@ -10,14 +10,11 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 
 local insert = table.insert
 
 -- TODO Luau: Support generic functions
 local function groupBy(input: Dash.Table, getKey: any)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.groupBy with argument #1 of type {left:?} not {right:?}]])
-	assertEqual(getKey == nil, false, [[Attempted to call Dash.groupBy with a nil getKey argument]])
 	local result = {}
 	for key, child in pairs(input) do
 		local groupKey

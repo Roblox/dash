@@ -6,17 +6,15 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 local iterator = require(Dash.iterator)
 
 -- TODO Luau: Support generic functions
 local function collectSet(input: Types.Table, handler: Types.AnyFunction?)
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.collectSet with argument #1 of type {left:?} not {right:?}]])
 	local result = {}
 	for key, child in iterator(input) do
 		local outputValue
 		if handler == nil then
-			outputValue = child 
+			outputValue = child
 		else
 			outputValue = handler(key, child)
 		end

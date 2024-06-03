@@ -1,44 +1,26 @@
-return function()
-	local Dash = require(script.Parent)
-	local collect = Dash.collect
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	describe("collect", function()
-		it("should collect elements of an array", function()
-			local input = {10, 20, 30, 50}
-			local output = collect(input, function(key, value)
-				return value, key
-			end)
-			assertSnapshot(output, [[{
-	10 = 1,
-	20 = 2,
-	30 = 3,
-	50 = 4
-}]])
-		end)
+local Dash = require(Packages.Dash)
+local collect = Dash.collect
 
-		it("should collect elements of a map", function()
-			local input = {a = 10, b = 20, c = 30, d = 50}
-			local output = collect(input, function(key, value)
-				return value + 1, key .. "!"
-			end)
-			assertSnapshot(output, [[{
-	11 = "a!",
-	21 = "b!",
-	31 = "c!",
-	51 = "d!"
-}]])
+describe("collect", function()
+	it("should collect elements of an array", function()
+		local input = { 10, 20, 30, 50 }
+		local output = collect(input, function(key, value)
+			return value, key
 		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				collect()
-			end, [[AssertError: Attempted to call Dash.collect with argument #1 of type "nil" not "table"]])
-		end)
-
-		it("ensures a handler of correct type", function()
-			assertThrows(function()
-				collect({})
-			end, [[AssertError: Attempted to call Dash.collect with argument #2 of type "nil" not "function"]])
-		end)
+		expect(output).toEqual({ [10] = 1, [20] = 2, [30] = 3, [50] = 4 })
 	end)
-end
+
+	it("should collect elements of a map", function()
+		local input = { a = 10, b = 20, c = 30, d = 50 }
+		local output = collect(input, function(key, value)
+			return value + 1, key .. "!"
+		end)
+		expect(output).toEqual({ [11] = "a!", [21] = "b!", [31] = "c!", [51] = "d!" })
+	end)
+end)

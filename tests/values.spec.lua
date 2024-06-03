@@ -1,43 +1,28 @@
-return function()
-	local Dash = require(script.Parent)
-	local values = Dash.values
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	local sort = table.sort
+local Dash = require(Packages.Dash)
+local values = Dash.values
 
-	describe("values", function()
-		it("should return an empty table for an empty map", function()
-			local output = values({})
-			assertSnapshot(output, [[{}]])
-		end)
+local sort = table.sort
 
-		it("should return a list of the values of an array", function()
-			local output = values({10, 20, 30, 40, 50})
-			sort(output)
-			assertSnapshot(output, [[{
-	10,
-	20,
-	30,
-	40,
-	50
-}]])
-		end)
-
-		it("should return a list of the values of a map", function()
-			local output = values({a = 10, b = 20, c = 30, d = 40, e = 50})
-			sort(output)
-			assertSnapshot(output, [[{
-	10,
-	20,
-	30,
-	40,
-	50
-}]])
-		end)
-
-		it("ensures an input of the correct type", function()
-			assertThrows(function()
-				values(355)
-			end, [[AssertError: Attempted to call Dash.values with argument #1 of type "number" not "table"]])
-		end)
+describe("values", function()
+	it("should return an empty table for an empty map", function()
+		local output = values({})
+		expect(output).toEqual({})
 	end)
-end
+
+	it("should return a list of the values of an array", function()
+		local output = values({ 10, 30, 20, 40, 50 })
+		expect(output).toEqual({ 10, 30, 20, 40, 50 })
+	end)
+
+	it("should return a list of the values of a map", function()
+		local output = values({ a = 10, b = 20, c = 30, d = 40, e = 50 })
+		sort(output)
+		expect(output).toEqual({ 10, 20, 30, 40, 50 })
+	end)
+end)

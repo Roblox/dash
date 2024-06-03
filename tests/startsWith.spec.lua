@@ -1,22 +1,16 @@
-return function()
-	local Dash = require(script.Parent)
-	local startsWith = Dash.startsWith
+local Packages = game:GetService("ReplicatedStorage").Packages
+local JestGlobals = require(Packages.Dev.JestGlobals)
+local describe = JestGlobals.describe
+local it = JestGlobals.it
+local expect = JestGlobals.expect
 
-	describe("startsWith", function()
-		it("should correctly test the string ending", function()
-			assertSnapshot(startsWith("Fun Roblox Games", "Fun"), [[true]])
-			assertSnapshot(startsWith("Card Games", "Fun"), [[false]])
-			assertSnapshot(startsWith("Roblox Games", "A string that is longer than the input"), [[false]])
-		end)
+local Dash = require(Packages.Dash)
+local startsWith = Dash.startsWith
 
-		it("ensures arguments of correct type", function()
-			assertThrows(function()
-				startsWith(5)
-			end, [[AssertError: Attempted to call Dash.startsWith with argument #1 of type "number" not "string"]])
-			assertThrows(function()
-				startsWith("test", 4)
-			end, [[AssertError: Attempted to call Dash.startsWith with argument #2 of type "number" not "string"]])
-		end)
-
+describe("startsWith", function()
+	it("should correctly test the string ending", function()
+		expect(startsWith("Fun Roblox Games", "Fun")).toBe(true)
+		expect(startsWith("Card Games", "Fun")).toBe(false)
+		expect(startsWith("Roblox Games", "A string that is longer than the input")).toBe(false)
 	end)
-end
+end)
