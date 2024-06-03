@@ -1,10 +1,15 @@
+--[[
+	Sums all numbers in the _input_ [Array](#array).
+
+	If the input Array has no elements, return `0`.
+
+	@example
+		Dash.sum({3, 2, 1}) --> 6
+]]
 local Dash = script.Parent
-local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 local reduce = require(Dash.reduce)
 
-local function sum(input: Types.Array<number>): number
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.sum with argument #1 of type {left:?} not {right:?}]])
+local function sum(input: { number }): number
 	return reduce(input, function(acc, num)
 		return acc + num
 	end, 0)
