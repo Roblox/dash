@@ -33,14 +33,14 @@ local defaultHandler = function()
 end
 
 local function count(input: Types.Table, handler: CountHandler?): number
-	local count = 0
-	handler = if handler then handler else defaultHandler
+	local counter = 0
+	local countHandler = handler or defaultHandler
 	for key, value in input do
-		if handler(value, key) then
-			count += 1
+		if countHandler(value, key) then
+			counter += 1
 		end
 	end
-	return count
+	return counter
 end
 
 return count
