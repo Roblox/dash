@@ -14,8 +14,6 @@ describe("cycles", function()
 	end)
 
 	it("should return a cycles breakdown for a non-cyclic table", function()
-		local tableA = { a = 2 }
-		local tableB = { a = 2, b = 4, c = tableB }
 		local output = cycles({ a = 2, b = 4, c = { a = 2 } })
 		expect(output.nextRef).toEqual(1)
 		expect(output.refs).toEqual({})
