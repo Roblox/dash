@@ -23,5 +23,6 @@ local function mapOne(input: Types.Table, handler: MapHandler?)
 			return output
 		end
 	end
+	return
 end
 return mapOne
