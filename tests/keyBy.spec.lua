@@ -9,24 +9,24 @@ local keyBy = Dash.keyBy
 
 describe("keyBy", function()
 	it("should return an empty table for an empty grouping", function()
-		local output = keyBy({}, function(child, index)
+		local output = keyBy({}, function()
 			return 5
 		end)
 		expect(output).toEqual({})
 	end)
 
 	it("should return the most recent value for aliased keys", function()
-		local output = keyBy({ 1, 2, 3, 4, 5 }, function(child, index)
+		local output = keyBy({ 1, 2, 3, 4, 5 }, function(_, index)
 			return index % 2
 		end)
 		expect(output).toEqual({
-			5,
+			[1] = 5,
 			[0] = 4,
 		})
 	end)
 
 	it("should return a table with a separate entries for unique keys", function()
-		local output = keyBy({ 1, 2, 3, 4, 5 }, function(child, key)
+		local output = keyBy({ 1, 2, 3, 4, 5 }, function(_, key)
 			return key
 		end)
 		expect(output).toEqual({
