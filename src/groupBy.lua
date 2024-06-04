@@ -14,7 +14,7 @@ local Types = require(Dash.Types)
 local insert = table.insert
 
 -- TODO Luau: Support generic functions
-local function groupBy(input: Dash.Table, getKey: any)
+local function groupBy(input: Types.Table, getKey: any)
 	local result = {}
 	for key, child in pairs(input) do
 		local groupKey
