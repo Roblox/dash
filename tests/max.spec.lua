@@ -19,7 +19,9 @@ describe("max", function()
 	describe("with custom comparator and default handler", function()
 		it("should get maximal element", function()
 			-- Yes, pun intended
-			local function customComparator(a, b) return a < b end
+			local function customComparator(a, b)
+				return a < b
+			end
 
 			local input = { 20, 50, -20, 30, 10 }
 			local output = max(input, nil, customComparator)
@@ -30,8 +32,12 @@ describe("max", function()
 	describe("with custom comparator and custom handler", function()
 		it("should get maximal element", function()
 		-- Yes, pun intended
-			local function customComparator(a, b)  return a < b end
-			local function customHandler(a)  return -a end
+			local function customComparator(a, b)
+				return a < b
+			end
+			local function customHandler(a)
+				return -a
+			end
 
 			local input = { 20, 50, -20, 30, 10 }
 			local output = max(input, customHandler, customComparator)
@@ -41,7 +47,9 @@ describe("max", function()
 
 	describe("with default comparator and custom handler", function()
 		it("should get maximal element", function()
-			local function customHandler(a)  return -a end
+			local function customHandler(a)
+				return -a
+			end
 
 			local input = { 20, 50, -20, 30, 10 }
 			local output = max(input, customHandler)

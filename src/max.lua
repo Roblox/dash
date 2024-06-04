@@ -37,24 +37,24 @@ local defaultComparator = function(a, b)
 end
 
 local function max(input: Types.Table, handler: MaxHandler?, comparator: MaxComparator?): number
-	comparator = if comparator then comparator else defaultComparator
+	local comparatorFn = comparator or defaultComparator
 
 	if handler then
-		local acc = reduce(input, function(acc, value, key)
+		local accumulator = reduce(input, function(acc, value, key)
 			local newValue = handler(value, key)
 			if not acc then
 				return { value = newValue, original = value }
 			end
-			return if comparator(newValue, acc.value) then { value = newValue, original = value } else acc
+			return if comparatorFn(newValue, acc.value) then { value = newValue, original = value } else acc
 		end, nil)
-		return acc.original
+		return accumulator.original
 	end
 
 	return reduce(input, function(acc, value)
 		if not acc then
 			return value
 		end
-		return if comparator(value, acc) then value else acc
+		return if comparatorFn(value, acc) then value else acc
 	end, nil)
 end
 
