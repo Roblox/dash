@@ -21,5 +21,6 @@ local function find(input: Types.Table, handler: FindHandler)
 			return child
 		end
 	end
+	return nil
 end
 return find
