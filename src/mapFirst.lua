@@ -5,7 +5,6 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 
 -- TODO Luau: Support generic functions
 export type MapHandler = (any, number) -> any
@@ -17,5 +16,6 @@ local function mapFirst(input: Types.Array<any>, handler: MapHandler)
 			return output
 		end
 	end
+	return
 end
 return mapFirst
