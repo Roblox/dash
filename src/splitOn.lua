@@ -4,7 +4,7 @@
 ]]
 local insert = table.insert
 
-local function splitOn(input: string, pattern: string): Types.Array<string>
+local function splitOn(input: string, pattern: string): { string }
 	local parts = {}
 	local delimiters = {}
 	local from = 1
