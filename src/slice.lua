@@ -19,16 +19,16 @@ local function slice(input: Types.Array<any>, left: number?, right: number?)
 	local output = {}
 
 	-- Default values
-	left = left or 1
-	right = right or #input
+	local l: number = left or 1
+	local r: number = right or #input
 
-	if left < 0 then
-		left = #input + left
+	if l < 0 then
+		l = #input + l
 	end
-	if right and right < 0 then
-		right = #input + right
+	if r and r < 0 then
+		r = #input + r
 	end
-	for i = left, right do
+	for i = l, r do
 		insert(output, input[i])
 	end
 	return output
