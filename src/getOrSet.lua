@@ -8,7 +8,7 @@ local Dash = script.Parent
 local Types = require(Dash.Types)
 
 -- TODO Luau: Support generic functions
-export type GetValueHandler = (any) -> any
+export type GetValueHandler = (Types.Table, any) -> any
 
 local function getOrSet(input: Types.Table, key: any, getValue: GetValueHandler)
 	if input[key] == nil then
