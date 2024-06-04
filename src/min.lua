@@ -37,24 +37,24 @@ end
 
 -- TODO (AleksandrSl 03/06/2024): Can be further "optimized" by writing a compare function that will do all the stuff and pass default comparator
 local function min(input: Types.Table, handler: MinHandler?, comparator: MinComparator?): number
-	comparator = if comparator then comparator else defaultComparator
+	local comparatorFn = comparator or defaultComparator
 
 	if handler then
-		local acc = reduce(input, function(acc, value, key)
+		local accumulator = reduce(input, function(acc, value, key)
 			local newValue = handler(value, key)
 			if not acc then
 				return { value = newValue, original = value }
 			end
-			return if comparator(newValue, acc.value) then { value = newValue, original = value } else acc
+			return if comparatorFn(newValue, acc.value) then { value = newValue, original = value } else acc
 		end, nil)
-		return acc.original
+		return accumulator.original
 	end
 
 	return reduce(input, function(acc, value)
 		if not acc then
 			return value
 		end
-		return if comparator(value, acc) then value else acc
+		return if comparatorFn(value, acc) then value else acc
 	end, nil)
 end
 
