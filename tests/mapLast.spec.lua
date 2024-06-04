@@ -10,7 +10,7 @@ local mapLast = Dash.mapLast
 describe("mapLast", function()
 	it("should return the first element that the handler does not return nil for", function()
 		local input = { 12, 13, 14, 15, 16 }
-		local output = mapLast(input, function(value, key)
+		local output = mapLast(input, function(value, _)
 			if value < 14 then
 				return value * 10
 			else
