@@ -14,7 +14,7 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local class = require(Dash.class)
-local format = require(Dash.format)
+local format = require(Dash.format) :: <T...>(string, T...) -> string
 local join = require(Dash.join)
 
 --[[
