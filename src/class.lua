@@ -39,7 +39,7 @@ end
 export type Constructor = () -> Types.Table
 
 local function class(name: string, constructor: Constructor?)
-	constructor = constructor or function()
+	local classConstructor: Constructor = constructor or function()
 		return {}
 	end
 	local Class = {
@@ -57,7 +57,7 @@ local function class(name: string, constructor: Constructor?)
 			pretty(car) --> 'Car {speed = 5}'
 	]]
 	function Class.new(...)
-		local instance = constructor(...)
+		local instance = classConstructor(...)
 		setmetatable(instance, {
 			__index = Class,
 			__tostring = Class.toString,
@@ -175,8 +175,8 @@ local function class(name: string, constructor: Constructor?)
 			local car = Car.new()
 			car.id --> "Car #1: 4 wheels"
 	]]
-	function Class:extend(className: string, classConstructor)
-		local SubClass = class(className, classConstructor or Class.new)
+	function Class:extend(subClassName: string, subClassConstructor)
+		local SubClass = class(subClassName, subClassConstructor or Class.new)
 		setmetatable(SubClass, { __index = self })
 		return SubClass
 	end
