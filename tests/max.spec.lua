@@ -31,7 +31,7 @@ describe("max", function()
 
 	describe("with custom comparator and custom handler", function()
 		it("should get maximal element", function()
-		-- Yes, pun intended
+			-- Yes, pun intended
 			local function customComparator(a, b)
 				return a < b
 			end

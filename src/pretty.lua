@@ -50,7 +50,6 @@ end
 
 local pretty
 
-
 -- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
 -- local function prettyLines(object: any, options: PrettyOptions?): Types.Array<string>
 local function prettyLines(object: any, options: any): Types.Array<string>
@@ -58,31 +57,35 @@ local function prettyLines(object: any, options: any): Types.Array<string>
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively
 		-- Construct the options for recursive calls for the table values
-		local valueOptions = assign({
-			visited = {},
-			indent = "\t",
-			depth = 2
-		}, options, {
-			-- Depth is reduced until we shouldn't recurse any more
-			depth = options.depth and options.depth - 1 or nil,
-			cycles = options.cycles or cycles(object, options.depth, {
+		local valueOptions = assign(
+			{
 				visited = {},
-				refs = {},
-				nextRef = 0,
-				depth = options.depth,
-				omit = options.omit or {}
-			})
-		})
+				indent = "\t",
+				depth = 2,
+			},
+			options,
+			{
+				-- Depth is reduced until we shouldn't recurse any more
+				depth = options.depth and options.depth - 1 or nil,
+				cycles = options.cycles or cycles(object, options.depth, {
+					visited = {},
+					refs = {},
+					nextRef = 0,
+					depth = options.depth,
+					omit = options.omit or {},
+				}),
+			}
+		)
 		if valueOptions.depth == -1 then
 			-- Indicate there is more information available beneath the maximum depth
-			return {"..."}
+			return { "..." }
 		end
 		if valueOptions.visited[object] then
 			-- Indicate this table has been printed already, so print a ref number instead of
 			-- printing it multiple times
-			return {"&" .. valueOptions.cycles.refs[object]}
+			return { "&" .. valueOptions.cycles.refs[object] }
 		end
-		
+
 		valueOptions.visited[object] = true
 
 		local multiline = valueOptions.multiline
@@ -92,12 +95,12 @@ local function prettyLines(object: any, options: any): Types.Array<string>
 		-- be identified if it crops up later on
 		local ref = valueOptions.cycles.refs[object]
 		local refTag = ref and ("<%s>"):format(ref) or ""
-		local lines = {refTag .. "{"}
+		local lines = { refTag .. "{" }
 
 		-- Build the options for the recursive call for the table keys
 		local keyOptions = join(valueOptions, {
 			noQuotes = true,
-			multiline = false
+			multiline = false,
 		})
 
 		-- Compact numeric keys into a simpler array style
@@ -159,7 +162,11 @@ local function prettyLines(object: any, options: any): Types.Array<string>
 				append(lines, indentedKey)
 				append(lines, indendedValueTail)
 			else
-				lines[#lines] = ("%s%s = %s"):format(lines[#lines], pretty(key, keyOptions), pretty(value, valueOptions))
+				lines[#lines] = ("%s%s = %s"):format(
+					lines[#lines],
+					pretty(key, keyOptions),
+					pretty(value, valueOptions)
+				)
 			end
 		end
 		if valueOptions.multiline then
@@ -174,9 +181,9 @@ local function prettyLines(object: any, options: any): Types.Array<string>
 		end
 		return lines
 	elseif type(object) == "string" and not options.noQuotes then
-		return {('"%s"'):format(object)}
+		return { ('"%s"'):format(object) }
 	else
-		return {tostring(object)}
+		return { tostring(object) }
 	end
 end
 

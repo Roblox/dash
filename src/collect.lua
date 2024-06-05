@@ -11,7 +11,10 @@ local iterator = require(Dash.iterator)
 
 export type CollectHandler<Key, Value, NewKey, NewValue> = (key: Key, value: Value) -> (NewKey, NewValue) | nil
 
-local function collect<Key, Value, NewKey, NewValue>(input: Types.Map<Key, Value>, handler: CollectHandler<NewKey, NewValue>): Types.Map<NewKey, NewValue>
+local function collect<Key, Value, NewKey, NewValue>(
+	input: Types.Map<Key, Value>,
+	handler: CollectHandler<NewKey, NewValue>
+): Types.Map<NewKey, NewValue>
 	local result = {}
 	for key, child in iterator(input) do
 		local outputKey, outputValue = handler(key, child)

@@ -12,10 +12,11 @@ local Dash = script.Parent
 local function assertEqual(left: any, right: any, formattedErrorMessage: string?)
 	if left ~= right then
 		local Error = require(Dash.Error)
-		local TypeError = Error.new("AssertError", formattedErrorMessage or `Left "{left}" does not equal right "{right}"`)
+		local TypeError =
+			Error.new("AssertError", formattedErrorMessage or `Left "{left}" does not equal right "{right}"`)
 		TypeError:throw({
 			left = left,
-			right = right
+			right = right,
 		})
 	end
 end

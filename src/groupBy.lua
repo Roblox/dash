@@ -27,7 +27,7 @@ local function groupBy(input: Types.Table, getKey: any)
 			if result[groupKey] ~= nil then
 				insert(result[groupKey], child)
 			else
-				result[groupKey] = {child}
+				result[groupKey] = { child }
 			end
 		end
 	end

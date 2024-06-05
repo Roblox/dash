@@ -46,7 +46,6 @@ local Types = require(Dash.Types)
 local forEach = require(Dash.forEach)
 local forEachArgs = require(Dash.forEachArgs)
 
-
 -- TODO Luau: Support typing varargs
 -- TODO Luau: Support function generics
 local function assign(target: Types.Table, ...): Types.Table

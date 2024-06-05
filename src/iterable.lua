@@ -27,7 +27,12 @@ local function iterable(input: Types.Table): Types.AnyFunction
 		while true do
 			currentKey = next(input, currentKey)
 			-- Don't re-visit ordered keys 1..n
-			if typeof(currentKey) == "number" and currentKey > 0 and currentKey < currentIndex and currentKey % 1 == 0 then
+			if
+				typeof(currentKey) == "number"
+				and currentKey > 0
+				and currentKey < currentIndex
+				and currentKey % 1 == 0
+			then
 				continue
 			end
 			if currentKey == nil then

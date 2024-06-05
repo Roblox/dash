@@ -15,13 +15,15 @@ local function formatValue(value: any, displayString: string): string
 	local displayTypeStart, displayTypeEnd = displayString:find("[A-Za-z#?]+")
 	if displayTypeStart then
 		local displayType = displayString:sub(displayTypeStart, displayTypeEnd)
-		local formatAsString =
-		"%" .. displayString:sub(1, displayTypeStart - 1) .. displayString:sub(displayTypeEnd + 1) .. "s"
+		local formatAsString = "%"
+			.. displayString:sub(1, displayTypeStart - 1)
+			.. displayString:sub(displayTypeEnd + 1)
+			.. "s"
 		-- Pretty print values
 		local pretty = require(Dash.pretty)
 		if displayType == "#?" then
 			-- Multiline print a value
-			return formatAsString:format(pretty(value, {multiline = true}))
+			return formatAsString:format(pretty(value, { multiline = true }))
 		elseif displayType == "?" then
 			-- Inspect a value
 			return formatAsString:format(pretty(value))

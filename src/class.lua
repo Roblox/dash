@@ -31,7 +31,8 @@ local Types = require(Dash.Types)
 
 local function throwNotImplemented(tags: Types.Table)
 	local Error = require(Dash.Error)
-	local NotImplemented = Error.new("NotImplemented", [[The method "{methodName}" is not implemented on the class "{className}"]])
+	local NotImplemented =
+		Error.new("NotImplemented", [[The method "{methodName}" is not implemented on the class "{className}"]])
 	NotImplemented:throw(tags)
 end
 
@@ -42,7 +43,7 @@ local function class(name: string, constructor: Constructor?)
 		return {}
 	end
 	local Class = {
-		name = name
+		name = name,
 	}
 	--[[
 		Return a new instance of the class, passing any arguments to the specified constructor.
@@ -57,21 +58,18 @@ local function class(name: string, constructor: Constructor?)
 	]]
 	function Class.new(...)
 		local instance = constructor(...)
-		setmetatable(
-			instance,
-			{
-				__index = Class,
-				__tostring = Class.toString,
-				__eq = Class.equals,
-				__lt = Class.__lt,
-				__le = Class.__le,
-				__add = Class.__add,
-				__sub = Class.__sub,
-				__mul = Class.__mul,
-				__div = Class.__div,
-				__mod = Class.__mod
-			}
-		)
+		setmetatable(instance, {
+			__index = Class,
+			__tostring = Class.toString,
+			__eq = Class.equals,
+			__lt = Class.__lt,
+			__le = Class.__le,
+			__add = Class.__add,
+			__sub = Class.__sub,
+			__mul = Class.__mul,
+			__div = Class.__div,
+			__mod = Class.__mod,
+		})
 		instance.Class = Class
 		instance:_init(...)
 		return instance
@@ -107,8 +105,7 @@ local function class(name: string, constructor: Constructor?)
 			local car = Vehicle.new(4)
 			tostring(car) --> "#1: 4 wheels"
 	]]
-	function Class:_init()
-	end
+	function Class:_init() end
 
 	--[[
 		Returns `true` if _value_ is an instance of _Class_ or any sub-class.
@@ -180,7 +177,7 @@ local function class(name: string, constructor: Constructor?)
 	]]
 	function Class:extend(className: string, classConstructor)
 		local SubClass = class(className, classConstructor or Class.new)
-		setmetatable(SubClass, {__index = self})
+		setmetatable(SubClass, { __index = self })
 		return SubClass
 	end
 
@@ -235,8 +232,8 @@ local function class(name: string, constructor: Constructor?)
 	function Class:__lt(_)
 		throwNotImplemented({
 			methodName = "__lt",
-			className = name
-		})	
+			className = name,
+		})
 	end
 
 	--[[
@@ -247,39 +244,39 @@ local function class(name: string, constructor: Constructor?)
 	function Class:__le(_)
 		throwNotImplemented({
 			methodName = "__le",
-			className = name
-		})	
+			className = name,
+		})
 	end
 
 	function Class:__add()
 		throwNotImplemented({
 			methodName = "__add",
-			className = name
-		})	
+			className = name,
+		})
 	end
 	function Class:__sub()
 		throwNotImplemented({
 			methodName = "__sub",
-			className = name
-		})	
+			className = name,
+		})
 	end
 	function Class:__mul()
 		throwNotImplemented({
 			methodName = "__mul",
-			className = name
-		})	
+			className = name,
+		})
 	end
 	function Class:__div()
 		throwNotImplemented({
 			methodName = "__div",
-			className = name
-		})	
+			className = name,
+		})
 	end
 	function Class:__mod()
 		throwNotImplemented({
 			methodName = "__mod",
-			className = name
-		})	
+			className = name,
+		})
 	end
 
 	return Class
