@@ -142,8 +142,8 @@ local function class(name: string, constructor: Constructor?)
 	end
 
 	--[[
-		Create a subclass of _Class_ with a new _name_ that inherits the metatable of _Class_,
-		optionally overriding the _constructor_ and providing additional _decorators_.
+		Create a subclass of _Class_ with a new name _className_ that inherits the metatable of _Class_,
+		optionally overriding the constructor with _classConstructor_ and providing additional _decorators_.
 		The super-constructor can be accessed with `Class.constructor`.
 		Super methods can be accessed using `Class.methodName` and should be called with self.
 		@example
@@ -178,8 +178,8 @@ local function class(name: string, constructor: Constructor?)
 			local car = Car.new()
 			car.id --> "Car #1: 4 wheels"
 	]]
-	function Class:extend(name: string, constructor)
-		local SubClass = class(name, constructor or Class.new)
+	function Class:extend(className: string, classConstructor)
+		local SubClass = class(className, classConstructor or Class.new)
 		setmetatable(SubClass, {__index = self})
 		return SubClass
 	end
@@ -232,7 +232,7 @@ local function class(name: string, constructor: Constructor?)
 		Returns `true` if `self` is considered less than  _other_. This replaces the `<` operator
 		on instances of this class, and can be overridden to provide a custom implementation.
 	]]
-	function Class:__lt(other)
+	function Class:__lt(_)
 		throwNotImplemented({
 			methodName = "__lt",
 			className = name
@@ -244,7 +244,7 @@ local function class(name: string, constructor: Constructor?)
 		`<=` operator on instances of this class, and can be overridden to provide a custom
 		implementation.
 	]]
-	function Class:__le(other)
+	function Class:__le(_)
 		throwNotImplemented({
 			methodName = "__le",
 			className = name
