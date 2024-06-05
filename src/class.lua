@@ -30,7 +30,7 @@ local Dash = script.Parent
 local Types = require(Dash.Types)
 
 local function throwNotImplemented(tags: Types.Table)
-	local Error = require(Dash.Error)
+	local Error = require(Dash.Error) :: { [string]: any } -- see type Error
 	local NotImplemented =
 		Error.new("NotImplemented", [[The method "{methodName}" is not implemented on the class "{className}"]])
 	NotImplemented:throw(tags)
