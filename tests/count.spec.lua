@@ -16,8 +16,8 @@ describe("count", function()
 		expect(output).toBe(2)
 	end)
 
-	describe("without handler", function ()
-	-- TODO (AleksandrSl 03/06/2024): Add a case where #input and count will have different output
+	describe("without handler", function()
+		-- TODO (AleksandrSl 03/06/2024): Add a case where #input and count will have different output
 		it("should count all elements", function()
 			local input = { a = 5, b = 5, c = 5, d = 5 }
 			local output = count(input)

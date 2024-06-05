@@ -3,7 +3,7 @@
 
 	A nil _item_ will always return `false`.
 ]]
-local function includes<Item>(input: {[unknown]: Item}, item: Item?): boolean
+local function includes<Item>(input: { [unknown]: Item }, item: Item?): boolean
 	if item == nil then
 		return false
 	end

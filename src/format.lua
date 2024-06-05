@@ -35,7 +35,7 @@ local concat = table.concat
 local insert = table.insert
 
 local function format(formatString: string, ...)
-	local args = {...}
+	local args = { ... }
 	local argIndex = 1
 	local texts, subs = splitOn(formatString, "{[^{}]*}")
 	local result = {}

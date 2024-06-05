@@ -29,10 +29,9 @@ describe("min", function()
 		end)
 	end)
 
-
 	describe("with custom comparator and custom handler", function()
 		it("should get minimal element", function()
-		-- Yes, pun intended
+			-- Yes, pun intended
 			local function customComparator(a, b)
 				return a > b
 			end

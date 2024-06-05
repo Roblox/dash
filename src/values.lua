@@ -10,7 +10,7 @@ local Types = require(Dash.Types)
 
 local insert = table.insert
 
-local function values<Value>(input: Types.Map<unknown, Value>): {Value}
+local function values<Value>(input: Types.Map<unknown, Value>): { Value }
 	local result = {}
 	for _, value in input do
 		insert(result, value)

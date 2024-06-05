@@ -23,11 +23,11 @@ local function compose(...)
 	if fnCount == 0 then
 		return identity
 	end
-	local fns = {...}
+	local fns = { ... }
 	return function(...)
-		local result = {fns[1](...)}
+		local result = { fns[1](...) }
 		for i = 2, fnCount do
-			result = {fns[i](unpack(result))}
+			result = { fns[i](unpack(result)) }
 		end
 		return unpack(result)
 	end

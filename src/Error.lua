@@ -27,7 +27,7 @@ local Error = class("Error", function(name: string, message: string, tags: Types
 	return {
 		name = name,
 		message = message or "An error occurred",
-		tags = tags or {}
+		tags = tags or {},
 	}
 end)
 
