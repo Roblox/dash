@@ -174,9 +174,9 @@ Output: {
 </span>
 
 ```lua
-type CollectHandler = (Key, Value) -> any?
+type CollectHandler = (Key, Value) -> any
 
-collectArray(input: Types.Table, handler: Types.AnyFunction): Types.Array<any>
+collectArray(input: Types.Table, handler: CollectHandler): Types.Array<any>
 ```
 
 Collect returns a new [Array](#array) derived from _input_ by iterating through its pairs and calling
