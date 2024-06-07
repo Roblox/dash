@@ -9,11 +9,11 @@ local Dash = script.Parent
 local Types = require(Dash.Types)
 local iterator = require(Dash.iterator)
 
-export type CollectHandler<Key, Value, NewKey, NewValue> = (key: Key, value: Value) -> (NewKey, NewValue) | nil
+export type CollectHandler<Key, Value, NewKey, NewValue> = (key: Key, value: Value) -> (NewKey?, NewValue?)
 
 local function collect<Key, Value, NewKey, NewValue>(
 	input: Types.Map<Key, Value>,
-	handler: CollectHandler<NewKey, NewValue>
+	handler: CollectHandler<Key, Value, NewKey, NewValue>
 ): Types.Map<NewKey, NewValue>
 	local result = {}
 	for key, child in iterator(input) do
