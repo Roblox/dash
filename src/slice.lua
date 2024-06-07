@@ -1,5 +1,5 @@
 --[[
-	Return a portion of the _input_ Array starting with the element at the _left_ index and ending
+	Return a portion of the _input_ array starting with the element at the _left_ index and ending
 	with the element at the _right_ index (i.e. an inclusive range)
 
 	If _left_ is not defined, it defaults to 1.
@@ -10,12 +10,9 @@
 
 	An empty array is returned if the slice has no or negative length.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
-
 local insert = table.insert
 
-local function slice(input: Types.Array<any>, left: number?, right: number?)
+local function slice(input: { any }, left: number?, right: number?)
 	local output = {}
 
 	-- Default values

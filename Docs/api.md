@@ -4,16 +4,6 @@
 
 ## Types
 
-### Array
-
-```lua
-type Array<Value> = {[number]: Value}
-```
-
-A table with values of type _Value_ and numeric keys 1..n with no gaps
-
-<hr>
-
 ### Args
 
 ```lua
@@ -176,10 +166,10 @@ Output: {
 ```lua
 type CollectHandler = (Key, Value) -> any
 
-collectArray(input: Types.Table, handler: CollectHandler): Types.Array<any>
+collectArray(input: Types.Table, handler: CollectHandler): { any }
 ```
 
-Collect returns a new [Array](#array) derived from _input_ by iterating through its pairs and calling
+Collect returns a new array derived from _input_ by iterating through its pairs and calling
 the handler on each `(key, value)` tuple.
 
 The handler should return a new value to be pushed onto the end of the result array, or `nil`
@@ -227,7 +217,7 @@ If _handler_ is not provided, values of `input` are used as elements.
 
 **Examples**
 ```lua
--- Convert Array to Set
+-- Convert array to Set
 Dash.collectSet({"toast", "bagel", "donut"})
 
 --[[
@@ -337,12 +327,12 @@ Output: 2
 ```lua
 type FilterHandler = (Value, Key) -> boolean
 
-filter(input: Types.Table, handler: FilterHandler): Types.Array<any>
+filter(input: Types.Table, handler: FilterHandler): { any }
 ```
 
 Filter the _input_ [Table](#table) by calling the handler on each `(value, key)` tuple.
 
-For an [Array](#array) input, the order of elements is preserved in the output.
+For an array input, the order of elements is preserved in the output.
 
 The handler should return truthy to preserve the value in the resulting Table.
 
@@ -382,7 +372,7 @@ Returns an element in the _input_ [Table](#table) that the handler returns `true
 
 Returns nil if no entires satisfy the condition.
 
-For an Array, this first matching element is returned.
+For an array, this first matching element is returned.
 For a Map, an arbitrary matching element is returned if it exists.
 
 **Examples**
@@ -413,7 +403,7 @@ Output: nil
 
 **See**
 
-- [Dash.first](#first) for a function which returns the first element of an [Array](#array) matching a condition.
+- [Dash.first](#first) for a function which returns the first element of an array matching a condition.
 
 <hr>
 
@@ -431,7 +421,7 @@ forEach(input: Types.Table, handler: ForEachHandler): ()
 
 Iterates through the elements of the _input_ Table.
 
-If the table is an Array, it iterates in order 1..n.
+If the table is an array, it iterates in order 1..n.
 
 If the table is a Map, the keys are visited in an arbitrary order.
 
@@ -515,7 +505,7 @@ groupBy(input: Types.Table, getKey: any): Types.Table
 
 Groups values in the _input_ [Table](#table) by their _getKey_ value.
 
-Each value of the result [Table](#table) is an [Array](#array) of values from the _input_ [Table](#table) which were assigned
+Each value of the result [Table](#table) is an array of values from the _input_ [Table](#table) which were assigned
 the corresponding key.
 
 If _getKey_ is a function, it is called with each `(value, key)` entry and uses the return
@@ -658,12 +648,12 @@ Output: {
 </span>
 
 ```lua
-keys(input: Types.Table): Types.Array<any>
+keys(input: Types.Table): { any }
 ```
 
-Returns an [Array](#array) of the keys in the _input_ Table.
+Returns an array of the keys in the _input_ Table.
 
-If the input is an Array, ordering is preserved.
+If the input is an array, ordering is preserved.
 
 If the input is a Map, elements are keys in an arbitrary order.
 
@@ -695,12 +685,12 @@ Output: {
 ```lua
 type MapHandler = (Value, Key) -> any
 
-map(input: Types.Table, handler: MapHandler): Types.Table
+map(input: { any }, handler: MapHandler): { any }
 ```
 
 Iterates through the elements of the _input_ Table.
 
-For an [Array](#array) input, the elements are visted in order 1..n.
+For an array input, the elements are visted in order 1..n.
 
 For a [Map](#map) input, the elements are visited in an arbitrary order.
 
@@ -863,12 +853,12 @@ Dash.min(
 </span>
 
 ```lua
-omit(input: Types.Table, keys: Types.Array<any>): Types.Table
+omit(input: Types.Table, keys: { any }): Types.Table
 ```
 
-Return a new [Table](#table) made from entries in the _input_ [Table](#table) whose key is not in the _keys_ Array.
+Return a new [Table](#table) made from entries in the _input_ [Table](#table) whose key is not in the _keys_ array.
 
-If the input is an Array, ordering is preserved.
+If the input is an array, ordering is preserved.
 
 If the input is a Map, elements are returned in an arbitrary order.
 
@@ -906,7 +896,7 @@ type ReduceHandler = (Accumulator, Value, Key) -> Accumulator
 reduce(input: Types.Table, handler: ReduceHandler, initial: Accumulator)
 ```
 
-Iterate through the elements of the _input_ [Table](#table), preserving order if it is an [Array](#array).
+Iterate through the elements of the _input_ [Table](#table), preserving order if it is an array.
 
 Call the _handler_ for each element, passing the return of the previous call as the first argument.
 
@@ -1044,12 +1034,12 @@ Output: true
 </span>
 
 ```lua
-values(input: Types.Map<any, any>): Types.Array<any>
+values(input: Types.Map<any, any>): { any }
 ```
 
-Returns an [Array](#array) of the values in the _input_ Table.
+Returns an array of the values in the _input_ Table.
 
-If the input is an Array, ordering is preserved.
+If the input is an array, ordering is preserved.
 
 If the input is a Map, values are returned in an arbitrary order.
 
@@ -1076,7 +1066,7 @@ Output: {
 
 ## Arrays
 
-These utilities operate on [Arrays](#array), tables with ordered keys 1..n.
+These utilities operate on arrays, tables with ordered keys 1..n.
 
 <hr>
 
@@ -1087,10 +1077,10 @@ These utilities operate on [Arrays](#array), tables with ordered keys 1..n.
 </span>
 
 ```lua
-append<T>(target: Types.Array<T>, ...: Types.Array<T>): Types.Array<T>
+append<T>(target: { T }, ...: { T }): { T }
 ```
 
-Adds new elements to the _target_ [Array](#array) from subsequent [Array](#array) arguments in left-to-right order.
+Adds new elements to the _target_ array from subsequent array arguments in left-to-right order.
 
 Arguments which are `nil` or None are skipped.
 
@@ -1120,10 +1110,10 @@ Output: {
 ```lua
 type FindHandler = (Value, Key) -> boolean
 
-findIndex(input: Types.Array<any>, handler: FindHandler): value?
+findIndex(input: { any }, handler: FindHandler): value?
 ```
 
-Returns the index of the first element in the _input_ [Array](#array) that the handler returns `true` for,
+Returns the index of the first element in the _input_ array that the handler returns `true` for,
 when passed the `(value, key)` entry.
 
 Returns nil if no entires satisfy the condition.
@@ -1131,7 +1121,7 @@ Returns nil if no entires satisfy the condition.
 **Examples**
 
 ```lua
--- Find index of "Clementine" fruit if it exists in the Array
+-- Find index of "Clementine" fruit if it exists in the array
 Dash.findIndex(
 	{"Apple", "Banana", "Clementine"}, 
 	function(fruit) return fruit == "Clementine" end
@@ -1162,11 +1152,11 @@ Output: nil
 </span>
 
 ```lua
-flat(input: Types.Array<Types.Array<any>>): Types.Array<any>
+flat(input: { any }): { any }
 ```
 
 Flattens the input array by a single level.
-Outputs a new [Array](#array) of elements merged from the _input_ [Array](#array) arguments in left-to-right order.
+Outputs a new array of elements merged from the _input_ array arguments in left-to-right order.
 
 **Example**
 
@@ -1202,12 +1192,12 @@ type FindHandler = (Value, Key) -> boolean
 last(input: Types.Table, handler: FindHandler?): Value?
 ```
 
-Returns the last element in the _input_ [Array](#array) that the handler returns `true` for, when
+Returns the last element in the _input_ array that the handler returns `true` for, when
 passed the `(value, key)` entry.
 
 Returns nil if no entires satisfy the condition.
 
-If handler is not defined, the function simply returns the last element of the Array.
+If handler is not defined, the function simply returns the last element of the array.
 
 **Examples**
 
@@ -1239,10 +1229,10 @@ Output: 3
 ```lua
 type MapHandler = (Value, Key) -> any?
 
-mapFirst(input: Types.Array<any>, handler: MapHandler)
+mapFirst(input: { any }, handler: MapHandler)
 ```
 
-Iterates through the elements of the _input_ [Array](#array) in order 1..n.
+Iterates through the elements of the _input_ array in order 1..n.
 
 Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
 
@@ -1273,10 +1263,10 @@ Output: Y
 ```lua
 type MapHandler = (Value, Key) -> any?
 
-mapLast(input: Types.Array<any>, handler: MapHandler)
+mapLast(input: { any }, handler: MapHandler)
 ```
 
-Iterates through the elements of the _input_ [Array](#array) in reverse in order n..1.
+Iterates through the elements of the _input_ array in reverse in order n..1.
 
 Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
 
@@ -1305,10 +1295,10 @@ Output: O
 </span>
 
 ```lua
-product(input: Types.Array<number>): number
+product(input: { number }): number
 ```
 
-Multiplies together all of the numbers in the _input_ [Array](#array).
+Multiplies together all of the numbers in the _input_ array.
 
 If the _input_ has no elements, return `1`.
 
@@ -1326,10 +1316,10 @@ Dash.product({3, 3, 2}) --> 18
 </span>
 
 ```lua
-reverse(input: Types.Array<any>): Types.Array<any>
+reverse(input: { any }): { any }
 ```
 
-Reverse the order of the elements in the _input_ Array.
+Reverse the order of the elements in the _input_ array.
 
 **Example**
 ```lua
@@ -1353,10 +1343,10 @@ Output: {
 </span>
 
 ```lua
-slice(input: Types.Array<any>, left: number?, right: number?): Types.Array<any>
+slice(input: { any }, left: number?, right: number?): { any }
 ```
 
-Return a portion of the _input_ [Array](#array) starting with the element at the _left_ index and ending
+Return a portion of the _input_ array starting with the element at the _left_ index and ending
 with the element at the _right_ index (i.e. an inclusive range)
 
 If _left_ is not defined, it defaults to 1.
@@ -1414,12 +1404,12 @@ Output: {
 </span>
 
 ```lua
-sum(input: Types.Array<number>): number
+sum(input: { number }): number
 ```
 
-Adds together all of the numbers in the _input_ [Array](#array).
+Adds together all of the numbers in the _input_ array.
 
-If the input Array has no elements, return `0`.
+If the input array has no elements, return `0`.
 
 **Example**
 ```lua
@@ -1842,7 +1832,7 @@ rightPad("toast", 10, ":)") --> "toast:):):"
 </span>
 
 ```lua
-splitOn(input: string, pattern: string): Types.Array<string>
+splitOn(input: string, pattern: string): { string }
 ```
 
 Splits _input_ into parts based on a _pattern_ delimiter and returns a [Table](#table) of the parts,
@@ -1944,7 +1934,7 @@ These utilities are helpful for working with functions.
 </span>
 
 ```
-compose(...: Types.Array<Types.AnyFunction>): Types.AnyFunction
+compose(...: { Types.AnyFunction }): Types.AnyFunction
 ```
 
 Returns a function that calls the argument functions in left-right order on an input, passing
@@ -2235,7 +2225,7 @@ Operates on cyclic structures, and returns a Cycles object for a given _value_ b
 
 | Name      | Type                 | Description                                         |
 | --------- | -------------------- | --------------------------------------------------- |
-| `omit`    | `Array<any>`         | An array of keys which should not be visited        |
+| `omit`    | `{ any }`            | An array of keys which should not be visited        |
 | `visited` | `Set<Table>`         | A set of tables which were visited recursively      |
 | `refs`    | `Map<Table, number>` | A map from table to unique index in visit order     |
 | `nextRef` | `number`             | The number to use for the next unique table visited |
@@ -2339,7 +2329,7 @@ Optionally use an indented multiline string, limit the depth of tables, omit or 
 | Name        | Type          | Description                                                                                 |
 | ----------- | ------------- | ------------------------------------------------------------------------------------------- |
 | `depth`     | `number?`     | The maximum depth of ancestors of a table to display                                        |
-| `omit`      | `Array<any>?` | An array of keys which should not be visited                                                |
+| `omit`      | `{ any }?`    | An array of keys which should not be visited                                                |
 | `multiline` | `boolean?`    | Whether to use multiple lines (default = false)                                             |
 | `noQuotes`  | `boolean?`    | Whether to drop the quotation marks around strings. By default, this is true for table keys |
 | `indent`    | `string?`     | The indent string to use (default = "\t")                                                   |
