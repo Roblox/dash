@@ -7,10 +7,10 @@
 ]]
 
 local Dash = script.Parent
-local None = require(Dash.None) :: any
+local None = require(Dash.None)
 local Types = require(Dash.Types)
 local forEachArgs = require(Dash.forEachArgs)
-local forEach = require(Dash.forEach) :: any
+local forEach = require(Dash.forEach)
 local insert = table.insert
 
 local function append(target: { unknown }, ...: { unknown }?): { unknown }
