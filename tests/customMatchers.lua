@@ -1,5 +1,5 @@
 -- Checks that toString represenation of the error includes given message
-local function toThrowWithMessage(self, received, errorMessage)
+local function toThrowWithMessage(_, received, errorMessage)
 	local ok, error = pcall(received)
 	local pass = not ok and string.find(error:toString(), errorMessage) ~= nil
 	local message

@@ -30,19 +30,20 @@ local Dash = script.Parent
 local Types = require(Dash.Types)
 
 local function throwNotImplemented(tags: Types.Table)
-	local Error = require(Dash.Error)
-	local NotImplemented = Error.new("NotImplemented", [[The method "{methodName}" is not implemented on the class "{className}"]])
+	local Error = require(Dash.Error) :: { [string]: any } -- see type Error
+	local NotImplemented =
+		Error.new("NotImplemented", [[The method "{methodName}" is not implemented on the class "{className}"]])
 	NotImplemented:throw(tags)
 end
 
 export type Constructor = () -> Types.Table
 
 local function class(name: string, constructor: Constructor?)
-	constructor = constructor or function()
+	local classConstructor: Constructor = constructor or function()
 		return {}
 	end
 	local Class = {
-		name = name
+		name = name,
 	}
 	--[[
 		Return a new instance of the class, passing any arguments to the specified constructor.
@@ -56,22 +57,19 @@ local function class(name: string, constructor: Constructor?)
 			pretty(car) --> 'Car {speed = 5}'
 	]]
 	function Class.new(...)
-		local instance = constructor(...)
-		setmetatable(
-			instance,
-			{
-				__index = Class,
-				__tostring = Class.toString,
-				__eq = Class.equals,
-				__lt = Class.__lt,
-				__le = Class.__le,
-				__add = Class.__add,
-				__sub = Class.__sub,
-				__mul = Class.__mul,
-				__div = Class.__div,
-				__mod = Class.__mod
-			}
-		)
+		local instance = classConstructor(...)
+		setmetatable(instance, {
+			__index = Class,
+			__tostring = Class.toString,
+			__eq = Class.equals,
+			__lt = Class.__lt,
+			__le = Class.__le,
+			__add = Class.__add,
+			__sub = Class.__sub,
+			__mul = Class.__mul,
+			__div = Class.__div,
+			__mod = Class.__mod,
+		})
 		instance.Class = Class
 		instance:_init(...)
 		return instance
@@ -107,8 +105,7 @@ local function class(name: string, constructor: Constructor?)
 			local car = Vehicle.new(4)
 			tostring(car) --> "#1: 4 wheels"
 	]]
-	function Class:_init()
-	end
+	function Class:_init() end
 
 	--[[
 		Returns `true` if _value_ is an instance of _Class_ or any sub-class.
@@ -142,8 +139,8 @@ local function class(name: string, constructor: Constructor?)
 	end
 
 	--[[
-		Create a subclass of _Class_ with a new _name_ that inherits the metatable of _Class_,
-		optionally overriding the _constructor_ and providing additional _decorators_.
+		Create a subclass of _Class_ with a new name _className_ that inherits the metatable of _Class_,
+		optionally overriding the constructor with _classConstructor_ and providing additional _decorators_.
 		The super-constructor can be accessed with `Class.constructor`.
 		Super methods can be accessed using `Class.methodName` and should be called with self.
 		@example
@@ -178,9 +175,9 @@ local function class(name: string, constructor: Constructor?)
 			local car = Car.new()
 			car.id --> "Car #1: 4 wheels"
 	]]
-	function Class:extend(name: string, constructor)
-		local SubClass = class(name, constructor or Class.new)
-		setmetatable(SubClass, {__index = self})
+	function Class:extend(subClassName: string, subClassConstructor)
+		local SubClass = class(subClassName, subClassConstructor or Class.new)
+		setmetatable(SubClass, { __index = self })
 		return SubClass
 	end
 
@@ -232,11 +229,11 @@ local function class(name: string, constructor: Constructor?)
 		Returns `true` if `self` is considered less than  _other_. This replaces the `<` operator
 		on instances of this class, and can be overridden to provide a custom implementation.
 	]]
-	function Class:__lt(other)
+	function Class:__lt(_)
 		throwNotImplemented({
 			methodName = "__lt",
-			className = name
-		})	
+			className = name,
+		})
 	end
 
 	--[[
@@ -244,42 +241,42 @@ local function class(name: string, constructor: Constructor?)
 		`<=` operator on instances of this class, and can be overridden to provide a custom
 		implementation.
 	]]
-	function Class:__le(other)
+	function Class:__le(_)
 		throwNotImplemented({
 			methodName = "__le",
-			className = name
-		})	
+			className = name,
+		})
 	end
 
 	function Class:__add()
 		throwNotImplemented({
 			methodName = "__add",
-			className = name
-		})	
+			className = name,
+		})
 	end
 	function Class:__sub()
 		throwNotImplemented({
 			methodName = "__sub",
-			className = name
-		})	
+			className = name,
+		})
 	end
 	function Class:__mul()
 		throwNotImplemented({
 			methodName = "__mul",
-			className = name
-		})	
+			className = name,
+		})
 	end
 	function Class:__div()
 		throwNotImplemented({
 			methodName = "__div",
-			className = name
-		})	
+			className = name,
+		})
 	end
 	function Class:__mod()
 		throwNotImplemented({
 			methodName = "__mod",
-			className = name
-		})	
+			className = name,
+		})
 	end
 
 	return Class

@@ -16,7 +16,7 @@ describe("reduce", function()
 	end)
 
 	it("should reduce entries from an array using the handler and key", function()
-		local output = reduce({ 10, 20, 30, 40 }, function(acc, current, key)
+		local output = reduce({ 10, 20, 30, 40 }, function(acc, _, key)
 			return acc .. key .. ","
 		end, "")
 		expect(output).toEqual("1,2,3,4,")

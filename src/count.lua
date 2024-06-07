@@ -1,27 +1,46 @@
+--[[
+	If no _handler_ is provided, return the number of elements in the _input_ [Table](#table).
+
+	If the _handler_ is provided, increase the count for each element for which the handler returns true on the `(value, key)` pair.
+
+	@example
+	Dash.count({1, 2, 3, 4, 5}) --> 5
+
+	@example
+	-- Count the number of ids that start with 1
+	Dash.count(
+		{[12] = true, [24] = true, [153] = true, [199] = true},
+		function(value, id) return tostring(id):sub(1, 1) == "1"
+	end)
+	-- Output: 3
+
+	@example
+	-- Count the number of numbers divisible by 5
+	Dash.count(
+		{1, 1, 2, 3, 5, 8, 13, 21, 34, 55},
+		function(num) return num % 5 == 0
+	end)
+
+	-- Output: 2
+]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
-local iterator = require(Dash.iterator)
 
 type CountHandler = (any, any) -> boolean
 
+local defaultHandler = function()
+	return true
+end
+
 local function count(input: Types.Table, handler: CountHandler?): number
-	assertEqual(
-		typeof(input),
-		"table",
-		[[Attempted to call Dash.count with argument #1 of type {left:?} not {right:?}]]
-	)
-	local count = 0
-	for key, value in iterator(input) do
-		if handler then
-			if handler(value, key) then
-				count += 1
-			end
-		else
-			count += 1
+	local counter = 0
+	local countHandler = handler or defaultHandler
+	for key, value in input do
+		if countHandler(value, key) then
+			counter += 1
 		end
 	end
-	return count
+	return counter
 end
 
 return count

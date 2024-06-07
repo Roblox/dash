@@ -18,10 +18,11 @@ local function last(input: Types.Array<any>, handler: FindHandler?)
 		if not handler then
 			return child
 		end
-		if handler(child, index) then
+		if handler and handler(child, index) then
 			return child
 		end
 	end
+	return nil
 end
 
 return last

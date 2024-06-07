@@ -6,7 +6,6 @@
 	@param prefix (default = `" "`)
 ]]
 local function leftPad(input: string, length: number, prefix: string?): string
-
 	local definedPrefix = prefix or " "
 
 	local padLength = length - input:len()

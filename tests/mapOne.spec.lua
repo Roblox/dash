@@ -13,6 +13,8 @@ describe("mapOne", function()
 		local output = mapOne(input, function(value, key)
 			if value == 6 then
 				return key
+			else
+				return nil
 			end
 		end)
 		expect(output).toEqual("b")

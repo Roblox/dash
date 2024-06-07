@@ -44,7 +44,7 @@ describe("iterator", function()
 
 	it("only discovers ordered keys as ipairs assumed", function()
 		local output = {}
-		for key, value in iterator({ 10, 20, 30, [5] = 50, a = 1, b = 2, c = 3, d = 4, e = 5 }) do
+		for key, value in iterator({ [1] = 10, [2] = 20, [3] = 30, [5] = 50, a = 1, b = 2, c = 3, d = 4, e = 5 }) do
 			insert(output, key .. "=" .. value)
 		end
 		sort(output)
@@ -56,7 +56,7 @@ describe("iterator", function()
 	end)
 
 	it("discovers unordered keys if forced", function()
-		local input = iterable({ 10, 20, 30, [5] = 50, a = 1, b = 2, c = 3, d = 4, e = 5 })
+		local input = iterable({ [1] = 10, [2] = 20, [3] = 30, [5] = 50, a = 1, b = 2, c = 3, d = 4, e = 5 })
 		local output = {}
 		for key, value in iterator(input) do
 			insert(output, key .. "=" .. value)

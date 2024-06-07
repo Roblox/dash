@@ -18,7 +18,7 @@ describe("some", function()
 
 	it("should return false if no element matches", function()
 		local input = { a = 5, b = 6, c = 7, d = 8 }
-		local output = some(input, function(value, key)
+		local output = some(input, function(_, key)
 			return key == "No such key"
 		end)
 		expect(output).toBe(false)
