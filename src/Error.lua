@@ -14,7 +14,7 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local class = require(Dash.class)
-local format = require(Dash.format)
+local format = require(Dash.format) :: <T...>(string, T...) -> string
 local join = require(Dash.join)
 
 --[[
@@ -27,7 +27,7 @@ local Error = class("Error", function(name: string, message: string, tags: Types
 	return {
 		name = name,
 		message = message or "An error occurred",
-		tags = tags or {}
+		tags = tags or {},
 	}
 end)
 

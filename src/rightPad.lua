@@ -8,7 +8,6 @@
 	@example rightPad("toast", 10, ":)") --> "toast:):):"
 ]]
 local function rightPad(input: string, length: number, suffix: string?): string
-
 	local definedSuffix = suffix or " "
 	local padLength = length - input:len()
 	local remainder = padLength % definedSuffix:len()

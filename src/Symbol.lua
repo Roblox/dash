@@ -18,7 +18,7 @@ local class = require(Dash.class)
 
 local Symbol = class("Symbol", function(name: string)
 	return {
-		name = name
+		name = name,
 	}
 end)
 

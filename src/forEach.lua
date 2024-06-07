@@ -12,7 +12,7 @@ local iterator = require(Dash.iterator)
 
 export type ForEachHandler<Value> = (Value, number) -> ()
 
-local function forEach<Value>(input: {Value}, handler: ForEachHandler<Value>)
+local function forEach<Value>(input: { Value }, handler: ForEachHandler<Value>)
 	for key, value in iterator(input) do
 		handler(value, key)
 	end

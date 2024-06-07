@@ -16,8 +16,7 @@ describe("includes", function()
 
 	it("should return the expected value for maps", function()
 		expect(includes({ a = 1, b = 5, c = 3 }, 5)).toBe(true)
-		-- This one doesn't typechecks because the inferred type of the table is incorrect, it should be { [unknonw]: string | number }, not { number }
-		expect(includes({ k = "10", l = 0, 9 }, "10")).toBe(true)
+		expect(includes({ k = "10", l = 0, [0] = 9 }, "10")).toBe(true)
 		expect(includes({ a = 1, b = 5, c = 3 }, 6)).toBe(false)
 	end)
 

@@ -7,16 +7,12 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
-local iterator = require(Dash.iterator)
 
 local insert = table.insert
 
--- TODO Luau: Support generic functions
-local function values(input: Types.Map<any, any>): Types.Array<any>
-	assertEqual(typeof(input), "table", [[Attempted to call Dash.values with argument #1 of type {left:?} not {right:?}]])
+local function values<Value>(input: Types.Map<unknown, Value>): { Value }
 	local result = {}
-	for _, value in iterator(input) do
+	for _, value in input do
 		insert(result, value)
 	end
 	return result

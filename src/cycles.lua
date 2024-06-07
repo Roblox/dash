@@ -6,7 +6,6 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 local includes = require(Dash.includes)
-local join = require(Dash.join)
 local keys = require(Dash.keys)
 
 local sort = table.sort

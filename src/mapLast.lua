@@ -17,5 +17,6 @@ local function mapLast(input: Types.Array<any>, handler: MapHandler)
 			return output
 		end
 	end
+	return
 end
 return mapLast

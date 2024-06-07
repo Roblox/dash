@@ -9,14 +9,14 @@ local groupBy = Dash.groupBy
 
 describe("groupBy", function()
 	it("should return an empty table for an empty grouping", function()
-		local output = groupBy({}, function(child, key)
+		local output = groupBy({}, function()
 			return 5
 		end)
 		expect(output).toEqual({})
 	end)
 
 	it("should return a table with a single group for aliased keys", function()
-		local output = groupBy({ 1, 2, 3, 4, 5 }, function(child, key)
+		local output = groupBy({ 1, 2, 3, 4, 5 }, function()
 			return 5
 		end)
 		expect(output).toEqual({
@@ -31,7 +31,7 @@ describe("groupBy", function()
 	end)
 
 	it("should return a table with a separate groups for unique keys", function()
-		local output = groupBy({ 1, 2, 3, 4, 5 }, function(child, key)
+		local output = groupBy({ 1, 2, 3, 4, 5 }, function(_, key)
 			return key
 		end)
 		expect(output).toEqual({

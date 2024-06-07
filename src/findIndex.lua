@@ -16,5 +16,6 @@ local function findIndex(input: Types.Array<any>, handler: FindHandler)
 			return key
 		end
 	end
+	return nil
 end
 return findIndex

@@ -10,8 +10,6 @@ local Dash = script.Parent
 local Types = require(Dash.Types)
 local collect = require(Dash.collect)
 
-local insert = table.insert
-
 -- TODO Luau: Support generic functions
 local function keyBy(input: Types.Table, getKey: any): Types.Table
 	return collect(input, function(key, child)
