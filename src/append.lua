@@ -1,5 +1,5 @@
 --[[
-	Adds new elements to the _target_ Array from subsequent Array arguments in left-to-right order.
+	Adds new elements to the _target_ array from subsequent array arguments in left-to-right order.
 
 	Arguments which are `nil` or None are skipped.
 

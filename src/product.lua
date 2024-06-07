@@ -1,5 +1,5 @@
 --[[
-	Multiplies all numbers in the _input_ [Array](#array).
+	Multiplies all numbers in the _input_ array.
 
 	If the _input_ has no elements, return `1`.
 
