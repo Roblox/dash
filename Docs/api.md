@@ -1582,9 +1582,9 @@ print(drink.syrup) --> nil
 </span>
 
 ```lua
-type GetValueHandler = (Types.Table, Key) -> Value
+type GetValueHandler<Key, Value> = ({ [Key]: Value }, Key) -> Value
 
-getOrSet(input: Types.Table, key: Key, getValue: GetValueHandler): Value
+getOrSet<Key, Value>(input: { [Key]: Value }, key: Key, getValue: GetValueHandler<Key, Value>): Value
 ```
 
 Returns a value of the _input_ [Table](#table) at the _key_ provided.
