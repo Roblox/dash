@@ -4,14 +4,21 @@
 		"name": "Dash",
 		"tree": {
 			"$className": "DataModel",
-            "Src": {
-                    "$path": "src",
-            },
 			"ReplicatedStorage": {
+				"$className": "ReplicatedStorage",
 				"Packages": {
 					"$path": "Packages",
-				},
-			},
+					"Dash": {
+						"$path": "src",
+						"Tests": {
+							"$path": "tests"
+						}
+					}
+				}
+			}
 		}
+	},
+	"luau": {
+		"languageMode": "strict",
 	}
 }
