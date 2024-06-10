@@ -606,7 +606,9 @@ For a stronger version of `Dash.includes`, use [Dash.some](#some).
 </span>
 
 ```lua
-keyBy(input: Types.Table, getKey: any): Types.Table
+type KeyByHandler<Key, Value, NewKey> = (Value, Key) -> NewKey
+
+keyBy<Key, Value, NewKey>(input: { [Key]: Value }, getKey: KeyByHandler<Key, Value, NewKey> | NewKey): { [NewKey]: Value }
 ```
 
 Assigns values in the _input_ [Table](#table) by their _getKey_ value.
