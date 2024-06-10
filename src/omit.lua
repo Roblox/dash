@@ -6,16 +6,12 @@
 	If the input is a Map, elements are returned in an arbitrary order.
 ]]
 local Dash = script.Parent
-local Types = require(Dash.Types)
 local collectSet = require(Dash.collectSet)
 local forEach = require(Dash.forEach)
 
--- TODO Luau: Support generic functions, then substitute type signature
--- TYPED: local function omit<Key, Value>(input: Types.Map<Key, Value>, keys: { Key }): Value
-local function omit(input: Types.Table, keys: { any }): Types.Table
+local function omit<Key, Value>(input: { [Key]: Value }, keys: { Key }): { [Key]: Value }
 	local output = {}
 	local keySet = collectSet(keys)
-	-- TYPED: forEach(input, function(child: Value, key: Key)
 	forEach(input, function(_, key)
 		if not keySet[key] then
 			output[key] = input[key]
