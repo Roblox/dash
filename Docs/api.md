@@ -372,9 +372,9 @@ Output: {
 </span>
 
 ```lua
-type FindHandler = (Value, Key) -> boolean
+type FindHandler<Key, Value> = (Value, Key) -> boolean
 
-find(input: Types.Table, handler: FindHandler) -> value?
+find<Key, Value>(input: { [Key]: Value }, handler: FindHandler<Key, Value>): Value?
 ```
 
 Returns an element in the _input_ [Table](#table) that the handler returns `true` for, when passed the
