@@ -4,6 +4,16 @@
 
 ## Types
 
+### Array
+
+```lua
+type Array<Value> = {[number]: Value}
+```
+
+A table with values of type _Value_ and numeric keys 1..n with no gaps
+
+<hr>
+
 ### Args
 
 ```lua
