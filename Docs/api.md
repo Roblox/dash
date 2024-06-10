@@ -1199,9 +1199,9 @@ Output:  {
 </span>
 
 ```lua
-type FindHandler = (Value, Key) -> boolean
+type FindHandler<Value> = (Value, number) -> boolean
 
-last(input: Types.Table, handler: FindHandler?): Value?
+last<Value>(input: { Value }, handler: FindHandler<Value>?): Value?
 ```
 
 Returns the last element in the _input_ array that the handler returns `true` for, when
