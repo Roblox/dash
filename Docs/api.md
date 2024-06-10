@@ -736,9 +736,9 @@ Output: {
 </span>
 
 ```lua
-type MapHandler = (Value, Key) -> any?
+type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue?
 
-mapOne(input: Types.Table, handler: MapHandler?)
+mapOne<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>?): NewValue
 ```
 
 Iterates through the elements of the _input_ [Table](#table) in no particular order.
