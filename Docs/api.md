@@ -1009,9 +1009,9 @@ Output: false
 </span>
 
 ```lua
-type SomeHandler = (Value, Key) -> boolean
+type SomeHandler<Key, Value> = (Value, Key) -> boolean
 
-some(input: Types.Map<Key, Value>, handler: SomeHandler): boolean
+some<Key, Value>(input: { [Key]: Value }, handler: SomeHandler<Key, Value>): boolean
 ```
 
 Iterates through the elements of the _input_ [Table](#table) in no particular order.
