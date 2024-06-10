@@ -8,9 +8,9 @@ local defaultHandler = function(value)
 end
 
 local function all(input: Types.Table, handler: AllHandler?): boolean
-	handler = if handler then handler else defaultHandler
+	local allHandler = handler or defaultHandler
 	for key, value in input do
-		if not handler(value, key) then
+		if not allHandler(value, key) then
 			return false
 		end
 	end
