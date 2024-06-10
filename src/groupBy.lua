@@ -8,13 +8,15 @@
 	value as the corresponding key to insert at in the result Table. Otherwise, the _getKey_ value
 	is used directly as the key itself.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
 local insert = table.insert
 
--- TODO Luau: Support generic functions
-local function groupBy(input: Types.Table, getKey: any)
+export type GroupByHandler<Key, Value, GroupKey> = (Value, Key) -> GroupKey
+
+local function groupBy<Key, Value, GroupKey>(
+	input: { [Key]: Value },
+	getKey: GroupByHandler<Key, Value, GroupKey> | GroupKey
+): { [GroupKey]: { Value } }
 	local result = {}
 	for key, child in pairs(input) do
 		local groupKey

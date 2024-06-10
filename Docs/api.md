@@ -513,7 +513,12 @@ Output: {
 </span>
 
 ```lua
-groupBy(input: Types.Table, getKey: any): Types.Table
+type GroupByHandler<Key, Value, GroupKey> = (Value, Key) -> GroupKey
+
+groupBy<Key, Value, GroupKey>(
+	input: { [Key]: Value },
+	getKey: GroupByHandler<Key, Value, GroupKey> | GroupKey
+): { [GroupKey]: { Value } }
 ```
 
 Groups values in the _input_ [Table](#table) by their _getKey_ value.
