@@ -213,9 +213,12 @@ Output: {
 </span>
 
 ```lua
-type CollectHandler = (Key, Value) -> any
+type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue?
 
-collectSet(input: Types.Table, handler: CollectHandler?): Types.Set<any>
+collectSet<Key, Value, NewValue>(
+	input: { [Key]: Value },
+	handler: CollectHandler<Key, Value, NewValue>?
+): Types.Set<Value | NewValue>
 ```
 
 Build a set from the entries of the _input_ Table, calling _handler_ on each entry and using
