@@ -7,11 +7,11 @@
 ]]
 
 local Dash = script.Parent
-local Types = require(Dash.Types)
 local collect = require(Dash.collect)
 
--- TODO Luau: Support generic functions
-local function keyBy(input: Types.Table, getKey: any): Types.Table
+export type KeyByHandler<Key, Value, NewKey> = (Value, Key) -> NewKey
+
+local function keyBy<Key, Value, NewKey>(input: { [Key]: Value }, getKey: KeyByHandler<Key, Value, NewKey> | NewKey): { [NewKey]: Value }
 	return collect(input, function(key, child)
 		local newKey
 		if typeof(getKey) == "function" then
