@@ -1273,9 +1273,9 @@ Output: Y
 </span>
 
 ```lua
-type MapHandler = (Value, Key) -> any?
+type MapHandler<Value, NewValue> = (Value, number) -> NewValue?
 
-mapLast(input: { any }, handler: MapHandler)
+mapLast<Value, NewValue>(input: { Value }, handler: MapHandler<Value, NewValue>): NewValue
 ```
 
 Iterates through the elements of the _input_ array in reverse in order n..1.

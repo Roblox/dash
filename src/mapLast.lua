@@ -4,10 +4,9 @@
 	Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
 ]]
 
--- TODO Luau: Support generic functions
-export type MapHandler = (any, number) -> any
+export type MapHandler<Value, NewValue> = (Value, number) -> NewValue?
 
-local function mapLast(input: { any }, handler: MapHandler)
+local function mapLast<Value, NewValue>(input: { Value }, handler: MapHandler<Value, NewValue>)
 	for key = #input, 1, -1 do
 		local child = input[key]
 		local output = handler(child, key)
