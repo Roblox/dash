@@ -7,13 +7,11 @@
 
 	Calls the _handler_ for each entry.
 ]]
-local Dash = script.Parent
-local iterator = require(Dash.iterator)
 
 export type ForEachHandler<Value> = (Value, number) -> ()
 
 local function forEach<Value>(input: { Value }, handler: ForEachHandler<Value>)
-	for key, value in iterator(input) do
+	for key, value in input do
 		handler(value, key)
 	end
 end
