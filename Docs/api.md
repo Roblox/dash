@@ -1159,9 +1159,9 @@ Output: {
 </span>
 
 ```lua
-type FindHandler = (Value, Key) -> boolean
+type FindHandler<Value> = (Value, number) -> boolean
 
-findIndex(input: { any }, handler: FindHandler): value?
+findIndex<Value>(input: { Value }, handler: FindHandler<Value>): number?
 ```
 
 Returns the index of the first element in the _input_ array that the handler returns `true` for,
