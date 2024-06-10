@@ -899,11 +899,13 @@ Output: {
 </span>
 
 ```lua
-type Accumulator = any
+type ReduceHandler<Key, Value, Accumulator> = (Accumulator, Value, Key) -> Accumulator
 
-type ReduceHandler = (Accumulator, Value, Key) -> Accumulator
-
-reduce(input: Types.Table, handler: ReduceHandler, initial: Accumulator)
+function reduce<Key, Value, Accumulator>(
+	input: { [Key]: Value },
+	handler: ReduceHandler<Key, Value, Accumulator>,
+	initial: Accumulator
+): Accumulator
 ```
 
 Iterate through the elements of the _input_ [Table](#table), preserving order if it is an array.
