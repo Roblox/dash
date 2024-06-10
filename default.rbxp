@@ -4,6 +4,9 @@
 		"name": "Dash",
 		"tree": {
 			"$className": "DataModel",
+            "Src": {
+                    "$path": "src",
+            },
 			"ReplicatedStorage": {
 				"Packages": {
 					"$path": "Packages",
