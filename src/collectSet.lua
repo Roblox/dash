@@ -7,11 +7,13 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 
-type CollectHandler = (key: any, value: any) -> any
+type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue?
 
--- TODO Luau: Support generic functions
-local function collectSet(input: Types.Table, handler: CollectHandler?)
-	local result = {}
+local function collectSet<Key, Value, NewValue>(
+	input: { [Key]: Value },
+	handler: CollectHandler<Key, Value, NewValue>?
+): Types.Set<Value | NewValue>
+	local result: Types.Set<Value | NewValue> = {}
 	for key, child in input do
 		local outputValue
 		if handler == nil then
