@@ -424,9 +424,9 @@ Output: nil
 </span>
 
 ```lua
-type ForEachHandler = (Value, Key) -> ()
+type ForEachHandler<Key, Value> = (Value, Key) -> ()
 
-forEach(input: Types.Table, handler: ForEachHandler): ()
+forEach<Key, Value>(input: { [Key]: Value }, handler: ForEachHandler<Key, Value>)
 ```
 
 Iterates through the elements of the _input_ Table.
@@ -863,7 +863,7 @@ Dash.min(
 </span>
 
 ```lua
-omit(input: Types.Table, keys: { any }): Types.Table
+omit<Key, Value>(input: { [Key]: Value }, keys: { Key }): { [Key]: Value }
 ```
 
 Return a new [Table](#table) made from entries in the _input_ [Table](#table) whose key is not in the _keys_ array.
