@@ -5,13 +5,10 @@
 
 	The handler should return truthy to preserve the value in the resulting Table.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
--- TODO Luau: support generic function definitions
-export type FilterHandler = (any, any) -> boolean
+export type FilterHandler<Key, Value> = (Value, Key) -> boolean
 
-local function filter(input: Types.Table, handler: FilterHandler): { any }
+local function filter<Key, Value>(input: { [Key]: Value }, handler: FilterHandler<Key, Value>): { Value }
 	local result = {}
 	for index, child in input do
 		if handler(child, index) then

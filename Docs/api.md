@@ -335,9 +335,9 @@ Output: 2
 </span>
 
 ```lua
-type FilterHandler = (Value, Key) -> boolean
+type FilterHandler<Key, Value> = (Value, Key) -> boolean
 
-filter(input: Types.Table, handler: FilterHandler): { any }
+filter<Key, Value>(input: { [Key]: Value }, handler: FilterHandler<Key, Value>): { Value }
 ```
 
 Filter the _input_ [Table](#table) by calling the handler on each `(value, key)` tuple.
