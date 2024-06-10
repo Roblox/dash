@@ -5,13 +5,10 @@
 
 	If _handler_ is nil, the first value visited is returned.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
--- TODO Luau: Support generic functions
-export type MapHandler = (any, number) -> any
+export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue?
 
-local function mapOne(input: Types.Table, handler: MapHandler?)
+local function mapOne<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>?)
 	for key, child in pairs(input) do
 		local output
 		if handler then
