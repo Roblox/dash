@@ -1,0 +1,14 @@
+{
+	"fileVersion": "1",
+	"instanceHierarchy": {
+		"name": "Dash",
+		"tree": {
+			"$className": "DataModel",
+			"ReplicatedStorage": {
+				"Packages": {
+					"$path": "Packages",
+				},
+			},
+		}
+	}
+}
