@@ -4,13 +4,10 @@
 
 	The handler should return truthy to preserve the value in the resulting Table.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
--- TODO Luau: support generic function definitions
-export type PickHandler = (any, any) -> boolean
+export type PickHandler<Key, Value> = (Value, Key) -> boolean
 
-local function pick(input: Types.Map<any, any>, handler: PickHandler): Types.Map<any, any>
+local function pick<Key, Value>(input: { [Key]: Value }, handler: PickHandler<Key, Value>): { [Key]: Value }
 	local result = {}
 	for key, child in input do
 		if handler(child, key) then
