@@ -658,7 +658,7 @@ Output: {
 </span>
 
 ```lua
-keys(input: Types.Table): { any }
+keys<Key, Value>(input: { [Key]: Value }): { Key }
 ```
 
 Returns an array of the keys in the _input_ Table.
