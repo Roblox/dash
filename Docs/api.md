@@ -1239,9 +1239,9 @@ Output: 3
 </span>
 
 ```lua
-type MapHandler = (Value, Key) -> any?
+type MapHandler<Value, NewValue> = (Value, number) -> NewValue?
 
-mapFirst(input: { any }, handler: MapHandler)
+mapFirst<Value, NewValue>(input: { Value }, handler: MapHandler<Value, NewValue>): NewValue
 ```
 
 Iterates through the elements of the _input_ array in order 1..n.
