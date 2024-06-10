@@ -1489,7 +1489,7 @@ These utilities operate on [Maps](#map), tables with arbitrary keys.
 </span>
 
 ```lua
-assign(target: Types.Table, ...: Args<Table>): Types.Table
+assign<Key, Value>(target: Types.Map<Key, Value>, ...: Types.Map<Key, Value>): Types.Map<Key, Value>
 ```
 
 Adds new values to _target_ from subsequent [Table](#table) arguments in left-to-right order.
