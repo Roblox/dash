@@ -693,9 +693,9 @@ Output: {
 </span>
 
 ```lua
-type MapHandler = (Value, Key) -> any
+type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 
-map(input: { any }, handler: MapHandler): { any }
+map<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>): { [Key]: NewValue }
 ```
 
 Iterates through the elements of the _input_ Table.
