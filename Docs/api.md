@@ -1631,7 +1631,7 @@ Output: Yellow
 </span>
 
 ```lua
-join(...): Types.Map<any, any>
+join<Key, Value>(...: Types.Map<Key, Value>): Types.Map<Key, Value>
 ```
 
 Output a new [Map](#map) from merging all the keys in the [Map](#map) arguments in left-to-right order.
