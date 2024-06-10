@@ -2,6 +2,7 @@ local Dash = {}
 
 local Types = require(script.Types)
 
+export type Array<Value> = Types.Array<Value>
 export type Args<Value> = Types.Args<Value>
 export type Map<Key, Value> = Types.Map<Key, Value>
 export type Set<Key> = Types.Set<Key>

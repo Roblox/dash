@@ -1,4 +1,6 @@
 -- TODO Luau: Support these globally
+-- A table with values of type _Value_ and numeric keys 1..n with no gaps
+export type Array<Value> = { [number]: Value }
 -- A table with values of type _Value_ and numeric keys, possibly with gaps
 export type Args<Value> = { [number]: Value }
 -- A table with keys of type _Key_ and values of type _Value_
