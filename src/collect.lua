@@ -7,7 +7,6 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local iterator = require(Dash.iterator)
 
 export type CollectHandler<Key, Value, NewKey, NewValue> = (key: Key, value: Value) -> (NewKey?, NewValue?)
 
@@ -16,7 +15,7 @@ local function collect<Key, Value, NewKey, NewValue>(
 	handler: CollectHandler<Key, Value, NewKey, NewValue>
 ): Types.Map<NewKey, NewValue>
 	local result = {}
-	for key, child in iterator(input) do
+	for key, child in input do
 		local outputKey, outputValue = handler(key, child)
 		if outputKey ~= nil then
 			result[outputKey] = outputValue
