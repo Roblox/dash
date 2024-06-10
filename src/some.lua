@@ -4,13 +4,10 @@
 	Calls the _handler_ for each entry and returns `true` if the handler returns truthy for any
 	element which it is called with.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
--- TODO Luau: Support generic functions
-export type SomeHandler = (any, any) -> boolean
+export type SomeHandler<Key, Value> = (Value, Key) -> boolean
 
-local function some(input: Types.Map<any, any>, handler: SomeHandler): boolean
+local function some<Key, Value>(input: { [Key]: Value }, handler: SomeHandler<Key, Value>): boolean
 	for key, child in input do
 		if handler(child, key) then
 			return true
