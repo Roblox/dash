@@ -1,7 +1,7 @@
 --[[
 	Iterates through the elements of the _input_ Table.
 
-	For an Array input, the elements are visted in order 1..n.
+	For an array input, the elements are visted in order 1..n.
 
 	For a Map input, the elements are visited in an arbitrary order.
 
@@ -14,7 +14,6 @@
 ]]
 
 local Dash = script.Parent
-local Types = require(Dash.Types)
 local assertEqual = require(Dash.assertEqual)
 local iterator = require(Dash.iterator)
 
@@ -22,9 +21,9 @@ local iterator = require(Dash.iterator)
 export type MapHandler = (any, number) -> any
 
 -- TYPED: export type MapHandler<Input, Output> = (Value, number) -> Output
--- TYPED: local function map<Input, Output>(input: Types.Array<Input>, fn: MapFn<Input, Output>)<Output>
+-- TYPED: local function map<Input, Output>(input: { Input }, fn: MapFn<Input, Output>)<Output>
 
-local function map(input: Types.Array<any>, handler: MapHandler): Types.Array<any>
+local function map(input: { any }, handler: MapHandler): { any }
 	local result = {}
 	for key, child in iterator(input) do
 		local value = handler(child, key)

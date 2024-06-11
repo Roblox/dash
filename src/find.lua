@@ -4,7 +4,7 @@
 
 	Returns nil if no entires satisfy the condition.
 
-	For an Array, this first matching element is returned.
+	For an array, this first matching element is returned.
 
 	For a Map, an arbitrary matching element is returned if it exists.
 ]]

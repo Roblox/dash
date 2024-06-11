@@ -1,7 +1,7 @@
 --[[
-	Return a new Table made from entries in the _input_ Table whose key is not in the _keys_ Array.
+	Return a new Table made from entries in the _input_ Table whose key is not in the _keys_ array.
 
-	If the input is an Array, ordering is preserved.
+	If the input is an array, ordering is preserved.
 
 	If the input is a Map, elements are returned in an arbitrary order.
 ]]
@@ -11,7 +11,7 @@ local collectSet = require(Dash.collectSet)
 local forEach = require(Dash.forEach)
 
 -- TODO Luau: Support generic functions, then substitute type signature
--- TYPED: local function omit<Key, Value>(input: Types.Map<Key, Value>, keys: Types.Array<Key>): Value
+-- TYPED: local function omit<Key, Value>(input: Types.Map<Key, Value>, keys: { Key }): Value
 local function omit(input: Types.Table, keys: { any }): Types.Table
 	local output = {}
 	local keySet = collectSet(keys)

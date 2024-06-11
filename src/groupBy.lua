@@ -1,7 +1,7 @@
 --[[
 	Groups values in the _input_ Table by their _getKey_ value.
 
-	Each value of the result Table is an Array of values from the _input_ Table which were assigned
+	Each value of the result Table is an array of values from the _input_ Table which were assigned
 	the corresponding key.
 
 	If _getKey_ is a function, it is called with each `(child, key)` entry and uses the return

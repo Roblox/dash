@@ -1,10 +1,10 @@
 --[[
 	Iterates using a `pairs` iterator for an _input_ Table if zero length, otherwise an `ipairs`
-	iterator for an Array.
+	iterator for an array.
 
 	If _input_ is a function it is used as a stateful iterator instead.
 
-	This function can be used to build behaviour that iterates over both Arrays and Maps.
+	This function can be used to build behaviour that iterates over both arrays and Maps.
 
 	@see Dash.iterable if you want to iterate over a Table with numeric but un-ordered keys.
 ]]

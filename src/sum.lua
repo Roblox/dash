@@ -1,7 +1,7 @@
 --[[
-	Sums all numbers in the _input_ [Array](#array).
+	Sums all numbers in the _input_ array.
 
-	If the input Array has no elements, return `0`.
+	If the input array has no elements, return `0`.
 
 	@example
 		Dash.sum({3, 2, 1}) --> 6
