@@ -290,9 +290,9 @@ Output: {
 </span>
 
 ```lua
-type CountHandler = (Value, Key) -> boolean
+type CountHandler<Key, Value> = (Value, Key) -> boolean
 
-count(input: types.Table, handler: CountHandler?): number
+count<Key, Value>(input: { [Key]: Value }, handler: CountHandler<Key, Value>?): number
 ```
 
 If no _handler_ is provided, return the number of elements in the _input_ [Table](#table).
