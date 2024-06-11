@@ -7,14 +7,13 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local iterator = require(Dash.iterator)
 
 local insert = table.insert
 
 -- TODO Luau: Support generic functions
 local function keys(input: Types.Table): { any }
 	local result = {}
-	for key, _ in iterator(input) do
+	for key, _ in input do
 		insert(result, key)
 	end
 	return result

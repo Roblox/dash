@@ -7,14 +7,13 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local iterator = require(Dash.iterator)
 
 -- TODO Luau: support generic function definitions
 export type FilterHandler = (any, any) -> boolean
 
 local function filter(input: Types.Table, handler: FilterHandler): { any }
 	local result = {}
-	for index, child in iterator(input) do
+	for index, child in input do
 		if handler(child, index) then
 			table.insert(result, child)
 		end
