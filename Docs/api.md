@@ -1404,7 +1404,7 @@ Output: {
 </span>
 
 ```lua
-slice(input: { any }, left: number?, right: number?): { any }
+slice<T>(input: { T }, left: number?, right: number?): { T }
 ```
 
 Return a portion of the _input_ array starting with the element at the _left_ index and ending
