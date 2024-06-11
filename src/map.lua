@@ -15,7 +15,6 @@
 
 local Dash = script.Parent
 local assertEqual = require(Dash.assertEqual)
-local iterator = require(Dash.iterator)
 
 -- TODO Luau: Support generic functions
 export type MapHandler = (any, number) -> any
@@ -25,7 +24,7 @@ export type MapHandler = (any, number) -> any
 
 local function map(input: { any }, handler: MapHandler): { any }
 	local result = {}
-	for key, child in iterator(input) do
+	for key, child in input do
 		local value = handler(child, key)
 		assertEqual(value == nil, false, [[Returned nil from a Dash.map handler]])
 		result[key] = value

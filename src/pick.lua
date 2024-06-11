@@ -6,14 +6,13 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local iterator = require(Dash.iterator)
 
 -- TODO Luau: support generic function definitions
 export type PickHandler = (any, any) -> boolean
 
 local function pick(input: Types.Map<any, any>, handler: PickHandler): Types.Map<any, any>
 	local result = {}
-	for key, child in iterator(input) do
+	for key, child in input do
 		if handler(child, key) then
 			result[key] = child
 		end

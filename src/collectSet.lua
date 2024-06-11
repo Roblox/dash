@@ -6,14 +6,13 @@
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local iterator = require(Dash.iterator)
 
 type CollectHandler = (key: any, value: any) -> any
 
 -- TODO Luau: Support generic functions
 local function collectSet(input: Types.Table, handler: CollectHandler?)
 	local result = {}
-	for key, child in iterator(input) do
+	for key, child in input do
 		local outputValue
 		if handler == nil then
 			outputValue = child
