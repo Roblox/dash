@@ -2058,7 +2058,7 @@ Can be used to make it clear that a handler returns its inputs.
 </span>
 
 ```lua
-isCallable(value: any): boolean
+isCallable<T>(value: T): boolean
 ```
 
 Returns `true` if the value can be called i.e. you can write `value(...)`.
