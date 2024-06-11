@@ -1096,7 +1096,7 @@ Output: true
 </span>
 
 ```lua
-values(input: Types.Map<any, any>): { any }
+values<Key, Value>(input: { [Key]: Value }): { Value }
 ```
 
 Returns an array of the values in the _input_ Table.
