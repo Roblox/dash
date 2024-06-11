@@ -1,7 +1,7 @@
 --[[
 	Iterates through the elements of the _input_ Table.
 
-	If the table is an Array, it iterates in order 1..n.
+	If the table is an array, it iterates in order 1..n.
 
 	If the table is a Map, the keys are visited in an arbitrary order.
 

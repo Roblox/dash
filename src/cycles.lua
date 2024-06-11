@@ -18,7 +18,7 @@ export type Cycles = {
 	-- The number to use for the next unique table visited
 	nextRef: number,
 	-- An array of keys which should not be visited
-	omit: Types.Array<any>,
+	omit: { any },
 }
 
 local function getDefaultCycles(): Cycles

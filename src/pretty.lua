@@ -25,7 +25,7 @@ export type PrettyOptions = {
 	-- The maximum depth of ancestors of a table to display (default = 2)
 	depth: number?,
 	-- An array of keys which should not be visited
-	omit: Types.Array<any>?,
+	omit: { any } | nil,
 	-- Whether to use multiple lines (default = false)
 	multiline: boolean?,
 	-- Whether to show the length of any array in front of its content
@@ -42,7 +42,7 @@ export type PrettyOptions = {
 	cycles: cycles.Cycles?,
 }
 
-local function indentLines(lines: Types.Array<string>, indent: string)
+local function indentLines(lines: { string }, indent: string)
 	return map(lines, function(line: string)
 		return indent .. line
 	end)
@@ -51,8 +51,8 @@ end
 local pretty
 
 -- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
--- local function prettyLines(object: any, options: PrettyOptions?): Types.Array<string>
-local function prettyLines(object: any, options: any): Types.Array<string>
+-- local function prettyLines(object: any, options: PrettyOptions?): { string }
+local function prettyLines(object: any, options: any): { string }
 	options = options or {}
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively

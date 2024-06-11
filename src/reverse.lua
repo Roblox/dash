@@ -1,13 +1,10 @@
 --[[
-	Reverse the order of the elements in the _input_ Array.
+	Reverse the order of the elements in the _input_ array.
 ]]
-
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
 local insert = table.insert
 
-local function reverse(input: Types.Array<any>): Types.Array<any>
+local function reverse(input: { any }): { any }
 	local output = {}
 	for i = #input, 1, -1 do
 		insert(output, input[i])

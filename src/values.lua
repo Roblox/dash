@@ -1,7 +1,7 @@
 --[[
-	Returns an Array of the values in the _input_ Map.
+	Returns an array of the values in the _input_ Map.
 
-	If the input is an Array, ordering is preserved.
+	If the input is an array, ordering is preserved.
 
 	If the input is a Map, elements are returned in an arbitrary order.
 ]]
