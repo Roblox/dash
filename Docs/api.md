@@ -461,9 +461,12 @@ Item 3
 </span>
 
 ```lua
-type FrequenciesHandler = (Value, Key) -> any
+type FrequenciesHandler<Key, Value, NewKey> = (Value, Key) -> NewKey
 
-frequencies(input: Types.Table)
+frequencies<Key, Value, NewKey>(
+	input: { [Key]: Value },
+	handler: FrequenciesHandler<Key, Value, NewKey>?
+): { [NewKey | Value]: number }
 ```
 
 If no handler is provided, returns a [Map](#map) with keys as unique values of the _input_ [Table](#table) and values as the count of each value.
