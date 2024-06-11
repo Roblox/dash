@@ -4,8 +4,8 @@
 
 local insert = table.insert
 
-local function reverse(input: { any }): { any }
-	local output = {}
+local function reverse<T>(input: { T }): { T }
+	local output: { T } = {}
 	for i = #input, 1, -1 do
 		insert(output, input[i])
 	end
