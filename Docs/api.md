@@ -1380,7 +1380,7 @@ Dash.product({3, 3, 2}) --> 18
 </span>
 
 ```lua
-reverse(input: { any }): { any }
+reverse<T>(input: { T }): { T }
 ```
 
 Reverse the order of the elements in the _input_ array.
