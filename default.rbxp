@@ -1,0 +1,24 @@
+{
+	"fileVersion": "1",
+	"instanceHierarchy": {
+		"name": "Dash",
+		"tree": {
+			"$className": "DataModel",
+			"ReplicatedStorage": {
+				"$className": "ReplicatedStorage",
+				"Packages": {
+					"$path": "Packages",
+					"Dash": {
+						"$path": "src",
+						"Tests": {
+							"$path": "tests"
+						}
+					}
+				}
+			}
+		}
+	},
+	"luau": {
+		"languageMode": "strict",
+	}
+}
