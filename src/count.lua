@@ -23,16 +23,14 @@
 
 	-- Output: 2
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
-type CountHandler = (any, any) -> boolean
+type CountHandler<Key, Value> = (Value, Key) -> boolean
 
 local defaultHandler = function()
 	return true
 end
 
-local function count(input: Types.Table, handler: CountHandler?): number
+local function count<Key, Value>(input: { [Key]: Value }, handler: CountHandler<Key, Value>?): number
 	local counter = 0
 	local countHandler = handler or defaultHandler
 	for key, value in input do

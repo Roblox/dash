@@ -1,17 +1,15 @@
 --[[
 	Iterates through the elements of the _input_ Table in no particular order.
 
-	Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
+	Calls the _handler_ for each entry and returns the first non-nil value returned by the _handler_.
+	If all returned from the _handler_ values are `nil`, `nil` is returned.
 
-	If _handler_ is nil, the first value visited is returned.
+	If _handler_ is `nil`, the first value visited is returned.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
--- TODO Luau: Support generic functions
-export type MapHandler = (any, number) -> any
+export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue?
 
-local function mapOne(input: Types.Table, handler: MapHandler?)
+local function mapOne<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>?): NewValue?
 	for key, child in pairs(input) do
 		local output
 		if handler then
@@ -23,6 +21,6 @@ local function mapOne(input: Types.Table, handler: MapHandler?)
 			return output
 		end
 	end
-	return
+	return nil
 end
 return mapOne

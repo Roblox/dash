@@ -40,7 +40,7 @@ end
 	current error instance.
 ]]
 function Error:joinTags(tags: Types.Table?): Error
-	return Error.new(self.name, self.message, join(self.tags, tags))
+	return Error.new(self.name, self.message, join(self.tags, tags or {}))
 end
 
 --[[

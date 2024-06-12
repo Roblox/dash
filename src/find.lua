@@ -8,13 +8,10 @@
 
 	For a Map, an arbitrary matching element is returned if it exists.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
--- TODO Luau: support generic function definitions
-export type FindHandler = (any, any) -> boolean
+export type FindHandler<Key, Value> = (Value, Key) -> boolean
 
-local function find(input: Types.Table, handler: FindHandler)
+local function find<Key, Value>(input: { [Key]: Value }, handler: FindHandler<Key, Value>): Value?
 	for key, child in input do
 		if handler(child, key) then
 			return child

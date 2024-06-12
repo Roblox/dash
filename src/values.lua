@@ -5,13 +5,11 @@
 
 	If the input is a Map, elements are returned in an arbitrary order.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
 local insert = table.insert
 
-local function values<Value>(input: Types.Map<unknown, Value>): { Value }
-	local result = {}
+local function values<Key, Value>(input: { [Key]: Value }): { Value }
+	local result: { Value } = {}
 	for _, value in input do
 		insert(result, value)
 	end

@@ -6,13 +6,13 @@
 	The _initial_ value is passed into the first call, and the final value returned by the function.
 ]]
 
-local Dash = script.Parent
-local Types = require(Dash.Types)
+export type ReduceHandler<Key, Value, Accumulator> = (Accumulator, Value, Key) -> Accumulator
 
--- TODO Luau: Support generic functions
-export type ReduceHandler = (any, any, any) -> any
-
-local function reduce(input: Types.Table, handler: ReduceHandler, initial: any)
+local function reduce<Key, Value, Accumulator>(
+	input: { [Key]: Value },
+	handler: ReduceHandler<Key, Value, Accumulator>,
+	initial: Accumulator
+): Accumulator
 	local result = initial
 	for key, value in input do
 		result = handler(result, value, key)

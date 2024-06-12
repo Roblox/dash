@@ -46,23 +46,22 @@ local Types = require(Dash.Types)
 local forEach = require(Dash.forEach)
 local forEachArgs = require(Dash.forEachArgs)
 
--- TODO Luau: Support typing varargs
--- TODO Luau: Support function generics
-local function assign(target: Types.Table, ...): Types.Table
+local function assign<Key, Value>(target: Types.Map<Key, Value>, ...: Types.Map<Key, Value>): Types.Map<Key, Value>
 	-- Iterate through the varags in order
-	forEachArgs(function(input: Types.Table?)
+	forEachArgs(function(input: Types.Map<Key, Value>?)
 		-- Ignore items which are not defined
 		if input == nil or input == None then
 			return
+		else
+			-- Iterate through each key of the input and assign to target at the same key
+			forEach(input, function(value, key)
+				if value == None then
+					target[key] = nil
+				else
+					target[key] = value
+				end
+			end)
 		end
-		-- Iterate through each key of the input and assign to target at the same key
-		forEach(input, function(value, key)
-			if value == None then
-				target[key] = nil
-			else
-				target[key] = value
-			end
-		end)
 	end, ...)
 	return target
 end
