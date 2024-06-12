@@ -5,10 +5,9 @@
 	Returns nil if no entires satisfy the condition.
 ]]
 
--- TODO Luau: support generic function definitions
-export type FindHandler = (any, any) -> boolean
+export type FindHandler<Value> = (Value, number) -> boolean
 
-local function findIndex(input: { any }, handler: FindHandler)
+local function findIndex<Value>(input: { Value }, handler: FindHandler<Value>): number?
 	for key, child in ipairs(input) do
 		if handler(child, key) then
 			return key

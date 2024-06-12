@@ -8,9 +8,9 @@
 	Calls the _handler_ for each entry.
 ]]
 
-export type ForEachHandler<Value> = (Value, number) -> ()
+export type ForEachHandler<Key, Value> = (Value, Key) -> ()
 
-local function forEach<Value>(input: { Value }, handler: ForEachHandler<Value>)
+local function forEach<Key, Value>(input: { [Key]: Value }, handler: ForEachHandler<Key, Value>)
 	for key, value in input do
 		handler(value, key)
 	end

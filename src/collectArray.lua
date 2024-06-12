@@ -5,15 +5,12 @@
 	The handler should return a new value to be pushed onto the end of the result array, or `nil`
 	if no value should be added.
 ]]
-local Dash = script.Parent
-local Types = require(Dash.Types)
 
 local insert = table.insert
 
-type CollectHandler = (key: any, value: any) -> any
+type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue?
 
--- TODO Luau: Support generic functions
-local function collectArray(input: Types.Table, handler: CollectHandler)
+local function collectArray<Key, Value, NewValue>(input: { [Key]: Value }, handler: CollectHandler<Key, Value, NewValue>): { NewValue }
 	local result = {}
 	for key, child in input do
 		local outputValue = handler(key, child)

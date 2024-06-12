@@ -174,9 +174,9 @@ Output: {
 </span>
 
 ```lua
-type CollectHandler = (Key, Value) -> any
+type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue?
 
-collectArray(input: Types.Table, handler: CollectHandler): { any }
+collectArray<Key, Value, NewValue>(input: { [Key]: Value }, handler: CollectHandler<Key, Value, NewValue>): { NewValue }
 ```
 
 Collect returns a new array derived from _input_ by iterating through its pairs and calling
@@ -213,9 +213,12 @@ Output: {
 </span>
 
 ```lua
-type CollectHandler = (Key, Value) -> any
+type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue?
 
-collectSet(input: Types.Table, handler: CollectHandler?): Types.Set<any>
+collectSet<Key, Value, NewValue>(
+	input: { [Key]: Value },
+	handler: CollectHandler<Key, Value, NewValue>?
+): Types.Set<Value | NewValue>
 ```
 
 Build a set from the entries of the _input_ Table, calling _handler_ on each entry and using
@@ -287,9 +290,9 @@ Output: {
 </span>
 
 ```lua
-type CountHandler = (Value, Key) -> boolean
+type CountHandler<Key, Value> = (Value, Key) -> boolean
 
-count(input: types.Table, handler: CountHandler?): number
+count<Key, Value>(input: { [Key]: Value }, handler: CountHandler<Key, Value>?): number
 ```
 
 If no _handler_ is provided, return the number of elements in the _input_ [Table](#table).
@@ -335,9 +338,9 @@ Output: 2
 </span>
 
 ```lua
-type FilterHandler = (Value, Key) -> boolean
+type FilterHandler<Key, Value> = (Value, Key) -> boolean
 
-filter(input: Types.Table, handler: FilterHandler): { any }
+filter<Key, Value>(input: { [Key]: Value }, handler: FilterHandler<Key, Value>): { Value }
 ```
 
 Filter the _input_ [Table](#table) by calling the handler on each `(value, key)` tuple.
@@ -372,9 +375,9 @@ Output: {
 </span>
 
 ```lua
-type FindHandler = (Value, Key) -> boolean
+type FindHandler<Key, Value> = (Value, Key) -> boolean
 
-find(input: Types.Table, handler: FindHandler) -> value?
+find<Key, Value>(input: { [Key]: Value }, handler: FindHandler<Key, Value>): Value?
 ```
 
 Returns an element in the _input_ [Table](#table) that the handler returns `true` for, when passed the
@@ -424,9 +427,9 @@ Output: nil
 </span>
 
 ```lua
-type ForEachHandler = (Value, Key) -> ()
+type ForEachHandler<Key, Value> = (Value, Key) -> ()
 
-forEach(input: Types.Table, handler: ForEachHandler): ()
+forEach<Key, Value>(input: { [Key]: Value }, handler: ForEachHandler<Key, Value>)
 ```
 
 Iterates through the elements of the _input_ Table.
@@ -458,9 +461,12 @@ Item 3
 </span>
 
 ```lua
-type FrequenciesHandler = (Value, Key) -> any
+type FrequenciesHandler<Key, Value, NewKey> = (Value, Key) -> NewKey
 
-frequencies(input: Types.Table)
+frequencies<Key, Value, NewKey>(
+	input: { [Key]: Value },
+	handler: FrequenciesHandler<Key, Value, NewKey>?
+): { [NewKey | Value]: number }
 ```
 
 If no handler is provided, returns a [Map](#map) with keys as unique values of the _input_ [Table](#table) and values as the count of each value.
@@ -510,7 +516,12 @@ Output: {
 </span>
 
 ```lua
-groupBy(input: Types.Table, getKey: any): Types.Table
+type GroupByHandler<Key, Value, GroupKey> = (Value, Key) -> GroupKey
+
+groupBy<Key, Value, GroupKey>(
+	input: { [Key]: Value },
+	getKey: GroupByHandler<Key, Value, GroupKey> | GroupKey
+): { [GroupKey]: { Value } }
 ```
 
 Groups values in the _input_ [Table](#table) by their _getKey_ value.
@@ -603,7 +614,9 @@ For a stronger version of `Dash.includes`, use [Dash.some](#some).
 </span>
 
 ```lua
-keyBy(input: Types.Table, getKey: any): Types.Table
+type KeyByHandler<Key, Value, NewKey> = (Value, Key) -> NewKey
+
+keyBy<Key, Value, NewKey>(input: { [Key]: Value }, getKey: KeyByHandler<Key, Value, NewKey> | NewKey): { [NewKey]: Value }
 ```
 
 Assigns values in the _input_ [Table](#table) by their _getKey_ value.
@@ -658,7 +671,7 @@ Output: {
 </span>
 
 ```lua
-keys(input: Types.Table): { any }
+keys<Key, Value>(input: { [Key]: Value }): { Key }
 ```
 
 Returns an array of the keys in the _input_ Table.
@@ -693,9 +706,9 @@ Output: {
 </span>
 
 ```lua
-type MapHandler = (Value, Key) -> any
+type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 
-map(input: { any }, handler: MapHandler): { any }
+map<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>): { [Key]: NewValue }
 ```
 
 Iterates through the elements of the _input_ Table.
@@ -736,14 +749,15 @@ Output: {
 </span>
 
 ```lua
-type MapHandler = (Value, Key) -> any?
+type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue?
 
-mapOne(input: Types.Table, handler: MapHandler?)
+mapOne<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>?): NewValue?
 ```
 
 Iterates through the elements of the _input_ [Table](#table) in no particular order.
 
-Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
+Calls the _handler_ for each entry and returns the first non-nil value returned by the _handler_.
+If all returned from the _handler_ values are `nil`, `nil` is returned.
 
 If _handler_ is `nil`, the first value visited is returned.
 
@@ -863,7 +877,7 @@ Dash.min(
 </span>
 
 ```lua
-omit(input: Types.Table, keys: { any }): Types.Table
+omit<Key, Value>(input: { [Key]: Value }, keys: { Key }): { [Key]: Value }
 ```
 
 Return a new [Table](#table) made from entries in the _input_ [Table](#table) whose key is not in the _keys_ array.
@@ -892,6 +906,42 @@ Output: {
 
 <hr>
 
+### pick
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```lua
+type PickHandler<Key, Value> = (Value, Key) -> boolean
+
+pick<Key, Value>(input: { [Key]: Value }, handler: PickHandler<Key, Value>): { [Key]: Value }
+```
+
+Pick entries in the _input_ Table which should remain in the output by calling the handler on
+each `(child, index)` tuple.
+
+The handler should return truthy to preserve the value in the resulting Table.
+
+**Examples**
+
+```lua
+Dash.pick(
+	{10, 20, 30, 40, 50, 60},
+	function(value, _) return value % 20 == 0 end
+)
+
+--[[
+Output: {
+	[2] = 20,
+	[4] = 40,
+	[6] = 60
+}
+]]
+```
+
+<hr>
+
 ### reduce
 
 <span class="tags">
@@ -899,11 +949,13 @@ Output: {
 </span>
 
 ```lua
-type Accumulator = any
+type ReduceHandler<Key, Value, Accumulator> = (Accumulator, Value, Key) -> Accumulator
 
-type ReduceHandler = (Accumulator, Value, Key) -> Accumulator
-
-reduce(input: Types.Table, handler: ReduceHandler, initial: Accumulator)
+reduce<Key, Value, Accumulator>(
+	input: { [Key]: Value },
+	handler: ReduceHandler<Key, Value, Accumulator>,
+	initial: Accumulator
+): Accumulator
 ```
 
 Iterate through the elements of the _input_ [Table](#table), preserving order if it is an array.
@@ -1007,9 +1059,9 @@ Output: false
 </span>
 
 ```lua
-type SomeHandler = (Value, Key) -> boolean
+type SomeHandler<Key, Value> = (Value, Key) -> boolean
 
-some(input: Types.Map<Key, Value>, handler: SomeHandler): boolean
+some<Key, Value>(input: { [Key]: Value }, handler: SomeHandler<Key, Value>): boolean
 ```
 
 Iterates through the elements of the _input_ [Table](#table) in no particular order.
@@ -1044,7 +1096,7 @@ Output: true
 </span>
 
 ```lua
-values(input: Types.Map<any, any>): { any }
+values<Key, Value>(input: { [Key]: Value }): { Value }
 ```
 
 Returns an array of the values in the _input_ Table.
@@ -1118,9 +1170,9 @@ Output: {
 </span>
 
 ```lua
-type FindHandler = (Value, Key) -> boolean
+type FindHandler<Value> = (Value, number) -> boolean
 
-findIndex(input: { any }, handler: FindHandler): value?
+findIndex<Value>(input: { Value }, handler: FindHandler<Value>): number?
 ```
 
 Returns the index of the first element in the _input_ array that the handler returns `true` for,
@@ -1197,9 +1249,9 @@ Output:  {
 </span>
 
 ```lua
-type FindHandler = (Value, Key) -> boolean
+type FindHandler<Value> = (Value, number) -> boolean
 
-last(input: Types.Table, handler: FindHandler?): Value?
+last<Value>(input: { Value }, handler: FindHandler<Value>?): Value?
 ```
 
 Returns the last element in the _input_ array that the handler returns `true` for, when
@@ -1237,14 +1289,15 @@ Output: 3
 </span>
 
 ```lua
-type MapHandler = (Value, Key) -> any?
+type MapHandler<Value, NewValue> = (Value, number) -> NewValue?
 
-mapFirst(input: { any }, handler: MapHandler)
+mapFirst<Value, NewValue>(input: { Value }, handler: MapHandler<Value, NewValue>): NewValue?
 ```
 
 Iterates through the elements of the _input_ array in order 1..n.
 
-Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
+Calls the _handler_ for each entry and returns the first non-nil value returned by the _handler_.
+If all returned from the _handler_ values are `nil`, `nil` is returned.
 
 **Example**
 
@@ -1271,14 +1324,15 @@ Output: Y
 </span>
 
 ```lua
-type MapHandler = (Value, Key) -> any?
+type MapHandler<Value, NewValue> = (Value, number) -> NewValue?
 
-mapLast(input: { any }, handler: MapHandler)
+mapLast<Value, NewValue>(input: { Value }, handler: MapHandler<Value, NewValue>): NewValue?
 ```
 
 Iterates through the elements of the _input_ array in reverse in order n..1.
 
 Calls the _handler_ for each entry and returns the first non-nil value returned by the handler.
+If all returned from the _handler_ values are `nil`, `nil` is returned.
 
 **Example**
 
@@ -1326,7 +1380,7 @@ Dash.product({3, 3, 2}) --> 18
 </span>
 
 ```lua
-reverse(input: { any }): { any }
+reverse<T>(input: { T }): { T }
 ```
 
 Reverse the order of the elements in the _input_ array.
@@ -1353,7 +1407,7 @@ Output: {
 </span>
 
 ```lua
-slice(input: { any }, left: number?, right: number?): { any }
+slice<T>(input: { T }, left: number?, right: number?): { T }
 ```
 
 Return a portion of the _input_ array starting with the element at the _left_ index and ending
@@ -1441,7 +1495,7 @@ These utilities operate on [Maps](#map), tables with arbitrary keys.
 </span>
 
 ```lua
-assign(target: Types.Table, ...: Args<Table>): Types.Table
+assign<Key, Value>(target: Types.Map<Key, Value>, ...: Types.Map<Key, Value>): Types.Map<Key, Value>
 ```
 
 Adds new values to _target_ from subsequent [Table](#table) arguments in left-to-right order.
@@ -1539,9 +1593,9 @@ print(drink.syrup) --> nil
 </span>
 
 ```lua
-type GetValueHandler = (Types.Table, Key) -> Value
+type GetValueHandler<Key, Value> = ({ [Key]: Value }, Key) -> Value
 
-getOrSet(input: Types.Table, key: Key, getValue: GetValueHandler): Value
+getOrSet<Key, Value>(input: { [Key]: Value }, key: Key, getValue: GetValueHandler<Key, Value>): Value
 ```
 
 Returns a value of the _input_ [Table](#table) at the _key_ provided.
@@ -1583,7 +1637,7 @@ Output: Yellow
 </span>
 
 ```lua
-join(...): Types.Map<any, any>
+join<Key, Value>(...: Types.Map<Key, Value>): Types.Map<Key, Value>
 ```
 
 Output a new [Map](#map) from merging all the keys in the [Map](#map) arguments in left-to-right order.
@@ -2004,7 +2058,7 @@ Can be used to make it clear that a handler returns its inputs.
 </span>
 
 ```lua
-isCallable(value: any): boolean
+isCallable<T>(value: T): boolean
 ```
 
 Returns `true` if the value can be called i.e. you can write `value(...)`.

@@ -12,8 +12,8 @@
 ]]
 local insert = table.insert
 
-local function slice(input: { any }, left: number?, right: number?)
-	local output = {}
+local function slice<T>(input: { T }, left: number?, right: number?): { T }
+	local output: { T } = {}
 
 	-- Default values
 	local l: number = left or 1

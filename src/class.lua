@@ -36,12 +36,14 @@ local function throwNotImplemented(tags: Types.Table)
 	NotImplemented:throw(tags)
 end
 
-export type Constructor = () -> Types.Table
+export type Constructor<T...> = (T...) -> Types.Table
 
-local function class(name: string, constructor: Constructor?)
-	local classConstructor: Constructor = constructor or function()
-		return {}
-	end
+local defaultConstructor: Constructor<> = function()
+	return {}
+end
+
+local function class<T...>(name: string, constructor: Constructor<T...>?)
+	local classConstructor = constructor or defaultConstructor
 	local Class = {
 		name = name,
 	}

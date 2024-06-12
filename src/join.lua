@@ -9,9 +9,7 @@ local Dash = script.Parent
 local Types = require(Dash.Types)
 local assign = require(Dash.assign)
 
--- TODO Luau: Support typing varargs
--- TODO Luau: Support function generics
-local function join(...): Types.Map<any, any>
+local function join<Key, Value>(...: Types.Map<Key, Value>): Types.Map<Key, Value>
 	return assign({}, ...)
 end
 

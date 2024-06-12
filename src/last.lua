@@ -7,10 +7,9 @@
 	If handler is not defined, the function simply returns the last element of the array.
 ]]
 
--- TODO Luau: support generic function definitions
-export type FindHandler = (any, any) -> boolean
+export type FindHandler<Value> = (Value, number) -> boolean
 
-local function last(input: { any }, handler: FindHandler?)
+local function last<Value>(input: { Value }, handler: FindHandler<Value>?): Value?
 	for index = #input, 1, -1 do
 		local child = input[index]
 		if not handler then

@@ -16,13 +16,9 @@
 local Dash = script.Parent
 local assertEqual = require(Dash.assertEqual)
 
--- TODO Luau: Support generic functions
-export type MapHandler = (any, number) -> any
+export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 
--- TYPED: export type MapHandler<Input, Output> = (Value, number) -> Output
--- TYPED: local function map<Input, Output>(input: { Input }, fn: MapFn<Input, Output>)<Output>
-
-local function map(input: { any }, handler: MapHandler): { any }
+local function map<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>): { [Key]: NewValue }
 	local result = {}
 	for key, child in input do
 		local value = handler(child, key)
