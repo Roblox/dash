@@ -4,8 +4,7 @@
 	Iterator stops when the shortest array ends, i.e. when it encounters nil in one of the arrays
 ]]
 local function zip<Item1, Item2>(array1: { Item1 }, array2: { Item2 }): () -> (Item1, Item2)
-	local key1, key2 = nil, nil
-	local item1, item2 = nil, nil
+	local key1, key2, item1, item2
 	return function()
 		key1, item1 = next(array1, key1)
 		key2, item2 = next(array2, key2)
