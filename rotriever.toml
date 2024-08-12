@@ -1,6 +1,10 @@
 [package]
 name = "Dash"
-author = "hcollins"
+authors = ["hcollins"]
+description = "A collection of core utilities expanding the capabilities of Lua in Roblox."
+repository = "https://github.com/Roblox/dash-internal"
+documentation = "https://roblox.github.io/dash-internal"
+keywords = ["utilities"]
 license = ""
 version = "1.0.0"
 content_root = "src"
