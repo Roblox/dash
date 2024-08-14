@@ -5,7 +5,7 @@ description = "A collection of core utilities expanding the capabilities of Lua 
 repository = "https://github.com/Roblox/dash-internal"
 documentation = "https://roblox.github.io/dash-internal"
 keywords = ["utilities"]
-license = ""
+license = "MIT"
 version = "1.0.0"
 content_root = "src"
 
