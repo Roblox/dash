@@ -1,4 +1,4 @@
 *.rbxl.lock
 .DS_Store
 /site/
-.gitignore
+/Packages/
