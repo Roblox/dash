@@ -119,8 +119,8 @@ Dash.all({true, 0, "0"}) --> true
 ```lua
 -- Do all words start with 'ro'?
 Dash.all(
-	{"roblox", "roact", "rodux"}, 
-	function(word) return Dash.startsWith(word, "ro") 
+	{"roblox", "roact", "rodux"},
+	function(word) return Dash.startsWith(word, "ro")
 end)
 --[[
 Output: true
@@ -152,15 +152,15 @@ or `nil` if no value should be added.
 
 ```lua
 -- Invert keys and values of a table
-Dash.collect({a = "1", b = "2", c = 3}, function(key, value) 
-	return value, key 
+Dash.collect({a = "1", b = "2", c = 3}, function(key, value)
+	return value, key
 end)
 
 --[[
 Output: {
 	[3] = "c"
-	["1"] = "a", 
-	["2"] = "b", 
+	["1"] = "a",
+	["2"] = "b",
 }
 ]]
 ```
@@ -308,8 +308,8 @@ Dash.count({1, 2, 3, 4, 5}) --> 5
 ```lua
 -- Count the number of ids that start with 1
 Dash.count(
-	{[12] = true, [24] = true, [153] = true, [199] = true}, 
-	function(value, id) return tostring(id):sub(1, 1) == "1" 
+	{[12] = true, [24] = true, [153] = true, [199] = true},
+	function(value, id) return tostring(id):sub(1, 1) == "1"
 end)
 
 --[[
@@ -320,7 +320,7 @@ Output: 3
 ```lua
 -- Count the number of numbers divisible by 5
 Dash.count(
-	{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}, 
+	{1, 1, 2, 3, 5, 8, 13, 21, 34, 55},
 	function(num) return num % 5 == 0
 end)
 
@@ -354,8 +354,8 @@ The handler should return truthy to preserve the value in the resulting Table.
 ```lua
 -- Take only the elements whose values begin with "r"
 Dash.filter(
-	{place = "roblox", packages = "rotriever", ide = "studio"}, 
-	function(word) return Dash.startsWith(word, "r") 
+	{place = "roblox", packages = "rotriever", ide = "studio"},
+	function(word) return Dash.startsWith(word, "r")
 end)
 
 --[[
@@ -393,7 +393,7 @@ For a Map, an arbitrary matching element is returned if it exists.
 ```lua
 -- Check if there's the "ExtraSettings" key and get the value of that key if so
 Dash.find(
-	{Id = 145, IsReady = false, ExtraSettings = {AutoReady = true}}, 
+	{Id = 145, IsReady = false, ExtraSettings = {AutoReady = true}},
 	function(value, key) return key == "ExtraSettings" end
 )
 
@@ -404,7 +404,7 @@ Output: {
 ]]
 
 
-Dash.find({Id = 145, IsReady = false}, 
+Dash.find({Id = 145, IsReady = false},
 	function(value, key) return key == "ExtraSettings" end
 )
 --[[
@@ -448,7 +448,7 @@ Dash.forEach({"Item 1", "Item 2", "Item 3"}, function(value) print(value) end)
 --[[
 Output: Item 1
 Item 2
-Item 3	
+Item 3
 ]]
 ```
 
@@ -483,20 +483,20 @@ Output:{
 	["Black"] = 1,
 	["Orange"] = 1,
 	["Red"] = 2
-} 
+}
 ]]
 ```
 
 ```lua
 -- Count colors by simple definition of neutral and non-neutral
-function toNeutral(color) 
-	return if Dash.includes({"Black", "Gray", "White"}, color) 
-		then "Neutral" 
+function toNeutral(color)
+	return if Dash.includes({"Black", "Gray", "White"}, color)
+		then "Neutral"
 		else "Non-neutral"
 end
 Dash.frequencies(
-	{"Black", "Orange", "Blue", "Gray", "White"}, 
-	function(color) return toNeutral(color) 
+	{"Black", "Orange", "Blue", "Gray", "White"},
+	function(color) return toNeutral(color)
 end)
 
 --[[
@@ -769,8 +769,8 @@ Dash.mapOne({
 	{Id = 1, IsHidden = true},
 	{Id = 3, IsHidden = false},
 	{Id = 2, IsHidden = false},
-}, function(message) 
-	return if message.IsHidden then nil else message.Id 
+}, function(message)
+	return if message.IsHidden then nil else message.Id
 end)
 
 --[[
@@ -817,8 +817,8 @@ Dash.max({1, 2, 3}, function(num) return -num end) --> 1
 
 ```lua
 Dash.max(
-	{"blue", "red", "orange"}, 
-	nil, 
+	{"blue", "red", "orange"},
+	nil,
 	function(word1, word2) return word1:len() > word2:len() end
 ) --> "orange"
 ```
@@ -862,8 +862,8 @@ Dash.min({3, 2, 1}, function(num) return -num end) --> 3
 
 ```lua
 Dash.min(
-	{"blue", "red", "orange"}, 
-	nil, 
+	{"blue", "red", "orange"},
+	nil,
 	function(word1, word2) return word1:len() < word2:len() end
 ) --> "red"
 ```
@@ -970,7 +970,7 @@ The _initial_ value is passed into the first call, and the final value returned 
 -- Count occurences of each element in array and output a table of counts
 -- See Dash.frequencies
 Dash.reduce(
-	{"Red", "Black", "Red", "Red", "Black"}, 
+	{"Red", "Black", "Red", "Red", "Black"},
 	function(acc, color)
 		if acc[color] == nil then
 			acc[color] = 1
@@ -985,7 +985,7 @@ Dash.reduce(
 Output: {
 	["Black"] = 2,
 	["Red"] = 3
-} 
+}
 ]]
 ```
 
@@ -1022,7 +1022,7 @@ inputs are tables, and all their keys are equal.
 
 ```lua
 Dash.shallowEqual({
-	A = 1, 
+	A = 1,
 	B = 2
 }, {
 	A = 1,
@@ -1036,7 +1036,7 @@ Output: true
 
 ```lua
 Dash.shallowEqual({
-	A = 1, 
+	A = 1,
 	B = 2,
 	C = 3
 }, {
@@ -1075,10 +1075,10 @@ element which it is called with.
 -- Does there exist a red fruit?
 Dash.some(
 	{
-		{Type = "Cherry", Color = "Red"}, 
-		{Type = "Strawberry", Color = "Red"}, 
+		{Type = "Cherry", Color = "Red"},
+		{Type = "Strawberry", Color = "Red"},
 		{Type = "Blueberry", Color = "Blue"}
-	}, 
+	},
 	function(fruit) return fruit.Color == "Red" end
 )
 
@@ -1108,9 +1108,9 @@ If the input is a Map, values are returned in an arbitrary order.
 **Example**
 ```lua
 Dash.values({
-	Type = "Cherry", 
-	Color = "Red", 
-	Price = "Expensive", 
+	Type = "Cherry",
+	Color = "Red",
+	Price = "Expensive",
 	EnjoymentLevel = "High"
 })
 
@@ -1185,7 +1185,7 @@ Returns nil if no entires satisfy the condition.
 ```lua
 -- Find index of "Clementine" fruit if it exists in the array
 Dash.findIndex(
-	{"Apple", "Banana", "Clementine"}, 
+	{"Apple", "Banana", "Clementine"},
 	function(fruit) return fruit == "Clementine" end
 )
 
@@ -1196,7 +1196,7 @@ Output: 3
 
 ```lua
 Dash.findIndex(
-	{"Apple", "Banana"}, 
+	{"Apple", "Banana"},
 	function(fruit) return fruit == "Clementine" end
 )
 
@@ -1225,7 +1225,7 @@ Outputs a new array of elements merged from the _input_ array arguments in left-
 ```lua
 -- Flatten a partition of numbers in the range 1-5
 Dash.flat({
-	{1, 2, 3}, 
+	{1, 2, 3},
 	{4, 5}
 })
 
@@ -1304,7 +1304,7 @@ If all returned from the _handler_ values are `nil`, `nil` is returned.
 ```lua
 -- Get first color that's 6 letters and return its first letter
 Dash.mapFirst(
-	{"Red", "Yellow", "Orange", "Blue"}, 
+	{"Red", "Yellow", "Orange", "Blue"},
 	function(color)
 		return if color:len() == 6 then color:sub(1, 1) else nil
 	end
@@ -1339,7 +1339,7 @@ If all returned from the _handler_ values are `nil`, `nil` is returned.
 ```lua
 -- Get last color that's 6 letters and return its first letter
 Dash.mapLast(
-	{"Red", "Yellow", "Orange", "Blue"}, 
+	{"Red", "Yellow", "Orange", "Blue"},
 	function(color)
 		return if color:len() == 6 then color:sub(1, 1) else nil
 	end
@@ -1606,8 +1606,8 @@ added to the _input_ [Table](#table) and returned.
 
 ```lua
 Dash.getOrSet(
-	{Item = "Gummy Bear", Color = "Lime"}, 
-	"Color", 
+	{Item = "Gummy Bear", Color = "Lime"},
+	"Color",
 	function() return "Yellow" end
 )
 
@@ -1618,8 +1618,8 @@ Output: Lime
 
 ```lua
 Dash.getOrSet(
-	{Item = "Gummy Bear"}, 
-	"Color", 
+	{Item = "Gummy Bear"},
+	"Color",
 	function() return "Yellow" end
 )
 
@@ -1645,7 +1645,7 @@ Output a new [Map](#map) from merging all the keys in the [Map](#map) arguments 
 **Example**
 ```lua
 Dash.join(
-	{Text = "Hello World!", Color = "Sky Blue"}, 
+	{Text = "Hello World!", Color = "Sky Blue"},
 	{Title = "Greetings!", Color = "Indigo"}
 )
 
@@ -1654,7 +1654,7 @@ Output: {
 	["Color"] = "Indigo",
 	["Text"] = "Hello World!",
 	["Title"] = "Greetings!"
-} 
+}
 ]]
 ```
 
@@ -1906,7 +1906,7 @@ followed by a [Table](#table) of the matched delimiters.
 
 ```lua
 local parts, delimeters = Dash.splitOn(
-	"The quick brown fox jumps over the lazy dog", 
+	"The quick brown fox jumps over the lazy dog",
 	" "
 )
 
@@ -2080,6 +2080,20 @@ A function which does nothing.
 Can be used to make it clear that a handler has no function.
 
 <hr>
+
+### chain
+
+<span class="tags">
+	[Functions](#functions)
+</span>
+
+```lua
+chain("test":gmatch("t"), "test":gmatch("e"))
+```
+
+Returns a stateful iterator that returns elements from the first iterable until it is exhausted,
+then proceeds to the next iterator, until all the iterators are exhausted.
+
 
 ## Classes
 
