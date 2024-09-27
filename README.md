@@ -1,6 +1,6 @@
 # Dash
 
-A collection of core utilities expanding the capabilities of Lua in Roblox.
+A collection of core utilities expanding the capabilities of Luau in Roblox.
 
 [Read the docs](https://roblox.github.io/dash-internal/)
 
