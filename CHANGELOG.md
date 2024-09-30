@@ -1,3 +1,7 @@
+## V1.1.0
+
+- Added chain function to chain stateful iterators
+
 ## v1.0.0
 
 - Changed types to support generics. Type inference should become better.
