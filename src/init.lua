@@ -1,5 +1,3 @@
-local Dash = {}
-
 local Types = require(script.Types)
 
 export type Array<Value> = Types.Array<Value>
@@ -10,11 +8,73 @@ export type Table = Types.Table
 export type Class<Object> = Types.Class<Object>
 export type AnyFunction = Types.AnyFunction
 
--- Require and add the Dash functions to the Dash table
-for _, fn in script:GetChildren() do
-	if fn.ClassName == "ModuleScript" then
-		Dash[fn.Name] = require(fn)
-	end
-end
+local Dash = {
+	all = require(script.all),
+	append = require(script.append),
+	assertEqual = require(script.assertEqual),
+	assign = require(script.assign),
+	chain = require(script.chain),
+	class = require(script.class),
+	collect = require(script.collect),
+	collectArray = require(script.collectArray),
+	collectSet = require(script.collectSet),
+	compose = require(script.compose),
+	copy = require(script.copy),
+	count = require(script.count),
+	cycles = require(script.cycles),
+	endsWith = require(script.endsWith),
+	Error = require(script.Error),
+	filter = require(script.filter),
+	find = require(script.find),
+	findIndex = require(script.findIndex),
+	flat = require(script.flat),
+	forEach = require(script.forEach),
+	forEachArgs = require(script.forEachArgs),
+	format = require(script.format),
+	formatValue = require(script.formatValue),
+	freeze = require(script.freeze),
+	frequencies = require(script.frequencies),
+	getOrSet = require(script.getOrSet),
+	groupBy = require(script.groupBy),
+	identity = require(script.identity),
+	includes = require(script.includes),
+	isCallable = require(script.isCallable),
+	isLowercase = require(script.isLowercase),
+	isUppercase = require(script.isUppercase),
+	iterable = require(script.iterable),
+	iterator = require(script.iterator),
+	join = require(script.join),
+	joinDeep = require(script.joinDeep),
+	keyBy = require(script.keyBy),
+	keys = require(script.keys),
+	last = require(script.last),
+	leftPad = require(script.leftPad),
+	map = require(script.map),
+	mapFirst = require(script.mapFirst),
+	mapLast = require(script.mapLast),
+	mapOne = require(script.mapOne),
+	max = require(script.max),
+	min = require(script.min),
+	None = require(script.None),
+	noop = require(script.noop),
+	omit = require(script.omit),
+	pick = require(script.pick),
+	pretty = require(script.pretty),
+	product = require(script.product),
+	reduce = require(script.reduce),
+	reverse = require(script.reverse),
+	rightPad = require(script.rightPad),
+	shallowEqual = require(script.shallowEqual),
+	slice = require(script.slice),
+	some = require(script.some),
+	splitOn = require(script.splitOn),
+	startsWith = require(script.startsWith),
+	sum = require(script.sum),
+	Symbol = require(script.Symbol),
+	trim = require(script.trim),
+	Types = require(script.Types),
+	values = require(script.values),
+	zip = require(script.zip),
+}
 
 return Dash.freeze("Dash", Dash, true)
