@@ -7,6 +7,8 @@
 	This function can be used to build behaviour that iterates over both arrays and Maps.
 
 	@see Dash.iterable if you want to iterate over a Table with numeric but un-ordered keys.
+	@deprecated use generalized iteration instead.
+
 ]]
 
 local Dash = script.Parent
