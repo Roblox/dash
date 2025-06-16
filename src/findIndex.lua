@@ -8,7 +8,8 @@
 export type FindHandler<Value> = (Value, number) -> boolean
 
 local function findIndex<Value>(input: { Value }, handler: FindHandler<Value>): number?
-	for key, child in ipairs(input) do
+	for key = 1, #input do
+		local child = input[key]
 		if handler(child, key) then
 			return key
 		end

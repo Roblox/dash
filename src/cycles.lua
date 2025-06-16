@@ -60,7 +60,8 @@ local function cycles(input: any, depth: number?, initialCycles: any): Cycles?
 					return tostring(left) < tostring(right)
 				end
 			end)
-			for _, key in ipairs(inputKeys) do
+			for i = 1, #inputKeys do
+				local key = inputKeys[i]
 				local value = input[key]
 				if includes(childCycles.omit, key) then
 					-- Don't visit omitted keys

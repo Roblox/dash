@@ -1,5 +1,5 @@
 --[[
-	Collect returns a new Table derived from _input_ by iterating through its pairs and calling
+	Collect returns a new Table derived from _input_ by iterating and calling
 	the handler on each `(key, child)` tuple.
 
 	The handler should return a new `(newKey, value)` tuple to be inserted into the returned Table,
