@@ -1,5 +1,5 @@
 --[[
-	Collect returns a new array derived from _input_ by iterating through its pairs and calling
+	Collect returns a new array derived from _input_ by iterating and calling
 	the handler on each `(key, child)` tuple.
 
 	The handler should return a new value to be pushed onto the end of the result array, or `nil`

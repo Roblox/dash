@@ -106,7 +106,9 @@ local function prettyLines(object: any, options: any): { string }
 		-- Compact numeric keys into a simpler array style
 		local maxConsecutiveIndex = 0
 		local first = true
-		for index, value in ipairs(object) do
+		for index = 1, #object do
+			local value = object[index]
+			
 			if valueOptions.omit and includes(valueOptions.omit, index) then
 				-- Don't include keys which are omitted
 				continue
@@ -136,7 +138,7 @@ local function prettyLines(object: any, options: any): { string }
 				return tostring(left) < tostring(right)
 			end
 		end)
-		for _, key in ipairs(objectKeys) do
+		for _, key in objectKeys do
 			local value = object[key]
 			-- We printed a key if it's an index e.g. an integer in the range 1..n.
 			if typeof(key) == "number" and key % 1 == 0 and key >= 1 and key <= maxConsecutiveIndex then

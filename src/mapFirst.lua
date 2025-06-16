@@ -8,7 +8,8 @@
 export type MapHandler<Value, NewValue> = (Value, number) -> NewValue?
 
 local function mapFirst<Value, NewValue>(input: { Value }, handler: MapHandler<Value, NewValue>): NewValue?
-	for index, child in ipairs(input) do
+	for index = 1, #input do
+		local child = input[index]
 		local output = handler(child, index)
 		if output ~= nil then
 			return output

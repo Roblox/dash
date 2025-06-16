@@ -40,7 +40,7 @@ local function format(formatString: string, ...)
 	local texts, subs = splitOn(formatString, "{[^{}]*}")
 	local result = {}
 	-- Iterate through possible curly-brace matches, ignoring escaped and substituting valid ones
-	for i, text in pairs(texts) do
+	for i, text in texts do
 		local unescaped = text:gsub("{{", "{"):gsub("}}", "}")
 		insert(result, unescaped)
 		local placeholder = subs[i] and subs[i]:sub(2, -2)
