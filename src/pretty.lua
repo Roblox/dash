@@ -108,7 +108,7 @@ local function prettyLines(object: any, options: any): { string }
 		local first = true
 		for index = 1, #object do
 			local value = object[index]
-			
+
 			if valueOptions.omit and includes(valueOptions.omit, index) then
 				-- Don't include keys which are omitted
 				continue
