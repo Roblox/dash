@@ -60,23 +60,23 @@ local function sortObjectKeys(object: Types.Table): { any }
 	return objectKeys
 end
 
-local function constructValueOptions(options: PrettyOptions?, object: Types.Table): PrettyOptions
+local function constructValueOptions(options: PrettyOptions, object: Types.Table): PrettyOptions
 	return assign(
 		{
 			visited = {},
 			indent = "\t",
 			depth = 2,
 		},
-		options or {},
+		options,
 		{
 			-- Depth is reduced until we shouldn't recurse any more
-			depth = options and options.depth and options.depth - 1 or nil,
-			cycles = options and options.cycles or cycles(object, options and options.depth, {
+			depth = options.depth and options.depth - 1 or nil,
+			cycles = options.cycles or cycles(object, options.depth, {
 				visited = {},
 				refs = {},
 				nextRef = 0,
-				depth = options and options.depth,
-				omit = options and options.omit or {},
+				depth = options.depth,
+				omit = options.omit or {},
 			}),
 		}
 	) :: PrettyOptions
@@ -97,7 +97,7 @@ end
 
 local pretty
 
-local function prettyLines(object: Types.Table, options: PrettyOptions?): { string }
+local function prettyLines(object: Types.Table, options: PrettyOptions): { string }
 	options = options or {}
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively
@@ -194,7 +194,7 @@ local function prettyLines(object: Types.Table, options: PrettyOptions?): { stri
 	end
 end
 
-pretty = function(object: Types.Table, options: PrettyOptions?): string
+pretty = function(object: Types.Table, options: PrettyOptions): string
 	return concat(prettyLines(object, options), "\n")
 end
 
