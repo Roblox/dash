@@ -48,34 +48,62 @@ local function indentLines(lines: { string }, indent: string)
 	end)
 end
 
+local function sortObjectKeys(object: Types.Table): { any }
+	local objectKeys = keys(object)
+	sort(objectKeys, function(a, b)
+		if type(a) == "number" and type(b) == "number" then
+			return a < b
+		else
+			return tostring(a) < tostring(b)
+		end
+	end)
+	return objectKeys
+end
+
+local function constructValueOptions(options: PrettyOptions?, object: Types.Table): PrettyOptions
+	return assign(
+		{
+			visited = {},
+			indent = "\t",
+			depth = 2,
+		},
+		options or {},
+		{
+			-- Depth is reduced until we shouldn't recurse any more
+			depth = options and options.depth and options.depth - 1 or nil,
+			cycles = options and options.cycles or cycles(object, options and options.depth, {
+				visited = {},
+				refs = {},
+				nextRef = 0,
+				depth = options and options.depth,
+				omit = options and options.omit or {},
+			}),
+		}
+	) :: PrettyOptions
+end
+
+local function addTableEnd(lines: { string }, multiline: boolean, first: boolean)
+	if multiline then
+		if first then
+			-- An empty table is just represented as {}
+			lines[#lines] = lines[#lines] .. "}"
+		else
+			insert(lines, "}")
+		end
+	else
+		lines[#lines] = ("%s}"):format(lines[#lines])
+	end
+end
+
 local pretty
 
--- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
--- local function prettyLines(object: any, options: PrettyOptions?): { string }
-local function prettyLines(object: any, options: any): { string }
+local function prettyLines(object: Types.Table, options: PrettyOptions?): { string }
 	options = options or {}
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively
 		-- Construct the options for recursive calls for the table values
-		local valueOptions = assign(
-			{
-				visited = {},
-				indent = "\t",
-				depth = 2,
-			},
-			options,
-			{
-				-- Depth is reduced until we shouldn't recurse any more
-				depth = options.depth and options.depth - 1 or nil,
-				cycles = options.cycles or cycles(object, options.depth, {
-					visited = {},
-					refs = {},
-					nextRef = 0,
-					depth = options.depth,
-					omit = options.omit or {},
-				}),
-			}
-		)
+		local valueOptions = constructValueOptions(options, object)
+
 		if valueOptions.depth == -1 then
 			-- Indicate there is more information available beneath the maximum depth
 			return { "..." }
@@ -106,92 +134,67 @@ local function prettyLines(object: any, options: any): { string }
 		-- Compact numeric keys into a simpler array style
 		local maxConsecutiveIndex = 0
 		local first = true
-		for index = 1, #object do
-			local value = object[index]
 
-			if valueOptions.omit and includes(valueOptions.omit, index) then
-				-- Don't include keys which are omitted
-				continue
-			end
-			if first then
-				first = false
-			else
-				lines[#lines] = lines[#lines] .. comma
-			end
-			if valueOptions.multiline then
-				local indendedValue = indentLines(prettyLines(value, valueOptions), valueOptions.indent)
-				append(lines, indendedValue)
-			else
-				lines[#lines] = lines[#lines] .. pretty(value, valueOptions)
-			end
-			maxConsecutiveIndex = index
-		end
+		local objectKeys = sortObjectKeys(object)
+
 		if #object > 0 and valueOptions.arrayLength then
 			lines[1] = ("#%d %s"):format(#object, lines[1])
 		end
-		-- Ensure keys are printed in order to guarantee consistency
-		local objectKeys = keys(object)
-		sort(objectKeys, function(left, right)
-			if typeof(left) == "number" and typeof(right) == "number" then
-				return left < right
-			else
-				return tostring(left) < tostring(right)
+
+		for i = 1, #objectKeys do
+			local key = objectKeys[i]
+
+			if type(key) == "number" and key == maxConsecutiveIndex + 1 then
+				maxConsecutiveIndex = key
 			end
-		end)
-		for _, key in objectKeys do
-			local value = object[key]
-			-- We printed a key if it's an index e.g. an integer in the range 1..n.
-			if typeof(key) == "number" and key % 1 == 0 and key >= 1 and key <= maxConsecutiveIndex then
-				continue
-			end
+
 			if valueOptions.omit and includes(valueOptions.omit, key) then
 				-- Don't include keys which are omitted
 				continue
 			end
+
+			local value = object[key]
+			local isArray = (type(key) == "number" and key >= 1 and key <= maxConsecutiveIndex)
+
 			if first then
 				first = false
 			else
 				lines[#lines] = lines[#lines] .. comma
 			end
-			if valueOptions.multiline then
-				local keyLines = prettyLines(key, keyOptions)
-				local indentedKey = indentLines(keyLines, valueOptions.indent)
-				local valueLines = prettyLines(value, valueOptions)
-				local valueTail = slice(valueLines, 2)
-				local indendedValueTail = indentLines(valueTail, valueOptions.indent)
-				-- The last line of the key and first line of the value are concatenated together
-				indentedKey[#indentedKey] = ("%s = %s"):format(indentedKey[#indentedKey], valueLines[1])
-				append(lines, indentedKey)
-				append(lines, indendedValueTail)
+
+			if multiline then
+				if isArray then
+					append(lines, indentLines(prettyLines(value, valueOptions), valueOptions.indent))
+				else
+					local keyLines = prettyLines(key, keyOptions)
+					local indentedKey = indentLines(keyLines, valueOptions.indent)
+					local valueLines = prettyLines(value, valueOptions)
+					local valueTail = slice(valueLines, 2)
+					local indentedValueTail = indentLines(valueTail, valueOptions.indent)
+					-- The last line of the key and first line of the value are concatenated together
+					indentedKey[#indentedKey] = ("%s = %s"):format(indentedKey[#indentedKey], valueLines[1])
+					append(lines, indentedKey)
+					append(lines, indentedValueTail)
+				end
 			else
-				lines[#lines] = ("%s%s = %s"):format(
-					lines[#lines],
-					pretty(key, keyOptions),
-					pretty(value, valueOptions)
-				)
+				if isArray then
+					lines[#lines] = lines[#lines] .. pretty(value, valueOptions)
+				else
+					lines[#lines] = lines[#lines] .. pretty(key, keyOptions) .. " = " .. pretty(value, valueOptions)
+				end
 			end
 		end
-		if valueOptions.multiline then
-			if first then
-				-- An empty table is just represented as {}
-				lines[#lines] = lines[#lines] .. "}"
-			else
-				insert(lines, "}")
-			end
-		else
-			lines[#lines] = ("%s}"):format(lines[#lines])
-		end
+
+		addTableEnd(lines, multiline, first)
 		return lines
-	elseif type(object) == "string" and not options.noQuotes then
+	elseif type(object) == "string" and options and not options.noQuotes then
 		return { ('"%s"'):format(object) }
 	else
 		return { tostring(object) }
 	end
 end
 
--- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
--- pretty = function(object: any, options: PrettyOptions?): string
-pretty = function(object: any, options: any): string
+pretty = function(object: Types.Table, options: PrettyOptions?): string
 	return concat(prettyLines(object, options), "\n")
 end
 
