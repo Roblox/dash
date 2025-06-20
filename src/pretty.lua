@@ -141,9 +141,7 @@ local function prettyLines(object: Types.Table, options: PrettyOptions): { strin
 			lines[1] = ("#%d %s"):format(#object, lines[1])
 		end
 
-		for i = 1, #objectKeys do
-			local key = objectKeys[i]
-
+		for _, key in ipairs(objectKeys) do
 			if type(key) == "number" and key == maxConsecutiveIndex + 1 then
 				maxConsecutiveIndex = key
 			end
