@@ -2,7 +2,7 @@
 	Returns the index of the first element in the _input_ array that the handler returns `true` for,
 	when passed the `(child, key)` entry.
 
-	Returns nil if no entires satisfy the condition.
+	Returns nil if no entries satisfy the condition.
 ]]
 
 export type FindHandler<Value> = (Value, number) -> boolean
