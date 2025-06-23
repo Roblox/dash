@@ -1,7 +1,7 @@
 --[[
 	Filter the _input_ Table by calling the handler on each `(child, index)` tuple.
 
-	For an array input, the order of elements is prevered in the output.
+	For an array input, the order of elements is preserved in the output.
 
 	The handler should return truthy to preserve the value in the resulting Table.
 ]]

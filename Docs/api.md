@@ -383,7 +383,7 @@ find<Key, Value>(input: { [Key]: Value }, handler: FindHandler<Key, Value>): Val
 Returns an element in the _input_ [Table](#table) that the handler returns `true` for, when passed the
 `(value, key)` entry.
 
-Returns nil if no entires satisfy the condition.
+Returns nil if no entries satisfy the condition.
 
 For an array, this first matching element is returned.
 For a Map, an arbitrary matching element is returned if it exists.
@@ -412,11 +412,6 @@ Output: nil
 ]]
 
 ```
-
-
-**See**
-
-- [Dash.first](#first) for a function which returns the first element of an array matching a condition.
 
 <hr>
 
@@ -713,7 +708,7 @@ map<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Valu
 
 Iterates through the elements of the _input_ Table.
 
-For an array input, the elements are visted in order 1..n.
+For an array input, the elements are visited in order 1..n.
 
 For a [Map](#map) input, the elements are visited in an arbitrary order.
 
@@ -1178,7 +1173,7 @@ findIndex<Value>(input: { Value }, handler: FindHandler<Value>): number?
 Returns the index of the first element in the _input_ array that the handler returns `true` for,
 when passed the `(value, key)` entry.
 
-Returns nil if no entires satisfy the condition.
+Returns nil if no entries satisfy the condition.
 
 **Examples**
 
@@ -1257,7 +1252,7 @@ last<Value>(input: { Value }, handler: FindHandler<Value>?): Value?
 Returns the last element in the _input_ array that the handler returns `true` for, when
 passed the `(value, key)` entry.
 
-Returns nil if no entires satisfy the condition.
+Returns nil if no entries satisfy the condition.
 
 If handler is not defined, the function simply returns the last element of the array.
 
@@ -1362,7 +1357,7 @@ Output: O
 product(input: { number }): number
 ```
 
-Multiplies together all of the numbers in the _input_ array.
+Multiplies together all the numbers in the _input_ array.
 
 If the _input_ has no elements, return `1`.
 
@@ -1471,7 +1466,7 @@ Output: {
 sum(input: { number }): number
 ```
 
-Adds together all of the numbers in the _input_ array.
+Adds together all the numbers in the _input_ array.
 
 If the input array has no elements, return `0`.
 

@@ -2,7 +2,7 @@
 	Returns an element in the _input_ Table that the handler returns `true` for, when passed the
 	`(child, key)` entry.
 
-	Returns nil if no entires satisfy the condition.
+	Returns nil if no entries satisfy the condition.
 
 	For an array, this first matching element is returned.
 
