@@ -12,12 +12,12 @@ local function shallowEqual(left: any, right: any)
 	if left == nil or right == nil then
 		return false
 	end
-	for key, value in pairs(left) do
+	for key, value in left do
 		if right[key] ~= value then
 			return false
 		end
 	end
-	for key, value in pairs(right) do
+	for key, value in right do
 		if left[key] ~= value then
 			return false
 		end

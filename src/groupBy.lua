@@ -18,7 +18,7 @@ local function groupBy<Key, Value, GroupKey>(
 	getKey: GroupByHandler<Key, Value, GroupKey> | GroupKey
 ): { [GroupKey]: { Value } }
 	local result = {}
-	for key, child in pairs(input) do
+	for key, child in input do
 		local groupKey
 		if typeof(getKey) == "function" then
 			groupKey = getKey(child, key)

@@ -10,7 +10,7 @@
 export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue?
 
 local function mapOne<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>?): NewValue?
-	for key, child in pairs(input) do
+	for key, child in input do
 		local output
 		if handler then
 			output = handler(child, key)
