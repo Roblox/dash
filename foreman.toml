@@ -1,6 +1,6 @@
 [tools]
-selene = { source = "Roblox/Kampfkarren-selene", version = "=0.27.0" }
+selene = { source = "Roblox/Kampfkarren-selene", version = "=0.28.0" }
 stylua = { source = "Roblox/JohnnyMorganz-StyLua", version = "=2.0.1" }
-rotrieve = { source = "roblox/rotriever", version = "=0.5.13-alpha.5" }
-lest = { source = "Roblox/lest", version = "3.8.0" }
+rotrieve = { source = "roblox/rotriever", version = "=0.5.25" }
+lest = { source = "Roblox/lest", version = "3.10.1" }
 rbx-aged-cli = { source = "Roblox/rbx-aged-tool", version = "=5.8.0" }
