@@ -1,3 +1,12 @@
+## V2.0.0
+
+- Replaced `pairs` with generalized iteration
+- Added types and tests for `pretty` function
+- Fixed typos in docs
+- Added manual exports for the LSP
+- Updated `install-packages-to-branch` action
+- Updated tooling
+
 ## V1.1.0
 
 - Added chain function to chain stateful iterators
