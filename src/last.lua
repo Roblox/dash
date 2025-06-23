@@ -2,7 +2,7 @@
 	Returns the last element in the _input_ array that the handler returns `true` for, when
 	passed the `(child, index)` entry.
 
-	Returns nil if no entires satisfy the condition.
+	Returns nil if no entries satisfy the condition.
 
 	If handler is not defined, the function simply returns the last element of the array.
 ]]
