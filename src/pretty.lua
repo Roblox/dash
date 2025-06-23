@@ -82,7 +82,7 @@ local function constructValueOptions(options: PrettyOptions, object: Types.Table
 	) :: PrettyOptions
 end
 
-local function addTableEnd(lines: { string }, multiline: boolean, first: boolean)
+local function insertClosedBracket(lines: { string }, multiline: boolean, first: boolean)
 	if multiline then
 		if first then
 			-- An empty table is just represented as {}
@@ -183,7 +183,7 @@ local function prettyLines(object: Types.Table, options: PrettyOptions): { strin
 			end
 		end
 
-		addTableEnd(lines, multiline, first)
+		insertClosedBracket(lines, multiline, first)
 		return lines
 	elseif type(object) == "string" and options and not options.noQuotes then
 		return { ('"%s"'):format(object) }
