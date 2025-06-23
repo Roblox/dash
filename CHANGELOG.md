@@ -1,6 +1,6 @@
 ## V2.0.0
 
-- Replaced pairs on generalized iteration
+- Replaced `pairs` with generalized iteration
 - Added types and tests for `pretty` function
 - Fixed typos in docs
 - Added manual exports for the LSP
