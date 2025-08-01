@@ -87,7 +87,7 @@ These utilities operate on [Tables](#table) of any kind.
 
 <hr>
 
-### all (new!)
+### all
 
 <span class="tags">
 	[Tables](#tables)
@@ -283,7 +283,7 @@ Output: {
 ```
 <hr>
 
-### count (new!)
+### count
 
 <span class="tags">
 	[Tables](#tables)
@@ -449,7 +449,7 @@ Item 3
 
 <hr>
 
-### frequencies (new!)
+### frequencies
 
 <span class="tags">
 	[Tables](#tables)
@@ -775,7 +775,7 @@ Output: 3
 
 <hr>
 
-### max (new!)
+### max
 
 <span class="tags">
 	[Tables](#tables)
@@ -820,7 +820,53 @@ Dash.max(
 
 <hr>
 
-### min (new!)
+### memoize
+
+<span class="tags">
+	[Functions](#functions)
+</span>
+
+```lua
+type MemoizeHandler<Key> = (...any) -> Key
+
+memoize(func: Types.AnyFunction, resolver: MemoizeHandler?): Types.AnyFunction
+```
+
+Creates a function that memoizes the result of `func`. The memoized function will cache results based on the arguments provided. If a resolver function is provided, it will be used to generate the cache key from the arguments.
+
+**Parameters**
+
+| Name       | Type                | Description                                                              |
+| ---------- | ------------------- | ------------------------------------------------------------------------ |
+| `func`     | `Types.AnyFunction` | The function to memoize                                                  |
+| `resolver` | `MemoizeHandler?`   | Optional function to resolve the cache key from the function's arguments |
+
+**Examples**
+
+```lua
+local function add(a, b)
+    return a + b
+end
+
+local memoizedAdd = memoize(add)
+print(memoizedAdd(1, 2)) -- Calculates and caches: 3
+print(memoizedAdd(1, 2)) -- Returns from cache: 3
+
+-- With custom resolver
+local memoizedWithResolver = memoize(add, function(a, b)
+    return string.format("%d_%d", a, b)
+end)
+```
+
+**Usage**
+
+- Use memoization for expensive computations that are called frequently with the same arguments
+- The resolver function can be used to customize how arguments are used to generate cache keys
+- Be mindful of memory usage as cached results are stored indefinitely
+
+<hr>
+
+### min
 
 <span class="tags">
 	[Table](#tables)
@@ -1347,7 +1393,7 @@ Output: O
 
 <hr>
 
-### product (new!)
+### product
 
 <span class="tags">
 	[Arrays](#arrays)
@@ -1456,7 +1502,7 @@ Output: {
 
 <hr>
 
-### sum (new!)
+### sum
 
 <span class="tags">
 	[Arrays](#arrays)
