@@ -6,7 +6,7 @@ repository = "https://github.com/Roblox/dash-internal"
 documentation = "https://roblox.github.io/dash-internal"
 keywords = ["utilities"]
 license = "MIT"
-version = "2.0.0"
+version = "2.1.0"
 content_root = "src"
 
 [config]
