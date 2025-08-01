@@ -1,4 +1,10 @@
 *.rbxl.lock
-.DS_Store
 /site/
 /Packages/
+
+# Misc OS files
+**/*.DS_Store*
+*.log
+
+# Sourcemap
+sourcemap.json
