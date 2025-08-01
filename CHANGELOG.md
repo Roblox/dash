@@ -1,3 +1,7 @@
+## V2.1.0
+
+- Create `memoize`
+
 ## V2.0.0
 
 - Replaced `pairs` with generalized iteration
