@@ -26,13 +26,17 @@
 
 local Dash = script.Parent
 local Types = require(Dash.Types)
+local isCallable = require(Dash.isCallable)
 
 export type ResolverFunction = (...any) -> string
 
-local function memoize<T...>(func: Types.AnyFunction, resolver: ResolverFunction?): Types.AnyFunction
+local function memoize(func: Types.AnyFunction, resolver: ResolverFunction?): Types.AnyFunction
+	assert(isCallable(func), "Expected a function as first argument")
+	assert(resolver == nil or isCallable(resolver), "Expected a function or nil as second argument")
+
 	local cache = {}
 
-	return function(...: T...): any
+	return function(...): any
 		local args = table.pack(...)
 		local key: string
 
