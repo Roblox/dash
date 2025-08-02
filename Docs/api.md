@@ -75,7 +75,7 @@ Some functions such as [filter](#filter) will require handlers. There will be a 
 
 ### AnyFunction
 ```lua
-type AnyFunction = () -> any
+type AnyFunction = (...any) -> any
 ```
 Represents a function which takes any arguments and returns any value
 
@@ -827,19 +827,12 @@ Dash.max(
 </span>
 
 ```lua
-type MemoizeHandler<Key> = (...any) -> Key
+type ResolverFunction = (...any) -> string
 
-memoize(func: Types.AnyFunction, resolver: MemoizeHandler?): Types.AnyFunction
+memoize<T...>(func: Types.AnyFunction, resolver: ResolverFunction?): Types.AnyFunction
 ```
 
 Creates a function that memoizes the result of `func`. The memoized function will cache results based on the arguments provided. If a resolver function is provided, it will be used to generate the cache key from the arguments.
-
-**Parameters**
-
-| Name       | Type                | Description                                                              |
-| ---------- | ------------------- | ------------------------------------------------------------------------ |
-| `func`     | `Types.AnyFunction` | The function to memoize                                                  |
-| `resolver` | `MemoizeHandler?`   | Optional function to resolve the cache key from the function's arguments |
 
 **Examples**
 

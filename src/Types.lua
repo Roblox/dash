@@ -14,6 +14,6 @@ export type Class<Object> = {
 	new: () -> Object,
 }
 -- Represents a function which takes any arguments and returns any value
-export type AnyFunction = () -> any
+export type AnyFunction = (...any) -> any
 
 return {}
