@@ -829,7 +829,7 @@ Dash.max(
 ```lua
 type ResolverFunction = (...any) -> string
 
-memoize<T...>(func: Types.AnyFunction, resolver: ResolverFunction?): Types.AnyFunction
+memoize(func: Types.AnyFunction, resolver: ResolverFunction?): Types.AnyFunction
 ```
 
 Creates a function that memoizes the result of `func`. The memoized function will cache results based on the arguments provided. If a resolver function is provided, it will be used to generate the cache key from the arguments.
