@@ -60,6 +60,7 @@ local Dash = {
 	noop = require(script.noop),
 	omit = require(script.omit),
 	pick = require(script.pick),
+	pipe = require(script.pipe),
 	pretty = require(script.pretty),
 	product = require(script.product),
 	reduce = require(script.reduce),
