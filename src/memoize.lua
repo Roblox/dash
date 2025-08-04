@@ -37,7 +37,7 @@ local function memoize(func: Types.AnyFunction, resolver: ResolverFunction?): Ty
 	local cache = {}
 
 	return function(...): any
-		local args = table.pack(...)
+		local args = { ... }
 		local key: string
 
 		if resolver then
@@ -45,7 +45,7 @@ local function memoize(func: Types.AnyFunction, resolver: ResolverFunction?): Ty
 		else
 			-- Create a cache key from all arguments
 			key = ""
-			for i = 1, args.n do
+			for i = 1, #args do
 				key = key .. tostring(args[i]) .. "|"
 			end
 		end
