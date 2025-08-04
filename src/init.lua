@@ -34,6 +34,7 @@ local Dash = {
 	formatValue = require(script.formatValue),
 	freeze = require(script.freeze),
 	frequencies = require(script.frequencies),
+	get = require(script.get),
 	getOrSet = require(script.getOrSet),
 	groupBy = require(script.groupBy),
 	identity = require(script.identity),
