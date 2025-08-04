@@ -917,6 +917,31 @@ Output: {
 
 <hr>
 
+### pipe
+
+```lua
+pipe(...: { Types.AnyFunction }): Types.AnyFunction
+```
+
+Creates a function that returns the result of passing a value through a pipeline of functions.
+Each function in the pipeline receives the result of the previous function.
+Functions are executed from left to right.
+
+**Example**
+
+```lua
+local function addOne(n)
+	return n + 1
+end
+
+local function double(n)
+	return n * 2
+end
+
+local addThenDouble = pipe(addOne, double)
+print(addThenDouble(2)) -- prints 6 ((2 + 1) * 2)
+```
+
 ### reduce
 
 <span class="tags">
