@@ -47,7 +47,7 @@ local function get<T>(object: { [any]: any }, path: string | { any }, defaultVal
 	end
 
 	local current = object
-	for _, key in ipairs(segments) do
+	for _, key in segments do
 		if type(current) ~= "table" then
 			return defaultValue
 		end
