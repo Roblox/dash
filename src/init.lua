@@ -81,4 +81,4 @@ local Dash = {
 	zip = require(script.zip),
 }
 
-return Dash.freeze("Dash", Dash, true)
+return Dash.freeze("Dash", Dash, true) :: typeof(Dash)
