@@ -2,6 +2,7 @@
 	Returns a new read-only view of _object_ which prevents any values from being changed.
 
 	@param name The name of the object for improved error message readability.
+	@param object The object to freeze.
 	@param throwIfMissing If `true` then access to a missing key will also throw.
 
 	@note
@@ -20,22 +21,18 @@
 	--!> `MissingKey: Attempt to read missing key "syrup" (a string) of frozen object "Ice Cream"`
 ]]
 local Dash = script.Parent
-local Types = require(Dash.Types)
 local Error = require(Dash.Error)
 local format = require(Dash.format)
 
--- TODO Luau: Improve type inference to make these not need to be any
-local ReadonlyKey: any =
+local ReadonlyKey =
 	Error.new("ReadonlyKey", "Attempted to write to readonly key {key:?} of frozen object {objectName:?}")
-local MissingKey: any = Error.new("MissingKey", "Attempted to read missing key {key:?} of frozen object {objectName:?}")
+local MissingKey = Error.new("MissingKey", "Attempted to read missing key {key:?} of frozen object {objectName:?}")
 
--- TODO Luau: Support generic functions
--- TODO Luau: Support generic extends syntax
--- TODO: Can this be moved to under Tables?
--- TYPED: local function freeze<T extends Types.Table>(objectName: string, object: T, throwIfMissing: boolean?): T
-local function freeze(objectName: string, object: Types.Table, throwIfMissing: boolean?)
+local function freeze<T>(objectName: string, object: T, throwIfMissing: boolean?): T
 	-- We create a proxy so that the underlying object is not affected
 	local proxy = {}
+	---- TODO (AleksandrSl 06/08/2025): Remove once we can add constraints to generic
+	assert(type(object) == "table")
 	setmetatable(proxy, {
 		__index = function(_, key: any)
 			local value = object[key]
@@ -67,7 +64,8 @@ local function freeze(objectName: string, object: Types.Table, throwIfMissing: b
 			return callable(...)
 		end,
 	})
-	return proxy
+	-- If we ever able to types this naturally, feel free to drop the cast.
+	return (proxy :: unknown) :: T
 end
 
 return freeze
