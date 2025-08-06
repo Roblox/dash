@@ -1634,14 +1634,12 @@ print(drink.syrup) --> nil
 </span>
 
 ```lua
-get<T>(object: { [any]: any }, path: string | { any }, defaultValue: T?): T?
+get<T>(object: { [any]: any }, path: { any }, defaultValue: T?): T?
 ```
 
 Gets the value at path of object. If the resolved value is nil, the defaultValue is returned in its place.
 
-The path can be specified as either:
-1. A string using dots as separators (e.g. "a.b.c")
-2. An array of keys (e.g. {"a", "b", "c"})
+The path should be an array of keys (e.g. `{ "a", "b", "c" }`, `{ "test", "test.test", 0 }`).
 
 **Examples**
 
@@ -1653,9 +1651,8 @@ local object = {
         }
     }
 }
-Dash.get(object, "a.b.c") --> 3
-Dash.get(object, {"a", "b", "c"}) --> 3
-Dash.get(object, "x.y.z", "default") --> "default"
+Dash.get(object, { "a", "b", "c" }) --> 3
+Dash.get(object, { "x", "y", "z" }, "default") --> "default"
 ```
 
 ```lua
@@ -1666,8 +1663,19 @@ local object = {
         { name = "second" }
     }
 }
-Dash.get(object, "items.1.name") --> "first"
-Dash.get(object, {"items", 1, "name"}) --> "first"
+Dash.get(object, { "items", 1, "name" }) --> "first"
+```
+
+```lua
+-- Keys with dots
+local object = {
+    test = {
+        ["test.test"] = {
+            [0] = "value"
+        }
+    }
+}
+Dash.get(object, { "test", "test.test", 0 }) --> "value"
 ```
 
 **See**
