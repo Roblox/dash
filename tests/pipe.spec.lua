@@ -40,12 +40,6 @@ describe("pipe", function()
 		expect(passthrough("test")).toEqual("test")
 	end)
 
-	it("should throw an error when a non-function is provided", function()
-		expect(function()
-			pipe(function() end, "not a function")
-		end).toThrow("Expected a function")
-	end)
-
 	it("should handle functions that return multiple values", function()
 		local function returnTwo(n)
 			return n, n * 2

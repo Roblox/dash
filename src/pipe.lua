@@ -29,19 +29,13 @@ local function pipe(...: { Types.AnyFunction }): Types.AnyFunction
 	local funcs = { ... }
 	local length = #funcs
 
-	-- Validate all arguments are functions
-	for i = 1, length do
-		if type(funcs[i]) ~= "function" then
-			error("Expected a function", 2)
-		end
-	end
-
 	return function(...)
 		if length == 0 then
 			return ...
 		end
 
 		local result = { funcs[1](...) }
+
 		for i = 2, length do
 			result = { funcs[i](unpack(result)) }
 		end
