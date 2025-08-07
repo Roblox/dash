@@ -32,7 +32,7 @@ local function freeze<T>(objectName: string, object: T, throwIfMissing: boolean?
 	-- We create a proxy so that the underlying object is not affected
 	local proxy = {}
 	---- TODO (AleksandrSl 06/08/2025): Remove once we can add constraints to generic
-	assert(type(object) == "table")
+	assert(type(object) == "table", `Attempted to call Dash.freeze with argument #2 of type {type(object)}, but it should be table `)
 	setmetatable(proxy, {
 		__index = function(_, key: any)
 			local value = object[key]
