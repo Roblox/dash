@@ -7,6 +7,7 @@
 	@returns The new debounced function.
 ]]
 local function debounce<T>(func: T & (...any) -> ...any, wait: number): T
+	-- `& (...any) -> ...any` in the function type is a funky way to mimick `T extends function`
 	local delayedCall = nil
 	return (
 		function(...)
