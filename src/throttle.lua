@@ -25,7 +25,7 @@ local function throttle<T>(func: T & (...any) -> ...any, wait: number): T
 	local delayedCall = nil
 	local lastArgs
 
-	local function invoke(...: any)
+	local function invoke()
 		lastCallTime = os.clock()
 		delayedCall = nil;
 		(func :: (...any) -> ...any)(table.unpack(lastArgs))
