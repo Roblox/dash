@@ -6,7 +6,8 @@ local describe = JestGlobals.describe
 local expect = JestGlobals.expect
 local jest = JestGlobals.jest
 
-local debounce = require(Packages.debounce)
+local Dash = require(Packages.Dash)
+local debounce = Dash.debounce
 
 describe("debounce", function()
 	it("should call the function after the wait time has passed", function()
