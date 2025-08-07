@@ -13,5 +13,5 @@ content_root = "src"
 registry_index = true
 
 [dev_dependencies]
-JestGlobals = "github.com/Roblox/jest-roblox@3.8.0"
-Jest = "github.com/roblox/jest-roblox@3.8.0"
+JestGlobals = "3.8.0"
+Jest = "3.8.0"
