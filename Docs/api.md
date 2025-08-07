@@ -4,26 +4,6 @@
 
 ## Types
 
-### Array
-
-```lua
-type Array<Value> = {[number]: Value}
-```
-
-A table with values of type _Value_ and numeric keys 1..n with no gaps
-
-<hr>
-
-### Args
-
-```lua
-type Args<Value> = {[number]: Value}
-```
-
-A table with values of type _Value_ and numeric keys, possibly with gaps.
-
-<hr>
-
 ### Map
 
 ```lua
@@ -2088,7 +2068,7 @@ These utilities are helpful for working with functions.
 </span>
 
 ```
-compose(...: { Types.AnyFunction }): Types.AnyFunction
+compose(...: Types.AnyFunction): Types.AnyFunction
 ```
 
 Returns a function that calls the argument functions in left-right order on an input, passing
@@ -2116,7 +2096,7 @@ prepare("nachos") --> "cheesy fried nachos"
 </span>
 
 ```lua
-forEachArgs(handler: Types.AnyFunction, ...: Args<Value>): ()
+forEachArgs(handler: Types.AnyFunction, ...: Value): ()
 ```
 
 Iterates through the tail arguments in order, including nil values up to the argument list length.
