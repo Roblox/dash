@@ -1620,6 +1620,62 @@ print(drink.syrup) --> nil
 
 <hr>
 
+### get
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```lua
+get<T>(object: { [any]: any }, path: { any }, defaultValue: T?): T?
+```
+
+Gets the value at path of object. If the resolved value is nil, the defaultValue is returned in its place.
+
+The path should be an array of keys (e.g. `{ "a", "b", "c" }`, `{ "test", "test.test", 0 }`).
+
+**Examples**
+
+```lua
+local object = {
+    a = {
+        b = {
+            c = 3
+        }
+    }
+}
+Dash.get(object, { "a", "b", "c" }) --> 3
+Dash.get(object, { "x", "y", "z" }, "default") --> "default"
+```
+
+```lua
+-- Array indexing
+local object = {
+    items = {
+        { name = "first" },
+        { name = "second" }
+    }
+}
+Dash.get(object, { "items", 1, "name" }) --> "first"
+```
+
+```lua
+-- Keys with dots
+local object = {
+    test = {
+        ["test.test"] = {
+            [0] = "value"
+        }
+    }
+}
+Dash.get(object, { "test", "test.test", 0 }) --> "value"
+```
+
+**See**
+- [Dash.getOrSet](#getOrSet) - for getting a value with a default generator function
+
+<hr>
+
 ### getOrSet
 
 <span class="tags">

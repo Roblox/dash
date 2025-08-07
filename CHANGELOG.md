@@ -1,3 +1,7 @@
+## V2.2.0
+
+- Create `get`
+
 ## V2.1.0
 
 - Create `memoize`
