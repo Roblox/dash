@@ -1,5 +1,5 @@
 --[[
-	Return a portion of the _input_ array starting with the element at the _left_ index and ending
+	Return a portion of the _input_ Array starting with the element at the _left_ index and ending
 	with the element at the _right_ index (i.e. an inclusive range)
 
 	If _left_ is not defined, it defaults to 1.
@@ -10,24 +10,42 @@
 
 	An empty array is returned if the slice has no or negative length.
 ]]
+local Dash = script.Parent
+local Types = require(Dash.Types)
+local assertEqual = require(Dash.assertEqual)
+
 local insert = table.insert
 
-local function slice<T>(input: { T }, left: number?, right: number?): { T }
-	local output: { T } = {}
+local function slice(input: Types.Array<any>, left: number?, right: number?, step: number?)
+	assertEqual(typeof(input), "table", [[Attempted to call Dash.slice with argument #1 of type {left:?} not {right:?}]])
+	local output = {}
 
 	-- Default values
-	local l: number = left or 1
-	local r: number = right or #input
+	left = left or 1
+    right = right or #input
+    step = step or 1
+	assertEqual(typeof(left), "number", [[Attempted to call Dash.slice with argument #2 of type {left:?} not {right:?}]])
+    assertEqual(typeof(right), "number", [[Attempted to call Dash.slice with argument #3 of type {left:?} not {right:?}]])
+    assertEqual(typeof(step), "number", [[Attempted to call Dash.slice with argument #4 of type {left:?} not {right:?}]])
 
-	if l < 0 then
-		l = #input + l
+	if left < 0 then
+		left = #input + 1 + left
 	end
-	if r and r < 0 then
-		r = #input + r
-	end
-	for i = l, r do
+	if right and right < 0 then
+		right = #input + 1 + right
+    end
+    
+    left = math.clamp(left, 1, #input)
+    right = math.clamp(right, 1, #input)
+    
+    if right < left and step > 0 then
+        step *= -1
+    end
+    
+	for i = left, right, step do
 		insert(output, input[i])
-	end
+    end
+    
 	return output
 end
 
