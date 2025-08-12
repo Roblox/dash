@@ -74,6 +74,7 @@ local Dash = {
 	startsWith = require(script.startsWith),
 	sum = require(script.sum),
 	Symbol = require(script.Symbol),
+	throttle = require(script.throttle),
 	trim = require(script.trim),
 	Types = require(script.Types),
 	values = require(script.values),
