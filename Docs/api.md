@@ -2184,6 +2184,21 @@ chain("test":gmatch("t"), "test":gmatch("e"))
 Returns a stateful iterator that returns elements from the first iterable until it is exhausted,
 then proceeds to the next iterator, until all the iterators are exhausted.
 
+<hr>
+
+### debounce
+
+<span class="tags">
+	[Functions](#functions)
+</span>
+
+```luau
+local debouncedGreeting = debounce(function(name: string) print(`Hi, {name}!`) end, 0.3)
+debouncedGreeting("Hugh")
+```
+
+Creates and returns a new debounced version of the passed function which will postpone its execution
+until after `wait` seconds have elapsed since the last time it was invoked.
 
 ## Classes
 
