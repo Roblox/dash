@@ -2200,6 +2200,38 @@ debouncedGreeting("Hugh")
 Creates and returns a new debounced version of the passed function which will postpone its execution
 until after `wait` seconds have elapsed since the last time it was invoked.
 
+<hr>
+
+### throttle
+
+<span class="tags">
+	[Functions](#functions)
+</span>
+
+```luau
+local throttledGreeting = throttle(function(name: string) print(`Hi, {name}!`) end, 0.3)
+throttledGreeting("Hugh")
+```
+
+Creates and returns a new throttled version of the passed function which will ensure that the function
+is called at most once during the specified wait period. If called multiple times during the wait period,
+only the first call will be executed immediately, and subsequent calls will be ignored until the wait period has elapsed.
+
+The last call will always be done after the same delay. e.g.
+```luau
+local throttled = throttle(function(v) print(v) end, 0.1)
+for i = 1, 10 do
+    throttled(i)
+end
+```
+would result in
+```
+1
+10
+```
+
+`throttle` is useful for preventing a function from being called too often, e.g. when reacting to resize events.
+
 ## Classes
 
 These utilities are helpful for working with classes.
