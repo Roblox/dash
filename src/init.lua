@@ -22,6 +22,7 @@ local Dash = {
 	copy = require(script.copy),
 	count = require(script.count),
 	cycles = require(script.cycles),
+	debounce = require(script.debounce),
 	endsWith = require(script.endsWith),
 	Error = require(script.Error),
 	filter = require(script.filter),
