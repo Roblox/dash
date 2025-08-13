@@ -920,7 +920,7 @@ Output: {
 ### pipe
 
 ```lua
-pipe<Args>(f: (...Args) -> any, ...: { (...any) -> any }): (...Args) -> any
+pipe<Args...>(f: (Args...) -> any, ...: { (...any) -> any }): (Args...) -> any
 ```
 
 Creates a function that returns the result of passing a value through a pipeline of functions.
