@@ -22,7 +22,7 @@
 	```
 ]=]
 
-local function pipe<Args...>(f: (Args...) -> any, ...: { (...any) -> any }): (Args...) -> any
+local function pipe<Args...>(f: (Args...) -> any, ...: (...any) -> any): (Args...) -> any
 	local fnCount = select("#", ...)
 	if fnCount == 0 then
 		return f
