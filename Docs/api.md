@@ -920,7 +920,7 @@ Output: {
 ### pipe
 
 ```lua
-pipe(...: { Types.AnyFunction }): Types.AnyFunction
+pipe<Args>(f: (...Args) -> any, ...: { (...any) -> any }): (...Args) -> any
 ```
 
 Creates a function that returns the result of passing a value through a pipeline of functions.
@@ -2083,34 +2083,6 @@ end)
 - Use memoization for expensive computations that are called frequently with the same arguments
 - The resolver function can be used to customize how arguments are used to generate cache keys
 - Be mindful of memory usage as cached results are stored indefinitely
-
-<hr>
-
-### compose
-
-<span class="tags">
-	[Functions](#functions)
-</span>
-
-```
-compose(...: Types.AnyFunction): Types.AnyFunction
-```
-
-Returns a function that calls the argument functions in left-right order on an input, passing
-the return of the previous function as argument(s) to the next.
-
-**Example**
-
-```lua
-local function fry(item)
-	return "fried " .. item
-end
-local function cheesify(item)
-	return "cheesy " .. item
-end
-local prepare = compose(fry, cheesify)
-prepare("nachos") --> "cheesy fried nachos"
-```
 
 <hr>
 

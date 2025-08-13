@@ -16,7 +16,6 @@ local Dash = {
 	collect = require(script.collect),
 	collectArray = require(script.collectArray),
 	collectSet = require(script.collectSet),
-	compose = require(script.compose),
 	copy = require(script.copy),
 	count = require(script.count),
 	cycles = require(script.cycles),

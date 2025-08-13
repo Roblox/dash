@@ -22,22 +22,16 @@
 	```
 ]=]
 
-local Dash = script.Parent
-local Types = require(Dash.Types)
-
-local function pipe(...: { Types.AnyFunction }): Types.AnyFunction
-	local funcs = { ... }
-	local length = #funcs
-
+local function pipe<Args>(f: (...Args) -> any, ...: { (...any) -> any }): (...Args) -> any
+	local fnCount = select("#", ...)
+	if fnCount == 0 then
+		return f
+	end
+	local fns = { ... }
 	return function(...)
-		if length == 0 then
-			return ...
-		end
-
-		local result = { funcs[1](...) }
-
-		for i = 2, length do
-			result = { funcs[i](unpack(result)) }
+		local result = { f(...) }
+		for i = 1, fnCount do
+			result = { fns[i](unpack(result)) }
 		end
 		return unpack(result)
 	end
