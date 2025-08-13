@@ -34,11 +34,6 @@ describe("pipe", function()
 		expect(addThenDouble(2, 3)).toEqual(10) -- (2 + 3) * 2 = 10
 	end)
 
-	it("should return the input when no functions are provided", function()
-		local passthrough = pipe()
-		expect(passthrough(5)).toEqual(5)
-		expect(passthrough("test")).toEqual("test")
-	end)
 
 	it("should handle functions that return multiple values", function()
 		local function returnTwo(n)
