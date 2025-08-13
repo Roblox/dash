@@ -34,7 +34,6 @@ describe("pipe", function()
 		expect(addThenDouble(2, 3)).toEqual(10) -- (2 + 3) * 2 = 10
 	end)
 
-
 	it("should handle functions that return multiple values", function()
 		local function returnTwo(n)
 			return n, n * 2
