@@ -1,9 +1,10 @@
 --[[
-	Collect returns a new Table derived from _input_ by iterating and calling
-	the handler on each `(key, child)` tuple.
+	Returns a new table by iterating over _input_ and calling _handler_ for each `(key, value)`.
 
-	The handler should return a new `(newKey, value)` tuple to be inserted into the returned Table,
-	or `nil` if no value should be added.
+	The _handler_ should return a `(newKey, newValue)` pair to insert into the result, or `nil` to skip.
+
+	@returns A new table containing only the entries for which _handler_ returned a non-`nil` key.
+	@see Dash.collectArray to build arrays while optionally skipping values.
 ]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
@@ -23,4 +24,5 @@ local function collect<Key, Value, NewKey, NewValue>(
 	end
 	return result
 end
+
 return collect

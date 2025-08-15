@@ -1,31 +1,3 @@
---[[
-	Create a class called _name_ with the specified _constructor_. The constructor should return a
-	plain table which will be turned into an instance of _Class_ from a call to `Class.new(...)`.
-	
-	@example
-		-- Create a simple Vehicle class
-		local Vehicle = class("Vehicle", function(wheelCount: number) return 
-			{
-				speed = 0,
-				wheelCount = wheelCount
-			}
-		end)
-		function Vehicle:drive(speed)
-			self.speed = speed
-		end
-		-- Create a car instance
-		local car = Vehicle.new(4)
-		car.wheelCount --> 4
-		car.speed --> 0
-		-- Drive the car
-		car:drive(10)
-		car.speed --> 10
-		
-	@usage When using Dash classes, private fields should be prefixed with `_` to avoid accidental access.
-	@usage A private field should only be accessed by a method of the class itself, though Rodash
-		does not restrict this in code.
-	@usage Public fields are recommended when there is no complex access logic e.g. `position.x`
-]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
 
@@ -42,6 +14,38 @@ local defaultConstructor: Constructor<> = function()
 	return {}
 end
 
+--[=[
+	Creates a class called _name_ with the specified _constructor_. The constructor should return a plain table which will be turned into an instance of _Class_ from a call to `Class.new(...)`.
+
+	@param name The class name used for string representation and error messages.
+	@param constructor A function that returns the initial instance table; defaults to an empty table.
+	@return A new Class table with constructor `new` and overridable metamethods.
+
+	@example
+	```luau
+		-- Create a simple Vehicle class
+		local Vehicle = class("Vehicle", function(wheelCount: number) return
+			{
+				speed = 0,
+				wheelCount = wheelCount
+			}
+		end)
+		function Vehicle:drive(speed)
+			self.speed = speed
+		end
+		-- Create a car instance
+		local car = Vehicle.new(4)
+		car.wheelCount --> 4
+		car.speed --> 0
+		-- Drive the car
+		car:drive(10)
+		car.speed --> 10
+	```
+
+	@usage When using Dash classes, private fields should be prefixed with `_` to avoid accidental access.
+	@usage A private field should only be accessed by a method of the class itself, though Rodash does not restrict this in code.
+	@usage Public fields are recommended when there is no complex access logic e.g. `position.x`
+]=]
 local function class<T...>(name: string, constructor: Constructor<T...>?)
 	local classConstructor = constructor or defaultConstructor
 	local Class = {
@@ -80,7 +84,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 		Run after the instance has been properly initialized, allowing methods on the instance to
 		be used.
 		@example
-			local Vehicle = dash.class("Vehicle", function(wheelCount) return 
+			local Vehicle = dash.class("Vehicle", function(wheelCount) return
 				{
 					speed = 0,
 					wheelCount = wheelCount
@@ -100,7 +104,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			function Vehicle:_generateId()
 				return format("#{}: {} wheels", Vehicle._getNextId(), self.wheelCount)
 			end
-			-- Return the id if the instance is represented as a string 
+			-- Return the id if the instance is represented as a string
 			function Vehicle:toString()
 				return self._id
 			end
@@ -112,7 +116,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 	--[[
 		Returns `true` if _value_ is an instance of _Class_ or any sub-class.
 		@example
-			local Vehicle = dash.class("Vehicle", function(wheelCount) return 
+			local Vehicle = dash.class("Vehicle", function(wheelCount) return
 				{
 					speed = 0,
 					wheelCount = wheelCount
@@ -146,7 +150,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 		The super-constructor can be accessed with `Class.constructor`.
 		Super methods can be accessed using `Class.methodName` and should be called with self.
 		@example
-			local Vehicle = dash.class("Vehicle", function(wheelCount) return 
+			local Vehicle = dash.class("Vehicle", function(wheelCount) return
 				{
 					speed = 0,
 					wheelCount = wheelCount
@@ -192,7 +196,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 					name = name
 				}
 			end)
-			
+
 			local car = Car.new()
 			car:toString() --> 'Car'
 			tostring(car) --> 'Car'

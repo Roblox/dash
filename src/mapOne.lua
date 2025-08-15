@@ -1,14 +1,16 @@
---[[
-	Iterates through the elements of the _input_ Table in no particular order.
-
-	Calls the _handler_ for each entry and returns the first non-nil value returned by the _handler_.
-	If all returned from the _handler_ values are `nil`, `nil` is returned.
-
-	If _handler_ is `nil`, the first value visited is returned.
-]]
-
 export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue?
 
+--[=[
+	Iterates through the elements of the _input_ table in no particular order and returns the first non-nil value.
+
+	If a _handler_ is provided, returns the first non-nil value returned by the handler.
+	If no _handler_ is provided, returns the first value visited.
+	If all values are `nil`, `nil` is returned.
+
+	@param input The table to iterate over.
+	@param handler Optional function called as `(value, key)` for each element.
+	@return The first non-nil value, or `nil` if all values are `nil`.
+]=]
 local function mapOne<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>?): NewValue?
 	for key, child in input do
 		local output
@@ -23,4 +25,5 @@ local function mapOne<Key, Value, NewValue>(input: { [Key]: Value }, handler: Ma
 	end
 	return nil
 end
+
 return mapOne

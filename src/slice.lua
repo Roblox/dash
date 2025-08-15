@@ -1,17 +1,21 @@
---[[
-	Return a portion of the _input_ array starting with the element at the _left_ index and ending
-	with the element at the _right_ index (i.e. an inclusive range)
+local insert = table.insert
+
+--[=[
+	Returns a portion of the _input_ array starting with the element at the _left_ index and ending with the element at the _right_ index (i.e. an inclusive range).
 
 	If _left_ is not defined, it defaults to 1.
-	If _right_ is not defined, it defaults to the length of the array (i.e. the last element)
+	If _right_ is not defined, it defaults to the length of the array (i.e. the last element).
 
 	If _left_ is `-n`, the slice starts with the element `n` places from the last one.
 	If _right_ is `-n`, the slice ends with the element `n` places from the last one.
 
 	An empty array is returned if the slice has no or negative length.
-]]
-local insert = table.insert
 
+	@param input The array to slice.
+	@param left Optional starting index; defaults to 1.
+	@param right Optional ending index; defaults to array length.
+	@return A new array containing the sliced elements.
+]=]
 local function slice<T>(input: { T }, left: number?, right: number?): { T }
 	local output: { T } = {}
 

@@ -1,14 +1,21 @@
---[[
-	Format a specific _value_ using the specified _displayString_.
-	@example
-		formatValue(255, "06X") --> "0000FF"
-	@example
-		formatValue(255.5) --> "255.5"
-	@see `format` - for a full description of valid display strings.
-]]
-
 local Dash = script.Parent
 
+--[[
+	Formats a specific _value_ using the specified _displayString_.
+
+	@param value The value to format.
+	@param displayString Optional display string specifying the format.
+	@return The formatted string representation of the value.
+	@example
+	```luau
+		formatValue(255, "06X") --> "0000FF"
+	```
+	@example
+	```luau
+		formatValue(255.5) --> "255.5"
+	```
+	@see `format` for a full description of valid display strings.
+]]
 local function formatValue(value: any, displayString: string): string
 	displayString = displayString or ""
 	-- Inline require to prevent infinite require cycle
