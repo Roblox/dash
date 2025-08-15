@@ -1,17 +1,24 @@
---[[
-	Gets the value at path of object. If the resolved value is nil, the defaultValue is returned in its place.
+--[=[
+	Returns the value at _path_ from _object_. If resolution yields `nil`, _defaultValue_ is returned instead.
 
-	@param object table The table to query
-	@param path table An array of keys to get value from object
-	@param defaultValue any The value returned for nil resolved values
-	@return any The resolved value or defaultValue if path doesn't exist
+	@param object The table to query.
+	@param path An array of keys to traverse on _object_.
+	@param defaultValue The value to return when the resolved value is `nil`.
+	@return The resolved value at _path_, or _defaultValue_ if any step is missing or `nil`.
 
-	Examples:
+	@example
+	```luau
 		get({ a = 1 }, { "a" }) --> 1
+	```
+	@example
+	```luau
 		get({ a = { b = 2 }}, { "a", "b" }) --> 2
+	```
+	@example
+	```luau
 		get({ a = { b = 2 }}, { "a", "c" }, 5) --> 5
-]]
-
+	```
+]=]
 local function get<T>(object: { [any]: any }, path: { any }, defaultValue: T?): T?
 	if object == nil then
 		return defaultValue

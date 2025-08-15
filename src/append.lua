@@ -1,9 +1,11 @@
 --[[
 	Adds new elements to the _target_ array from subsequent array arguments in left-to-right order.
 
-	Arguments which are `nil` or None are skipped.
+	Arguments which are `nil` or `Dash.None` are skipped.
 
-	@mutable target
+	@param @mutable target The array to append to.
+	@param ... One or more arrays of items to append.
+	@returns The mutated _target_ array.
 ]]
 
 local Dash = script.Parent

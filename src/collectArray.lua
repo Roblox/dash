@@ -1,9 +1,10 @@
 --[[
-	Collect returns a new array derived from _input_ by iterating and calling
-	the handler on each `(key, child)` tuple.
+	Returns a new array by iterating over _input_ and calling _handler_ for each `(key, value)`.
 
-	The handler should return a new value to be pushed onto the end of the result array, or `nil`
-	if no value should be added.
+	The _handler_ should return a new value to be pushed onto the end of the result array, or `nil` to skip.
+
+	@returns A new array containing only the values returned by _handler_ that were not `nil`.
+	@see Dash.map to transform values without filtering out `nil`.
 ]]
 
 local insert = table.insert
@@ -20,4 +21,5 @@ local function collectArray<Key, Value, NewValue>(input: { [Key]: Value }, handl
 	end
 	return result
 end
+
 return collectArray
