@@ -25,6 +25,18 @@ local function getDefaultCycles(): Cycles
 	}
 end
 
+--[=[
+	Returns a Cycles object describing repeated table references found by recursively walking _input_.
+
+	Works with cyclic structures. Keys are visited in a stable order to preserve reference numbering.
+	If _depth_ is provided, traversal stops when it reaches -1; pass an existing _initialCycles_ to
+	continue accumulation across calls.
+
+	@param input Any value to inspect; only tables contribute cycles.
+	@param depth Optional maximum recursion depth (decremented on each recursive step).
+	@param initialCycles An existing Cycles object to update; if omitted a new one is created.
+	@return A Cycles object for tables; `nil` for non-table inputs.
+]=]
 -- TODO Luau: Improve type inference to a point that this definition does not produce so many type errors
 -- TYPED: local function cycles(value: any, depth: number?, initialCycles: Cycles?): Cycles
 --[=[
