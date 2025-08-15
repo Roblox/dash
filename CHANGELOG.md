@@ -1,6 +1,13 @@
-## V2.2.0
+## V3.0.0
 
-- Create `get`
+- Fixed exports to preserve types
+- Changed stricten `freeze` types
+- Added `get`
+- Added `debounce`
+- Added `throttle`
+- Added `pipe`. Same as compose, mainly the name improvement
+- Removed `compose`. Should've been right to left, but since it was left to right, it's renamed to `pipe`
+- Removed `Array` and `Args` types. They are well-supported by luau.
 
 ## V2.1.0
 
