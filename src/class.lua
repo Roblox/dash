@@ -51,7 +51,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 	local Class = {
 		name = name,
 	}
-	--[[
+	--[=[
 		Return a new instance of the class, passing any arguments to the specified constructor.
 		@example
 			local Car = class("Car", function(speed)
@@ -61,7 +61,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			end)
 			local car = Car.new(5)
 			pretty(car) --> 'Car {speed = 5}'
-	]]
+	]=]
 	function Class.new(...)
 		local instance = classConstructor(...)
 		setmetatable(instance, {
@@ -80,7 +80,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 		instance:_init(...)
 		return instance
 	end
-	--[[
+	--[=[
 		Run after the instance has been properly initialized, allowing methods on the instance to
 		be used.
 		@example
@@ -110,10 +110,10 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			end
 			local car = Vehicle.new(4)
 			tostring(car) --> "#1: 4 wheels"
-	]]
+	]=]
 	function Class:_init() end
 
-	--[[
+	--[=[
 		Returns `true` if _value_ is an instance of _Class_ or any sub-class.
 		@example
 			local Vehicle = dash.class("Vehicle", function(wheelCount) return
@@ -129,7 +129,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			car.isInstance(Car) --> true
 			car.isInstance(Vehicle) --> true
 			car.isInstance(Bike) --> false
-	]]
+	]=]
 	function Class.isInstance(value)
 		local ok, isInstance = pcall(function()
 			local metatable = getmetatable(value)
@@ -144,7 +144,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 		return ok and isInstance
 	end
 
-	--[[
+	--[=[
 		Create a subclass of _Class_ with a new name _className_ that inherits the metatable of _Class_,
 		optionally overriding the constructor with _classConstructor_ and providing additional _decorators_.
 		The super-constructor can be accessed with `Class.constructor`.
@@ -180,14 +180,14 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			end
 			local car = Car.new()
 			car.id --> "Car #1: 4 wheels"
-	]]
+	]=]
 	function Class:extend(subClassName: string, subClassConstructor)
 		local SubClass = class(subClassName, subClassConstructor or Class.new)
 		setmetatable(SubClass, { __index = self })
 		return SubClass
 	end
 
-	--[[
+	--[=[
 		Return a string representation of the instance. By default this is the _name_ field (or the
 		Class name if this is not defined), but the method can be overridden.
 		@example
@@ -218,23 +218,23 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			bob:toString() --> 'Car called Bob'
 			tostring(bob) --> 'Car called Bob'
 			print("Hello " .. bob) -->> Hello Car called Bob
-	]]
+	]=]
 	function Class:toString()
 		return self.name
 	end
 
-	--[[
+	--[=[
 		Returns `true` if `self` is considered equal to _other_. This replaces the `==` operator
 		on instances of this class, and can be overridden to provide a custom implementation.
-	]]
+	]=]
 	function Class:equals(other)
 		return rawequal(self, other)
 	end
 
-	--[[
+	--[=[
 		Returns `true` if `self` is considered less than  _other_. This replaces the `<` operator
 		on instances of this class, and can be overridden to provide a custom implementation.
-	]]
+	]=]
 	function Class:__lt(_)
 		throwNotImplemented({
 			methodName = "__lt",
@@ -242,11 +242,11 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 		})
 	end
 
-	--[[
+	--[=[
 		Returns `true` if `self` is considered less than or equal to _other_. This replaces the
 		`<=` operator on instances of this class, and can be overridden to provide a custom
 		implementation.
-	]]
+	]=]
 	function Class:__le(_)
 		throwNotImplemented({
 			methodName = "__le",

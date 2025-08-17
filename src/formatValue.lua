@@ -1,6 +1,6 @@
 local Dash = script.Parent
 
---[[
+--[=[
 	Formats a specific _value_ using the specified _displayString_.
 
 	@param value The value to format.
@@ -15,7 +15,7 @@ local Dash = script.Parent
 		formatValue(255.5) --> "255.5"
 	```
 	@see `format` for a full description of valid display strings.
-]]
+]=]
 local function formatValue(value: any, displayString: string): string
 	displayString = displayString or ""
 	-- Inline require to prevent infinite require cycle
