@@ -1,6 +1,8 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
 
+-- TODO (AleksandrSl 18/08/2025): Try to type again with a solver V2. Solver V1 infers types weirdly,
+--  so the functions are barely usable without type casts
 export type CollectHandler<Key, Value, NewKey, NewValue> = (key: Key, value: Value) -> (NewKey?, NewValue?)
 
 --[=[
@@ -12,9 +14,9 @@ export type CollectHandler<Key, Value, NewKey, NewValue> = (key: Key, value: Val
 	@see `Dash.collectArray` to build arrays while optionally skipping values.
 ]=]
 local function collect<Key, Value, NewKey, NewValue>(
-	input: Types.Map<Key, Value>,
+	input: Types.Table,
 	handler: CollectHandler<Key, Value, NewKey, NewValue>
-): Types.Map<NewKey, NewValue>
+): Types.Table
 	local result = {}
 	for key, child in input do
 		local outputKey, outputValue = handler(key, child)

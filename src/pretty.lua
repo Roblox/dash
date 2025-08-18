@@ -90,7 +90,7 @@ end
 
 local pretty
 
-local function prettyLines(object: Types.Table, options: PrettyOptions): { string }
+local function prettyLines(object: any, options: PrettyOptions?): { string }
 	options = options or {}
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively
@@ -196,7 +196,7 @@ end
 	@param options Optional configuration for the serialization.
 	@return A formatted string representation of the object.
 ]=]
-pretty = function(object: Types.Table, options: PrettyOptions): string
+pretty = function(object: any, options: PrettyOptions?): string
 	return concat(prettyLines(object, options), "\n")
 end
 

@@ -9,7 +9,7 @@ export type ForEachHandler<Key, Value> = (Value, Key) -> ()
 	@param input The table to iterate over.
 	@param handler Function called as `(value, key)` for each entry.
 ]=]
-local function forEach<Key, Value>(input: { [Key]: Value }, handler: ForEachHandler<Key, Value>)
+local function forEach(input: {}, handler: ForEachHandler<any, any>)
 	for key, value in input do
 		handler(value, key)
 	end

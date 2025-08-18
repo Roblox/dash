@@ -1,5 +1,10 @@
+local Dash = script.Parent
+local Types = require(Dash.Types)
+
 local insert = table.insert
 
+-- TODO (AleksandrSl 18/08/2025): Try to type again with a solver V2. Solver V1 infers types weirdly,
+--  so the functions are barely usable without type casts
 type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue?
 
 --[=[
@@ -10,7 +15,7 @@ type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue
 	@return A new array containing only the values returned by _handler_ that were not `nil`.
 	@see `Dash.map` to transform values without filtering out `nil`.
 ]=]
-local function collectArray<Key, Value, NewValue>(input: { [Key]: Value }, handler: CollectHandler<Key, Value, NewValue>): { NewValue }
+local function collectArray<Key, Value, NewValue>(input: Types.Table, handler: CollectHandler<Key, Value, NewValue>): { NewValue }
 	local result = {}
 	for key, child in input do
 		local outputValue = handler(key, child)

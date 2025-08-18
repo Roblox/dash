@@ -1,6 +1,7 @@
 local Dash = script.Parent
 local collectSet = require(Dash.collectSet)
 local forEach = require(Dash.forEach)
+local Types = require(Dash.Types)
 
 --[=[
 	Returns a new table made from entries in the _input_ table whose key is not in the _keys_ array.
@@ -12,7 +13,7 @@ local forEach = require(Dash.forEach)
 	@param keys Array of keys to exclude from the result.
 	@return A new table with the specified keys omitted.
 ]=]
-local function omit<Key, Value>(input: { [Key]: Value }, keys: { Key }): { [Key]: Value }
+local function omit(input: {}, keys: {any}): Types.Table
 	local output = {}
 	local keySet = collectSet(keys)
 	forEach(input, function(_, key)

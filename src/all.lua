@@ -3,7 +3,7 @@ local Types = require(Dash.Types)
 
 type AllHandler = (any, any) -> boolean
 
-local defaultHandler = function(value)
+local defaultHandler: AllHandler = function(value)
 	return value
 end
 

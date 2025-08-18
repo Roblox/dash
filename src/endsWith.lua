@@ -11,7 +11,7 @@
 	endsWith("Bad Roblox Memes", "Games") --> false
 	```
 ]=]
-local function endsWith(input: string, suffix: string)
+local function endsWith(input: string, suffix: string): boolean
 	return input:sub(-suffix:len()) == suffix
 end
 

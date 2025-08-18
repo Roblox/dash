@@ -7,7 +7,7 @@
 	@param item The value to search for.
 	@return `true` if the item is found, `false` otherwise.
 ]=]
-local function includes<Item>(input: { [unknown]: Item }, item: Item?): boolean
+local function includes(input: {}, item: any?): boolean
 	if item == nil then
 		return false
 	end

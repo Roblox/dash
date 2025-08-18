@@ -15,6 +15,7 @@ describe("cycles", function()
 
 	it("should return a cycles breakdown for a non-cyclic table", function()
 		local output = cycles({ a = 2, b = 4, c = { a = 2 } })
+		assert(output, "Should not be nil")
 		expect(output.nextRef).toEqual(1)
 		expect(output.refs).toEqual({})
 	end)
@@ -26,6 +27,7 @@ describe("cycles", function()
 		tableA.c = tableC
 		tableC.a = tableA
 		local output = cycles({ a = tableA, c = tableC })
+		assert(output, "Should not be nil")
 		expect(output.nextRef).toEqual(3)
 		expect(output.refs[tableA]).toEqual(1)
 		expect(output.refs[tableB]).toBeNil()

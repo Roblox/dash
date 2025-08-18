@@ -16,7 +16,7 @@ describe("getOrSet", function()
 	end)
 
 	it("should set a new value", function()
-		local function getValue(input, key)
+		local function getValue(input: { a: number }, key: number)
 			return input.a + key
 		end
 		local output = { a = 5 }

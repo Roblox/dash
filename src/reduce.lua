@@ -11,10 +11,10 @@ export type ReduceHandler<Key, Value, Accumulator> = (Accumulator, Value, Key) -
 	@param initial The initial value for the accumulator.
 	@return The final accumulated value.
 ]=]
-local function reduce<Key, Value, Accumulator>(
-	input: { [Key]: Value },
-	handler: ReduceHandler<Key, Value, Accumulator>,
-	initial: Accumulator
+local function reduce<Accumulator>(
+	input: {},
+	handler: ReduceHandler<any, any, Accumulator>,
+	initial: any
 ): Accumulator
 	local result = initial
 	for key, value in input do

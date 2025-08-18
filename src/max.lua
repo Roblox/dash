@@ -1,12 +1,11 @@
 local Dash = script.Parent
-local Types = require(Dash.Types)
 local reduce = require(Dash.reduce)
 
 -- Return true if a > b
 type MaxComparator = (any, any) -> boolean
 type MaxHandler = (any, any) -> any
 
-local defaultComparator = function(a, b)
+local defaultComparator = function(a: number | string, b: number | string)
 	return a > b
 end
 
@@ -44,8 +43,8 @@ end
 		) --> "orange"
 	```
 ]=]
-local function max(input: Types.Table, handler: MaxHandler?, comparator: MaxComparator?): number
-	local comparatorFn = comparator or defaultComparator
+local function max<T>(input: { T }, handler: MaxHandler?, comparator: MaxComparator?): T
+	local comparatorFn: MaxComparator = comparator or defaultComparator
 
 	if handler then
 		local accumulator = reduce(input, function(acc, value, key)

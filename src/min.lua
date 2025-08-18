@@ -1,5 +1,4 @@
 local Dash = script.Parent
-local Types = require(Dash.Types)
 local reduce = require(Dash.reduce)
 
 -- Return true if a < b
@@ -46,8 +45,8 @@ end
 		) --> "red"
 	```
 ]=]
-local function min(input: Types.Table, handler: MinHandler?, comparator: MinComparator?): number
-	local comparatorFn = comparator or defaultComparator
+local function min<T>(input: { T }, handler: MinHandler?, comparator: MinComparator?): T
+	local comparatorFn: MinComparator = comparator or defaultComparator
 
 	if handler then
 		local accumulator = reduce(input, function(acc, value, key)

@@ -1,4 +1,5 @@
 local Dash = script.Parent
+local Types = require(Dash.Types)
 local assertEqual = require(Dash.assertEqual)
 
 export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
@@ -16,7 +17,7 @@ export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 	@return A new table with the same keys but values replaced by handler results.
 	@see `Dash.collectArray` if you want to return nil values.
 ]=]
-local function map<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>): { [Key]: NewValue }
+local function map(input: {}, handler: MapHandler<any, any, any>): Types.Table
 	local result = {}
 	for key, child in input do
 		local value = handler(child, key)

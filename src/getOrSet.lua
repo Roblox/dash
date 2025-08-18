@@ -10,7 +10,7 @@ export type GetValueHandler<Key, Value> = ({ [Key]: Value }, Key) -> Value
 	@param getValue A function that computes and returns the value when the key is missing.
 	@return The existing value at _key_, or the newly computed value if it was missing.
 ]=]
-local function getOrSet<Key, Value>(input: { [Key]: Value }, key: Key, getValue: GetValueHandler<Key, Value>): Value
+local function getOrSet<Key, Value>(input: {}, key: Key, getValue: GetValueHandler<Key, Value>): Value
 	if input[key] == nil then
 		input[key] = getValue(input, key)
 	end

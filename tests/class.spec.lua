@@ -116,19 +116,19 @@ describe("class", function()
 		local car2 = Vehicle.new()
 		expect(function()
 			return car + car2
-		end).toThrowWithMessage([[NotImplemented: The method "__add" is not implemented on the class "Vehicle"]])
+		end).toThrow([[NotImplemented: The method "__add" is not implemented on the class "Vehicle"]])
 		expect(function()
 			return car * car2
-		end).toThrowWithMessage([[NotImplemented: The method "__mul" is not implemented on the class "Vehicle"]])
+		end).toThrow([[NotImplemented: The method "__mul" is not implemented on the class "Vehicle"]])
 		expect(function()
 			return car - car2
-		end).toThrowWithMessage([[NotImplemented: The method "__sub" is not implemented on the class "Vehicle"]])
+		end).toThrow([[NotImplemented: The method "__sub" is not implemented on the class "Vehicle"]])
 		expect(function()
 			return car / car2
-		end).toThrowWithMessage([[NotImplemented: The method "__div" is not implemented on the class "Vehicle"]])
+		end).toThrow([[NotImplemented: The method "__div" is not implemented on the class "Vehicle"]])
 		expect(function()
 			return car % car2
-		end).toThrowWithMessage([[NotImplemented: The method "__mod" is not implemented on the class "Vehicle"]])
+		end).toThrow([[NotImplemented: The method "__mod" is not implemented on the class "Vehicle"]])
 	end)
 
 	it("can extend a class with independent methods", function()

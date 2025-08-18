@@ -39,6 +39,7 @@ local insert = table.insert
 	@usage Escape `{` with `{{` and `}` similarly with `}}`.
 	@usage See [https://developer.roblox.com/articles/Format-String](https://developer.roblox.com/articles/Format-String) for complete list of formatting options and further use cases.
 ]=]
+-- TODO (AleksandrSl 18/08/2025): Check how it works, since splitOn returns only one value
 local function format(formatString: string, ...)
 	local args = { ... }
 	local argIndex = 1

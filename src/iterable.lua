@@ -21,7 +21,7 @@ local function iterable(input: Types.Table): Types.AnyFunction
 			else
 				local index = currentIndex
 				currentIndex += 1
-				return index, value
+				return index :: number?, value
 			end
 		end
 		while true do

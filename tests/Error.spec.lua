@@ -15,14 +15,14 @@ describe("Error", function()
 		expect(function()
 			local MyError = Error.new("MyError")
 			MyError:throw()
-		end).toThrowWithMessage([[MyError: An error occurred]])
+		end).toThrow([[MyError: An error occurred]])
 	end)
 
 	it("should throw an error with a custom message", function()
 		expect(function()
 			local MyError = Error.new("MyError", "An error did sadly occur")
 			MyError:throw()
-		end).toThrowWithMessage([[MyError: An error did sadly occur]])
+		end).toThrow([[MyError: An error did sadly occur]])
 	end)
 
 	it("should throw an error with message formatted with tag values", function()
@@ -34,7 +34,7 @@ describe("Error", function()
 					hunger = 10,
 				},
 			})
-		end).toThrowWithMessage([[MyError: An error happened for Eggbert due to {hunger = 10}]])
+		end).toThrow([[MyError: An error happened for Eggbert due to {hunger = 10}]])
 	end)
 
 	it("should capture a stack trace", function()

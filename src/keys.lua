@@ -9,7 +9,7 @@ local insert = table.insert
 	@param input The table to extract keys from.
 	@return An array containing all keys from the input table.
 ]=]
-local function keys<Key, Value>(input: { [Key]: Value }): { Key }
+local function keys(input: {})
 	local result = {}
 	for key, _ in input do
 		insert(result, key)

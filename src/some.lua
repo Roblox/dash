@@ -9,7 +9,7 @@ export type SomeHandler<Key, Value> = (Value, Key) -> boolean
 	@param handler Function called as `(value, key)` for each entry; return truthy to indicate a match.
 	@return `true` if any element matches the handler, `false` otherwise.
 ]=]
-local function some<Key, Value>(input: { [Key]: Value }, handler: SomeHandler<Key, Value>): boolean
+local function some(input: {}, handler: SomeHandler<any, any>): boolean
 	for key, child in input do
 		if handler(child, key) then
 			return true

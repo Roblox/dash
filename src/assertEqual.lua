@@ -9,7 +9,7 @@ local Dash = script.Parent
 
 	@error AssertError -- when values differ; includes `left` and `right` in the error tags.
 ]=]
-local function assertEqual(left: any, right: any, formattedErrorMessage: string?)
+local function assertEqual(left: unknown, right: unknown, formattedErrorMessage: string?)
 	if left ~= right then
 		local Error = require(Dash.Error)
 		local TypeError =
