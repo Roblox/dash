@@ -13,7 +13,7 @@ local Types = require(Dash.Types)
 	@param keys Array of keys to exclude from the result.
 	@return A new table with the specified keys omitted.
 ]=]
-local function omit(input: {}, keys: {any}): Types.Table
+local function omit(input: {}, keys: { any }): Types.Table
 	local output = {}
 	local keySet = collectSet(keys)
 	forEach(input, function(_, key)

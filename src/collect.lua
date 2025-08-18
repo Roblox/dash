@@ -13,10 +13,7 @@ export type CollectHandler<Key, Value, NewKey, NewValue> = (key: Key, value: Val
 	@return A new table containing only the entries for which _handler_ returned a non-`nil` key.
 	@see `Dash.collectArray` to build arrays while optionally skipping values.
 ]=]
-local function collect<Key, Value, NewKey, NewValue>(
-	input: Types.Table,
-	handler: CollectHandler<Key, Value, NewKey, NewValue>
-): Types.Table
+local function collect<Key, Value, NewKey, NewValue>(input: Types.Table, handler: CollectHandler<Key, Value, NewKey, NewValue>): Types.Table
 	local result = {}
 	for key, child in input do
 		local outputKey, outputValue = handler(key, child)

@@ -90,8 +90,8 @@ end
 
 local pretty
 
-local function prettyLines(object: any, options: PrettyOptions?): { string }
-	options = options or {}
+local function prettyLines(object: any, _options: PrettyOptions?): { string }
+	local options = _options or {}
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively
 		-- Construct the options for recursive calls for the table values
