@@ -2,6 +2,7 @@
 
 - Fixed exports to preserve types
 - Changed stricten `freeze` types
+- Changed `joinDeep` to use `table.clone` instead of `Dash.copy`
 - Added `get`
 - Added `debounce`
 - Added `throttle`
