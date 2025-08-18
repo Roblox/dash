@@ -28,10 +28,7 @@ type FrequenciesHandler<Key, Value, NewKey> = (Value, Key) -> NewKey
 		end) --> {["Neutral"] = 3, ["Non-neutral"] = 2}
 	```
 ]=]
-local function frequencies(
-	input: {},
-	handler: FrequenciesHandler<any, any, any>?
-): Types.Table
+local function frequencies(input: {}, handler: FrequenciesHandler<any, any, any>?): Types.Table
 	return reduce(input, function(acc, value, key)
 		local newKey = if handler then handler(value, key) else value
 		if acc[newKey] == nil then
