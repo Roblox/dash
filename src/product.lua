@@ -14,7 +14,7 @@ local reduce = require(Dash.reduce)
 	```
 ]=]
 local function product(input: { number }): number
-	return reduce(input, function(acc, num)
+	return reduce(input, function(acc: number, num)
 		return acc * num
 	end, 1)
 end

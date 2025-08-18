@@ -11,7 +11,7 @@ export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue?
 	@param handler Optional function called as `(value, key)` for each element.
 	@return The first non-nil value, or `nil` if all values are `nil`.
 ]=]
-local function mapOne<Key, Value, NewValue>(input: { [Key]: Value }, handler: MapHandler<Key, Value, NewValue>?): NewValue?
+local function mapOne(input: {}, handler: MapHandler<any, any, any>?): any?
 	for key, child in input do
 		local output
 		if handler then

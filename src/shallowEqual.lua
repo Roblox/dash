@@ -5,7 +5,7 @@
 	@param right The second value to compare.
 	@return `true` if the values are shallowly equal, `false` otherwise.
 ]=]
-local function shallowEqual(left: any, right: any)
+local function shallowEqual(left: any, right: any): boolean
 	if left == right then
 		return true
 	end

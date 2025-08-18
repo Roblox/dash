@@ -1,3 +1,5 @@
+local Dash = script.Parent
+local Types = require(Dash.Types)
 local insert = table.insert
 
 --[=[
@@ -9,8 +11,8 @@ local insert = table.insert
 	@param input The table to extract values from.
 	@return An array containing all values from the input table.
 ]=]
-local function values<Key, Value>(input: { [Key]: Value }): { Value }
-	local result: { Value } = {}
+local function values(input: {}): Types.Table
+	local result = {}
 	for _, value in input do
 		insert(result, value)
 	end

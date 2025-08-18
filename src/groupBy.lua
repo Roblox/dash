@@ -12,7 +12,7 @@ export type GroupByHandler<Key, Value, GroupKey> = (Value, Key) -> GroupKey
 	@return A table with keys as group identifiers and values as arrays of grouped items.
 ]=]
 local function groupBy<Key, Value, GroupKey>(
-	input: { [Key]: Value },
+	input: {},
 	getKey: GroupByHandler<Key, Value, GroupKey> | GroupKey
 ): { [GroupKey]: { Value } }
 	local result = {}

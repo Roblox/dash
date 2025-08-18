@@ -54,7 +54,7 @@ describe("groupBy", function()
 	end)
 
 	it("should allow groups of mixed sizes produced from combining handler arguments", function()
-		local output = groupBy({ 5, 4, 3, 4, 5 }, function(child, key)
+		local output = groupBy({ 5, 4, 3, 4, 5 }, function(child: number, key: number)
 			return child + key
 		end)
 		expect(output).toEqual({ [6] = {

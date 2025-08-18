@@ -7,7 +7,7 @@ local insert = table.insert
 	@param pattern The delimiter pattern to split on.
 	@return A tuple containing the parts array and delimiters array.
 ]=]
-local function splitOn(input: string, pattern: string): { string }
+local function splitOn(input: string, pattern: string): ({ string }, { string }?)
 	local parts = {}
 	local delimiters = {}
 	local from = 1

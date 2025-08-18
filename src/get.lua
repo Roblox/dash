@@ -38,7 +38,7 @@ local function get<T>(object: { [any]: any }, path: { any }, defaultValue: T?): 
 		end
 	end
 
-	return current
+	return (current :: unknown) :: T?
 end
 
 return get

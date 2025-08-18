@@ -10,7 +10,7 @@ local memoize = Dash.memoize
 describe("memoize", function()
 	it("should memoize function results", function()
 		local callCount = 0
-		local function add(a, b)
+		local function add(a: number, b: number)
 			callCount = callCount + 1
 			return a + b
 		end
@@ -32,7 +32,7 @@ describe("memoize", function()
 
 	it("should work with custom resolver", function()
 		local callCount = 0
-		local function multiply(a, b)
+		local function multiply(a: number, b: number)
 			callCount = callCount + 1
 			return a * b
 		end

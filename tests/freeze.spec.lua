@@ -18,8 +18,8 @@ describe("freeze", function()
 		})
 		expect(function()
 			output.red = 256
-		end).toThrowWithMessage([[ReadonlyKey: Attempted to write to readonly key "red" of frozen object "MyObject"]])
-		expect(output.blah).toBeNil()
+		end).toThrow([[ReadonlyKey: Attempted to write to readonly key "red" of frozen object "MyObject"]])
+		expect((output :: any).blah).toBeNil()
 	end)
 	it("should throw for missing keys if so desired", function()
 		expect(function()
@@ -27,8 +27,8 @@ describe("freeze", function()
 				name = "myName",
 				red = 255,
 			}, true)
-			return output.blue
-		end).toThrowWithMessage([[MissingKey: Attempted to read missing key "blue" of frozen object "MyObject"]])
+			return (output :: any).blue
+		end).toThrow([[MissingKey: Attempted to read missing key "blue" of frozen object "MyObject"]])
 	end)
 
 	it("should print the key used to a reasonable depth", function()
@@ -41,7 +41,7 @@ describe("freeze", function()
 			local key = { name = "key", child = { name = "child", deep = { deeper = { element = 6 } } } }
 			key.child.child = key
 			return output[key]
-		end).toThrowWithMessage(
+		end).toThrow(
 			[[MissingKey: Attempted to read missing key <0>{child = {child = &0, deep = {deeper = ...}, name = "child"}, name = "key"} of frozen object "MyObject"]]
 		)
 	end)

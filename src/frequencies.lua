@@ -1,4 +1,5 @@
 local Dash = script.Parent
+local Types = require(Dash.Types)
 local reduce = require(Dash.reduce)
 
 type FrequenciesHandler<Key, Value, NewKey> = (Value, Key) -> NewKey
@@ -27,10 +28,10 @@ type FrequenciesHandler<Key, Value, NewKey> = (Value, Key) -> NewKey
 		end) --> {["Neutral"] = 3, ["Non-neutral"] = 2}
 	```
 ]=]
-local function frequencies<Key, Value, NewKey>(
-	input: { [Key]: Value },
-	handler: FrequenciesHandler<Key, Value, NewKey>?
-): { [NewKey | Value]: number }
+local function frequencies(
+	input: {},
+	handler: FrequenciesHandler<any, any, any>?
+): Types.Table
 	return reduce(input, function(acc, value, key)
 		local newKey = if handler then handler(value, key) else value
 		if acc[newKey] == nil then

@@ -1,6 +1,18 @@
 {
-	"name": "TestHarness",
+	"name": "Dash",
 	"tree": {
-		"$path": "src"
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"Packages": {
+				"$path": "Packages",
+				"Dash": {
+					"$path": "src"
+				}
+			},
+			"Tests": {
+				"$path": "tests"
+			}
+		}
 	}
 }

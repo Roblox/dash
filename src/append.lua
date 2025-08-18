@@ -15,7 +15,6 @@ local insert = table.insert
 ]=]
 local function append<T>(target: { T }, ...: { T }?): { T }
 	forEachArgs(function(list: { T }?)
-		-- TODO (AleksandrSl 29/05/2024): Add wrapper function for this.
 		if list == None or list == nil then
 			return
 		else

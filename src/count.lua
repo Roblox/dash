@@ -36,9 +36,9 @@ end
 		) --> 2
 	```
 ]=]
-local function count<Key, Value>(input: { [Key]: Value }, handler: CountHandler<Key, Value>?): number
+local function count(input: {}, handler: CountHandler<any, any>?): number
 	local counter = 0
-	local countHandler = handler or defaultHandler
+	local countHandler: CountHandler<any, any> = handler or defaultHandler
 	for key, value in input do
 		if countHandler(value, key) then
 			counter += 1

@@ -12,7 +12,7 @@ local assertEqual = require(Dash.assertEqual)
 	@return `true` if the first character is lowercase, `false` otherwise.
 	@error AssertError when input is an empty string.
 ]=]
-local function isLowercase(input: string)
+local function isLowercase(input: string): boolean
 	assertEqual(#input > 0, true, [[Attempted to call Dash.isLowercase with an empty string]])
 	local firstLetter = input:sub(1, 1)
 	return firstLetter == firstLetter:lower()

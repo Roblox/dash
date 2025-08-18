@@ -19,7 +19,7 @@
 ]=]
 local function throttle<T>(func: T & (...any) -> ...any, wait: number): T
 	local lastCallTime = 0
-	local delayedCall = nil
+	local delayedCall: thread? = nil
 	local lastArgs
 
 	local function invoke()

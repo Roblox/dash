@@ -10,7 +10,7 @@ local assign = require(Dash.assign)
 	@param ... Any number of tables to merge.
 	@return A new Map containing the merged keys and values.
 ]=]
-local function join<Key, Value>(...: Types.Map<Key, Value>): Types.Map<Key, Value>
+local function join(...: {}?): Types.Table
 	return assign({}, ...)
 end
 
