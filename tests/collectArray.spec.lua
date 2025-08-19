@@ -11,7 +11,7 @@ local sort = table.sort
 describe("collectArray", function()
 	it("should collect elements from a map into a new array", function()
 		local input = { a = 10, b = 20, c = 30, d = 50 }
-		local output = collectArray(input, function(key, value)
+		local output = collectArray(input, function(key, value: number): string
 			return value .. "=" .. key
 		end)
 		sort(output)
