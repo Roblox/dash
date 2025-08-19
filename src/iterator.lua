@@ -10,7 +10,7 @@ local Types = require(Dash.Types)
 	@see `Dash.iterable` if you want to iterate over a Table with numeric but un-ordered keys.
 	@deprecated use generalized iteration instead.
 ]=]
-local function iterator(input: Types.Table | Types.AnyFunction)
+local function iterator(input: {} | Types.AnyFunction)
 	if typeof(input) == "function" then
 		return input
 	elseif typeof(input) == "table" then

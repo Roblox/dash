@@ -15,9 +15,9 @@ type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue
 	@return A new array containing only the values returned by _handler_ that were not `nil`.
 	@see `Dash.map` to transform values without filtering out `nil`.
 ]=]
-local function collectArray<Key, Value, NewValue>(input: Types.Table, handler: CollectHandler<Key, Value, NewValue>): { NewValue }
+local function collectArray<Key, Value, NewValue>(input: {}, handler: CollectHandler<Key, Value, NewValue>): { NewValue }
 	local result = {}
-	for key, child in input do
+	for key, child in input :: Types.Table do
 		local outputValue = handler(key, child)
 		if outputValue ~= nil then
 			insert(result, outputValue)

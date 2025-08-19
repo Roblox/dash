@@ -51,9 +51,9 @@ local forEachArgs = require(Dash.forEachArgs)
 		}
 	```
 ]=]
-local function assign(target: Types.Table, ...: Types.Table?): Types.Table
+local function assign(target: {}, ...: {}?): Types.Table
 	-- Iterate through the varags in order
-	forEachArgs(function(input: Types.Table?)
+	forEachArgs(function(input: {}?)
 		-- Ignore items which are not defined
 		if input == nil or input == None then
 			return

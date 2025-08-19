@@ -8,7 +8,7 @@ local Types = require(Dash.Types)
 	@return A stateful iterator function that yields `(key, value)` pairs.
 	@see `Dash.iterator` for an iterator that can iterate over an iterable.
 ]=]
-local function iterable(input: Types.Table): Types.AnyFunction
+local function iterable(input: {}): Types.AnyFunction
 	local currentIndex = 1
 	local inOrderedKeys = true
 	local currentKey
