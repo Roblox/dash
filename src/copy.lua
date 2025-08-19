@@ -1,6 +1,5 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assign = require(Dash.assign)
 
 --[=[
 	Returns a shallow copy of the _input_ table.
@@ -14,7 +13,7 @@ local assign = require(Dash.assign)
 	@deprecated -- Use `table.clone` instead
 ]=]
 local function copy(input: Types.Table): Types.Table
-	return assign({}, input)
+	return table.clone(input)
 end
 
 return copy
