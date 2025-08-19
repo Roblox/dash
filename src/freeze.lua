@@ -29,6 +29,8 @@ local MissingKey = Error.new("MissingKey", "Attempted to read missing key {key:?
 		print(drink.syrup) --> nil
 		--!> `MissingKey: Attempt to read missing key "syrup" (a string) of frozen object "Ice Cream"`
 	```
+
+	@deprecated -- Use `table.freeze` instead
 ]=]
 local function freeze<T>(objectName: string, object: T, throwIfMissing: boolean?): T
 	-- We create a proxy so that the underlying object is not affected
