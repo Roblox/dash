@@ -1,10 +1,13 @@
---[[
-	Splits _input_ into parts based on a _pattern_ delimiter and returns a Table of the parts,
-	followed by a Table of the matched delimiters.
-]]
 local insert = table.insert
 
-local function splitOn(input: string, pattern: string): { string }
+--[=[
+	Splits _input_ into parts based on a _pattern_ delimiter and returns a table of the parts, followed by a table of the matched delimiters.
+
+	@param input The string to split.
+	@param pattern The delimiter pattern to split on.
+	@return A tuple containing the parts array and delimiters array.
+]=]
+local function splitOn(input: string, pattern: string): ({ string }, { string }?)
 	local parts = {}
 	local delimiters = {}
 	local from = 1

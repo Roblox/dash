@@ -1,28 +1,25 @@
---[[
-	Creates and returns a new throttled version of the passed function which will ensure that the function
-	is called at most once during the specified wait period. If called multiple times during the wait period,
-	only the first call will be executed immediately, and subsequent calls will be ignored until the wait period has elapsed.
+--[=[
+	Creates and returns a new throttled version of the passed function which will ensure that the function is called at most once during the specified wait period. If called multiple times during the wait period, only the first call will be executed immediately, and subsequent calls will be ignored until the wait period has elapsed.
 
-	The last call will always be done after the same delay. e.g.
-	```
-	local throttled = throttle(function(v) print(v) end, 0.1)
-	for i = 1, 10 do
-		throttled(i)
-	end
-	```
-	would result in
-	```
-	1
-	10
-	```
+	The last call will always be done after the same delay.
 
 	@param func The function to throttle.
 	@param wait The number of seconds to throttle invocations to.
-	@returns The new throttled function.
-]]
+	@return The new throttled function.
+	@example
+	```luau
+		local throttled = throttle(function(v) print(v) end, 0.1)
+		for i = 1, 10 do
+			throttled(i)
+		end
+		-- Would result in:
+		-- 1
+		-- 10
+	```
+]=]
 local function throttle<T>(func: T & (...any) -> ...any, wait: number): T
 	local lastCallTime = 0
-	local delayedCall = nil
+	local delayedCall: thread? = nil
 	local lastArgs
 
 	local function invoke()

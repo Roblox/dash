@@ -1,10 +1,23 @@
---[[
-	Makes a string of `length` from `input` by repeating characters from `prefix` at the start of the string.
-	@example leftPad("toast", 6) --> " toast"
-	@example leftPad("2", 2, "0") --> "02"
-	@example leftPad("toast", 10, ":)") --> ":):):toast"
-	@param prefix (default = `" "`)
-]]
+--[=[
+	Makes a string of _length_ from _input_ by repeating characters from _prefix_ at the start of the string.
+
+	@param input The string to pad.
+	@param length The desired total length of the result.
+	@param prefix The character(s) to use for padding; defaults to a single space.
+	@return A new string padded to the specified length.
+	@example
+	```luau
+		leftPad("toast", 6) --> " toast"
+	```
+	@example
+	```luau
+		leftPad("2", 2, "0") --> "02"
+	```
+	@example
+	```luau
+		leftPad("toast", 10, ":)") --> ":):):toast"
+	```
+]=]
 local function leftPad(input: string, length: number, prefix: string?): string
 	local definedPrefix = prefix or " "
 

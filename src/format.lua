@@ -1,31 +1,3 @@
---[[
-	Returns the _format_ string with placeholders `{...}` substituted with readable representations
-	of the subsequent arguments.
-	This function is a simpler & more powerful version of `string.format`, inspired by `format!`
-	in Rust.
-
-	* `{}` formats and prints the next argument using `:format()` if available, or a suitable
-		default representation depending on its type.
-	* `{blah}` formats and prints the key "blah" of the 1st argument
-	* `{2}` formats and prints the 2nd argument.
-	* `{#2}` prints the length of the 2nd argument.
-	Display parameters can be combined after a `:` in the curly braces. Any format parameters used
-	in `string.format` can be used here, along with these extras:
-	* `{:?}` formats any value using `pretty`.
-	* `{:#?}` formats any value using multiline `pretty`.
-	@example
-		local props = {"teeth", "claws", "whiskers", "tail"}
-		format("{:?} is in {:#?}", "whiskers", props)
-		-> '"whiskers" is in {"teeth", "claws", "whiskers", "tail"}'
-	@example
-		format("The time is {:02}:{:02}", 2, 4) -> "The time is 02:04"
-	@example
-		format("The color blue is #{:06X}", 255) -> "The color blue is #0000FF"
-	@usage Escape `{` with `{{` and `}` similarly with `}}`.
-	@usage See [https://developer.roblox.com/articles/Format-String](https://developer.roblox.com/articles/Format-String)
-		for complete list of formating options and further use cases.
-]]
-
 local Dash = script.Parent
 local formatValue = require(Dash.formatValue)
 local splitOn = require(Dash.splitOn)
@@ -34,6 +6,40 @@ local startsWith = require(Dash.startsWith)
 local concat = table.concat
 local insert = table.insert
 
+--[=[
+	Returns the _format_ string with placeholders `{...}` substituted with readable representations of the subsequent arguments.
+	This function is a simpler & more powerful version of `string.format`, inspired by `format!` in Rust.
+
+	* `{}` formats and prints the next argument using `:format()` if available, or a suitable default representation depending on its type.
+	* `{blah}` formats and prints the key "blah" of the 1st argument
+	* `{2}` formats and prints the 2nd argument.
+	* `{#2}` prints the length of the 2nd argument.
+
+	Display parameters can be combined after a `:` in the curly braces. Any format parameters used in `string.format` can be used here, along with these extras:
+	* `{:?}` formats any value using `pretty`.
+	* `{:#?}` formats any value using multiline `pretty`.
+
+	@param formatString The format string with placeholders.
+	@param ... Arguments to substitute into the format string.
+	@return The formatted string with placeholders replaced.
+	@example
+	```luau
+		local props = {"teeth", "claws", "whiskers", "tail"}
+		format("{:?} is in {:#?}", "whiskers", props)
+		-> '"whiskers" is in {"teeth", "claws", "whiskers", "tail"}'
+	```
+	@example
+	```luau
+		format("The time is {:02}:{:02}", 2, 4) -> "The time is 02:04"
+	```
+	@example
+	```luau
+		format("The color blue is #{:06X}", 255) -> "The color blue is #0000FF"
+	```
+	@usage Escape `{` with `{{` and `}` similarly with `}}`.
+	@usage See [https://developer.roblox.com/articles/Format-String](https://developer.roblox.com/articles/Format-String) for complete list of formatting options and further use cases.
+]=]
+-- TODO (AleksandrSl 18/08/2025): Check how it works, since splitOn returns only one value
 local function format(formatString: string, ...)
 	local args = { ... }
 	local argIndex = 1

@@ -19,6 +19,6 @@
 		}
 	},
 	"luau": {
-		"languageMode": "strict",
+		"languageMode": "strict"
 	}
 }
