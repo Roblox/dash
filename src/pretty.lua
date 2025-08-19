@@ -1,10 +1,3 @@
---[[
-	Return a pretty string serialization of _object_.
-
-	This implementation deals with cycles in tables and can neatly display metatables.
-
-	Optionally use an indented multiline string, limit the depth of tables, omit or pick keys.
-]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
 
@@ -97,8 +90,8 @@ end
 
 local pretty
 
-local function prettyLines(object: Types.Table, options: PrettyOptions): { string }
-	options = options or {}
+local function prettyLines(object: any, _options: PrettyOptions?): { string }
+	local options = _options or {}
 	if type(object) == "table" then
 		-- A table needs to be serialized recusively
 		-- Construct the options for recursive calls for the table values
@@ -192,7 +185,18 @@ local function prettyLines(object: Types.Table, options: PrettyOptions): { strin
 	end
 end
 
-pretty = function(object: Types.Table, options: PrettyOptions): string
+--[=[
+	Returns a pretty string serialization of _object_.
+
+	This implementation deals with cycles in tables and can neatly display metatables.
+
+	Optionally use an indented multiline string, limit the depth of tables, omit or pick keys.
+
+	@param object The object to serialize.
+	@param options Optional configuration for the serialization.
+	@return A formatted string representation of the object.
+]=]
+pretty = function(object: any, options: PrettyOptions?): string
 	return concat(prettyLines(object, options), "\n")
 end
 

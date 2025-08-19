@@ -1,13 +1,15 @@
---[[
-	Pick entries in the _input_ Table which should remain in the output by calling the handler on
-	each `(child, index)` tuple.
-
-	The handler should return truthy to preserve the value in the resulting Table.
-]]
-
+local Dash = script.Parent
+local Types = require(Dash.Types)
 export type PickHandler<Key, Value> = (Value, Key) -> boolean
 
-local function pick<Key, Value>(input: { [Key]: Value }, handler: PickHandler<Key, Value>): { [Key]: Value }
+--[=[
+	Returns a new table containing only the entries from _input_ for which the _handler_ returns truthy.
+
+	@param input The table to filter.
+	@param handler Function called as `(value, key)` for each entry; return truthy to include the value.
+	@return A new table with only the selected entries.
+]=]
+local function pick(input: {}, handler: PickHandler<any, any>): Types.Table
 	local result = {}
 	for key, child in input do
 		if handler(child, key) then
@@ -16,4 +18,5 @@ local function pick<Key, Value>(input: { [Key]: Value }, handler: PickHandler<Ke
 	end
 	return result
 end
+
 return pick

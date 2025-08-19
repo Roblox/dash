@@ -14,7 +14,7 @@ describe.only("chain", function()
 			local index = 0
 			local count = #list
 
-			return function()
+			return function(): T?
 				index = index + 1
 				if index <= count then
 					return list[index]
@@ -42,7 +42,7 @@ describe.only("chain", function()
 			local index = 0
 			local count = #list
 
-			return function()
+			return function(): T?
 				mockFn()
 				index = index + 1
 				if index <= count then
@@ -70,12 +70,12 @@ describe.only("chain", function()
 			local index = 0
 			local count = #list
 
-			return function()
+			return function(): (number?, T?)
 				index = index + 1
 				if index <= count then
 					return index, list[index]
 				end
-				return nil
+				return nil, nil
 			end
 		end
 
@@ -86,7 +86,9 @@ describe.only("chain", function()
 		local values = {}
 
 		for index, value in chain(iterator1, iterator2, iterator3) do
-			table.insert(values, { index, value })
+			if value then
+				table.insert(values, { index, value })
+			end
 		end
 
 		expect(values).toEqual({

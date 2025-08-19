@@ -19,7 +19,7 @@ describe("freeze", function()
 		expect(function()
 			output.red = 256
 		end).toThrowWithMessage([[ReadonlyKey: Attempted to write to readonly key "red" of frozen object "MyObject"]])
-		expect(output.blah).toBeNil()
+		expect((output :: any).blah).toBeNil()
 	end)
 	it("should throw for missing keys if so desired", function()
 		expect(function()
@@ -27,7 +27,7 @@ describe("freeze", function()
 				name = "myName",
 				red = 255,
 			}, true)
-			return output.blue
+			return (output :: any).blue
 		end).toThrowWithMessage([[MissingKey: Attempted to read missing key "blue" of frozen object "MyObject"]])
 	end)
 

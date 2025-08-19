@@ -9,11 +9,11 @@ local pipe = Dash.pipe
 
 describe("pipe", function()
 	it("should pipe functions from left to right", function()
-		local function addOne(n)
+		local function addOne(n: number)
 			return n + 1
 		end
 
-		local function double(n)
+		local function double(n: number)
 			return n * 2
 		end
 
@@ -22,11 +22,11 @@ describe("pipe", function()
 	end)
 
 	it("should handle multiple arguments for the first function", function()
-		local function add(a, b)
+		local function add(a: number, b: number)
 			return a + b
 		end
 
-		local function double(n)
+		local function double(n: number)
 			return n * 2
 		end
 
@@ -35,11 +35,11 @@ describe("pipe", function()
 	end)
 
 	it("should handle functions that return multiple values", function()
-		local function returnTwo(n)
+		local function returnTwo(n: number)
 			return n, n * 2
 		end
 
-		local function add(a, b)
+		local function add(a: number, b: number)
 			return a + b
 		end
 

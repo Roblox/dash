@@ -1,31 +1,3 @@
---[[
-	Create a class called _name_ with the specified _constructor_. The constructor should return a
-	plain table which will be turned into an instance of _Class_ from a call to `Class.new(...)`.
-	
-	@example
-		-- Create a simple Vehicle class
-		local Vehicle = class("Vehicle", function(wheelCount: number) return 
-			{
-				speed = 0,
-				wheelCount = wheelCount
-			}
-		end)
-		function Vehicle:drive(speed)
-			self.speed = speed
-		end
-		-- Create a car instance
-		local car = Vehicle.new(4)
-		car.wheelCount --> 4
-		car.speed --> 0
-		-- Drive the car
-		car:drive(10)
-		car.speed --> 10
-		
-	@usage When using Dash classes, private fields should be prefixed with `_` to avoid accidental access.
-	@usage A private field should only be accessed by a method of the class itself, though Rodash
-		does not restrict this in code.
-	@usage Public fields are recommended when there is no complex access logic e.g. `position.x`
-]]
 local Dash = script.Parent
 local Types = require(Dash.Types)
 
@@ -42,12 +14,44 @@ local defaultConstructor: Constructor<> = function()
 	return {}
 end
 
+--[=[
+	Creates a class called _name_ with the specified _constructor_. The constructor should return a plain table which will be turned into an instance of _Class_ from a call to `Class.new(...)`.
+
+	@param name The class name used for string representation and error messages.
+	@param constructor A function that returns the initial instance table; defaults to an empty table.
+	@return A new Class table with constructor `new` and overridable metamethods.
+
+	@example
+	```luau
+		-- Create a simple Vehicle class
+		local Vehicle = class("Vehicle", function(wheelCount: number) return
+			{
+				speed = 0,
+				wheelCount = wheelCount
+			}
+		end)
+		function Vehicle:drive(speed)
+			self.speed = speed
+		end
+		-- Create a car instance
+		local car = Vehicle.new(4)
+		car.wheelCount --> 4
+		car.speed --> 0
+		-- Drive the car
+		car:drive(10)
+		car.speed --> 10
+	```
+
+	@usage When using Dash classes, private fields should be prefixed with `_` to avoid accidental access.
+	@usage A private field should only be accessed by a method of the class itself, though Rodash does not restrict this in code.
+	@usage Public fields are recommended when there is no complex access logic e.g. `position.x`
+]=]
 local function class<T...>(name: string, constructor: Constructor<T...>?)
 	local classConstructor = constructor or defaultConstructor
 	local Class = {
 		name = name,
 	}
-	--[[
+	--[=[
 		Return a new instance of the class, passing any arguments to the specified constructor.
 		@example
 			local Car = class("Car", function(speed)
@@ -57,7 +61,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			end)
 			local car = Car.new(5)
 			pretty(car) --> 'Car {speed = 5}'
-	]]
+	]=]
 	function Class.new(...)
 		local instance = classConstructor(...)
 		setmetatable(instance, {
@@ -76,11 +80,11 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 		instance:_init(...)
 		return instance
 	end
-	--[[
+	--[=[
 		Run after the instance has been properly initialized, allowing methods on the instance to
 		be used.
 		@example
-			local Vehicle = dash.class("Vehicle", function(wheelCount) return 
+			local Vehicle = dash.class("Vehicle", function(wheelCount) return
 				{
 					speed = 0,
 					wheelCount = wheelCount
@@ -100,19 +104,19 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			function Vehicle:_generateId()
 				return format("#{}: {} wheels", Vehicle._getNextId(), self.wheelCount)
 			end
-			-- Return the id if the instance is represented as a string 
+			-- Return the id if the instance is represented as a string
 			function Vehicle:toString()
 				return self._id
 			end
 			local car = Vehicle.new(4)
 			tostring(car) --> "#1: 4 wheels"
-	]]
+	]=]
 	function Class:_init() end
 
-	--[[
+	--[=[
 		Returns `true` if _value_ is an instance of _Class_ or any sub-class.
 		@example
-			local Vehicle = dash.class("Vehicle", function(wheelCount) return 
+			local Vehicle = dash.class("Vehicle", function(wheelCount) return
 				{
 					speed = 0,
 					wheelCount = wheelCount
@@ -125,7 +129,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			car.isInstance(Car) --> true
 			car.isInstance(Vehicle) --> true
 			car.isInstance(Bike) --> false
-	]]
+	]=]
 	function Class.isInstance(value)
 		local ok, isInstance = pcall(function()
 			local metatable = getmetatable(value)
@@ -140,13 +144,13 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 		return ok and isInstance
 	end
 
-	--[[
+	--[=[
 		Create a subclass of _Class_ with a new name _className_ that inherits the metatable of _Class_,
 		optionally overriding the constructor with _classConstructor_ and providing additional _decorators_.
 		The super-constructor can be accessed with `Class.constructor`.
 		Super methods can be accessed using `Class.methodName` and should be called with self.
 		@example
-			local Vehicle = dash.class("Vehicle", function(wheelCount) return 
+			local Vehicle = dash.class("Vehicle", function(wheelCount) return
 				{
 					speed = 0,
 					wheelCount = wheelCount
@@ -176,14 +180,14 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			end
 			local car = Car.new()
 			car.id --> "Car #1: 4 wheels"
-	]]
+	]=]
 	function Class:extend(subClassName: string, subClassConstructor)
 		local SubClass = class(subClassName, subClassConstructor or Class.new)
 		setmetatable(SubClass, { __index = self })
 		return SubClass
 	end
 
-	--[[
+	--[=[
 		Return a string representation of the instance. By default this is the _name_ field (or the
 		Class name if this is not defined), but the method can be overridden.
 		@example
@@ -192,7 +196,7 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 					name = name
 				}
 			end)
-			
+
 			local car = Car.new()
 			car:toString() --> 'Car'
 			tostring(car) --> 'Car'
@@ -214,23 +218,23 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 			bob:toString() --> 'Car called Bob'
 			tostring(bob) --> 'Car called Bob'
 			print("Hello " .. bob) -->> Hello Car called Bob
-	]]
+	]=]
 	function Class:toString()
 		return self.name
 	end
 
-	--[[
+	--[=[
 		Returns `true` if `self` is considered equal to _other_. This replaces the `==` operator
 		on instances of this class, and can be overridden to provide a custom implementation.
-	]]
+	]=]
 	function Class:equals(other)
 		return rawequal(self, other)
 	end
 
-	--[[
+	--[=[
 		Returns `true` if `self` is considered less than  _other_. This replaces the `<` operator
 		on instances of this class, and can be overridden to provide a custom implementation.
-	]]
+	]=]
 	function Class:__lt(_)
 		throwNotImplemented({
 			methodName = "__lt",
@@ -238,11 +242,11 @@ local function class<T...>(name: string, constructor: Constructor<T...>?)
 		})
 	end
 
-	--[[
+	--[=[
 		Returns `true` if `self` is considered less than or equal to _other_. This replaces the
 		`<=` operator on instances of this class, and can be overridden to provide a custom
 		implementation.
-	]]
+	]=]
 	function Class:__le(_)
 		throwNotImplemented({
 			methodName = "__le",

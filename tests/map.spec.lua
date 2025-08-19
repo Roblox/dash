@@ -23,7 +23,7 @@ describe("map", function()
 
 	it("should map elements into a new map", function()
 		local input = { a = 10, b = 20, c = 30, d = 50 }
-		local output = map(input, function(value, key)
+		local output = map(input, function(value: number, key: string)
 			return key .. "=" .. value
 		end)
 		expect(output).toEqual({

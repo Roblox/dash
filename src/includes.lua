@@ -1,9 +1,13 @@
---[[
+--[=[
 	Returns `true` if the _item_ exists as a value in the _input_ table.
 
 	A nil _item_ will always return `false`.
-]]
-local function includes<Item>(input: { [unknown]: Item }, item: Item?): boolean
+
+	@param input The table to search in.
+	@param item The value to search for.
+	@return `true` if the item is found, `false` otherwise.
+]=]
+local function includes(input: {}, item: any?): boolean
 	if item == nil then
 		return false
 	end
