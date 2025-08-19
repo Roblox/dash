@@ -13,10 +13,7 @@ type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue
 	@return A new set containing each non-`nil` value returned by _handler_ (or each value of _input_ if no handler).
 	@see `Dash.collectArray` to collect into an array while preserving insertion order for arrays.
 ]=]
-local function collectSet<Key, Value, NewValue>(
-	input: {},
-	handler: CollectHandler<Key, Value, NewValue>?
-): Types.Set<Value | NewValue>
+local function collectSet<Key, Value, NewValue>(input: {}, handler: CollectHandler<Key, Value, NewValue>?): Types.Set<Value | NewValue>
 	local result: Types.Set<Value | NewValue> = {}
 	for key, child in input :: Types.Table do
 		local outputValue
