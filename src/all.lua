@@ -1,6 +1,3 @@
-local Dash = script.Parent
-local Types = require(Dash.Types)
-
 type AllHandler = (any, any) -> boolean
 
 local defaultHandler: AllHandler = function(value)
@@ -17,7 +14,7 @@ end
 	@param handler Optional predicate called as `(value, key)`
 	@return boolean -- `true` only if every call to _handler_ returns truthy; otherwise `false`
 ]=]
-local function all(input: Types.Table, handler: AllHandler?): boolean
+local function all(input: {}, handler: AllHandler?): boolean
 	local allHandler = handler or defaultHandler
 	for key, value in input do
 		if not allHandler(value, key) then

@@ -14,11 +14,11 @@ type CollectHandler<Key, Value, NewValue> = (key: Key, value: Value) -> NewValue
 	@see `Dash.collectArray` to collect into an array while preserving insertion order for arrays.
 ]=]
 local function collectSet<Key, Value, NewValue>(
-	input: Types.Table,
+	input: {},
 	handler: CollectHandler<Key, Value, NewValue>?
 ): Types.Set<Value | NewValue>
 	local result: Types.Set<Value | NewValue> = {}
-	for key, child in input do
+	for key, child in input :: Types.Table do
 		local outputValue
 		if handler == nil then
 			outputValue = child

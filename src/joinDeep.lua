@@ -18,7 +18,7 @@ local forEach = require(Dash.forEach)
 	@param delta The delta table containing changes to apply.
 	@return A new table with deep-merged values from source and delta.
 ]=]
-local function joinDeep(source: Types.Table, delta: Types.Table): Types.Table
+local function joinDeep(source: {}, delta: {}): Types.Table
 	local result = table.clone(source)
 	-- Iterate through each key of the input and assign to target at the same key
 	forEach(delta, function(value, key)

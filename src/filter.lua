@@ -1,3 +1,6 @@
+local Dash = script.Parent
+local Types = require(Dash.Types)
+
 export type FilterHandler<Key, Value> = (Value, Key) -> boolean
 
 --[=[
@@ -10,7 +13,7 @@ export type FilterHandler<Key, Value> = (Value, Key) -> boolean
 	@param handler Function called as `(value, key)` for each entry; return truthy to include the value.
 	@return A new array with only the values for which _handler_ returned truthy.
 ]=]
-local function filter<Key, Value>(input: { [Key]: Value }, handler: FilterHandler<Key, Value>): { Value }
+local function filter(input: {}, handler: FilterHandler<any, any>): Types.Table
 	local result = {}
 	for index, child in input do
 		if handler(child, index) then
