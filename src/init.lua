@@ -79,4 +79,4 @@ local Dash = {
 	zip = require(script.zip),
 }
 
-return Dash.freeze("Dash", Dash, true)
+return table.freeze(Dash)
