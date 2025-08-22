@@ -69,4 +69,71 @@ describe("debounce", function()
 		task.wait(0.03)
 		expect(mock).toHaveBeenCalledTimes(1)
 	end)
+
+	it("should default to trailing with zero delay (next tick)", function()
+		local mock = jest.fn()
+		local debouncedFn = debounce(function(...)
+			mock(...)
+		end)
+
+		debouncedFn(1, 2, 3)
+		expect(mock).never.toHaveBeenCalled()
+		-- Next scheduler tick
+		task.wait()
+		expect(mock).toHaveBeenCalledTimes(1)
+		expect(mock).toHaveBeenCalledWith(1, 2, 3)
+	end)
+
+	it("should support leading only (no trailing)", function()
+		local mock = jest.fn()
+		local debouncedFn = debounce(function(...)
+			mock(...)
+		end, {
+			delay = 0.1,
+			leading = true,
+			trailing = false,
+		})
+
+		debouncedFn("a")
+		-- Immediate leading call
+		expect(mock).toHaveBeenCalledTimes(1)
+		-- No trailing call afterwards
+		task.wait(0.15)
+		expect(mock).toHaveBeenCalledTimes(1)
+	end)
+
+	it("should support leading and trailing (immediate + trailing once with latest args)", function()
+		local mock = jest.fn()
+		local debouncedFn = debounce(function(...)
+			mock(...)
+		end, {
+			delay = 0.1,
+			leading = true,
+			trailing = true,
+		})
+
+		debouncedFn("first")
+		-- Leading fires immediately
+		expect(mock).toHaveBeenCalledTimes(1)
+		debouncedFn("second")
+		debouncedFn("third")
+
+		-- After delay, only one trailing call should fire with the latest args
+		task.wait(0.15)
+		expect(mock).toHaveBeenCalledTimes(2)
+		expect(mock).toHaveBeenLastCalledWith("third")
+	end)
+
+	it("should preserve nil arguments in trailing call", function()
+		local mock = jest.fn()
+		local debouncedFn = debounce(function(...)
+			mock(...)
+		end, 0.05)
+
+		debouncedFn("a", nil, "c")
+		-- Wait for trailing
+		task.wait(0.07)
+		expect(mock).toHaveBeenCalledTimes(1)
+		expect(mock).toHaveBeenCalledWith("a", nil, "c")
+	end)
 end)
