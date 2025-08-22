@@ -16,6 +16,7 @@ type ThrottleOptionsInternal = {
 -- `& (...any) -> ...any` in the function type is a funky way to mimick `T extends function`
 type AnyVoidFunction = (...any) -> ()
 type Throttled<T> = T & AnyVoidFunction
+type Args = { [number]: any, n: number }
 
 --[=[
 	Creates and returns a new throttled version of the passed function which will ensure that the function is
@@ -64,7 +65,7 @@ local function throttle<T>(func: T & AnyVoidFunction, options: number | Throttle
 
 	local lastExecutionTime = -math.huge
 	local scheduledThread: thread? = nil
-	local lastArgs: { [number]: any, n: number }? = nil
+	local lastArgs: Args? = nil
 
 	local function clearScheduled()
 		if scheduledThread then
@@ -76,7 +77,7 @@ local function throttle<T>(func: T & AnyVoidFunction, options: number | Throttle
 	local function invoke()
 		lastExecutionTime = os.clock()
 		scheduledThread = nil
-		local args = lastArgs :: { [number]: any, n: number }
+		local args = lastArgs :: Args;
 		(func :: AnyVoidFunction)(table.unpack(args, 1, args.n))
 	end
 

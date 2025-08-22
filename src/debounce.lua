@@ -49,7 +49,7 @@ local function debounce<T>(func: T & AnyVoidFunction, options: number | Debounce
 	local thread: thread? = nil
 	local resetThread: thread? = nil
 	local isLeadingCalled = false
-	
+
 	return function(...)
 		local args = table.pack(...)
 		callId += 1
@@ -57,7 +57,7 @@ local function debounce<T>(func: T & AnyVoidFunction, options: number | Debounce
 		local leading = resolvedOptions.leading
 		local trailing = resolvedOptions.trailing
 		local shouldCallLeading = leading and not isLeadingCalled
-		
+
 		-- Clear existing timeout
 		if thread then
 			task.cancel(thread)
@@ -67,13 +67,13 @@ local function debounce<T>(func: T & AnyVoidFunction, options: number | Debounce
 			task.cancel(resetThread)
 			resetThread = nil
 		end
-		
+
 		-- Call leading if this is the first call and leading is enabled
 		if shouldCallLeading then
-			isLeadingCalled = true
+			isLeadingCalled = true;
 			(func :: AnyVoidFunction)(table.unpack(args, 1, args.n))
 		end
-		
+
 		-- Set up trailing call if enabled
 		if trailing then
 			thread = task.delay(delay, function()
