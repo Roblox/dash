@@ -26,7 +26,7 @@ type Debounced<T> = T & AnyVoidFunction
 		- trailing: boolean? (if true, call at the end of the delay; default true)
 	@return The new debounced function.
 ]=]
-local function debounce<T>(callback: T & AnyVoidFunction, options: number | DebounceOptions): Debounced<T>
+local function debounce<T>(func: T & AnyVoidFunction, options: number | DebounceOptions): Debounced<T>
 	local defaultOptions: DebounceOptionsInternal = {
 		delay = 0,
 		leading = false,
@@ -69,7 +69,7 @@ local function debounce<T>(callback: T & AnyVoidFunction, options: number | Debo
 		-- Call leading if this is the first call and leading is enabled
 		if shouldCallLeading then
 			isLeadingCalled = true
-			(callback :: AnyVoidFunction)(table.unpack(args, 1, args.n))
+			(func :: AnyVoidFunction)(table.unpack(args, 1, args.n))
 		end
 		
 		-- Set up trailing call if enabled
@@ -80,7 +80,7 @@ local function debounce<T>(callback: T & AnyVoidFunction, options: number | Debo
 					isLeadingCalled = false
 					-- Only call if this wasn't already called by leading
 					if not shouldCallLeading then
-						(callback :: AnyVoidFunction)(table.unpack(args, 1, args.n))
+						(func :: AnyVoidFunction)(table.unpack(args, 1, args.n))
 					end
 				end
 			end)

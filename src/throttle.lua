@@ -1,52 +1,101 @@
---[[
-	Creates and returns a new throttled version of the passed function which will ensure that the function
-	is called at most once during the specified wait period. If called multiple times during the wait period,
-	only the first call will be executed immediately, and subsequent calls will be ignored until the wait period has elapsed.
+local Dash = script.Parent
+local assign = require(Dash.assign)
 
-	The last call will always be done after the same delay. e.g.
+--[=[
+	Creates and returns a new throttled version of the passed function which ensures the function
+	is called at most once during the specified window. Optionally calls at the start (leading)
+	and/or at the end (trailing) of the window.
+
+	Example:
 	```
 	local throttled = throttle(function(v) print(v) end, 0.1)
-	for i = 1, 10 do
-		throttled(i)
-	end
-	```
-	would result in
-	```
-	1
-	10
+	for i = 1, 10 do throttled(i) end
+	-- prints: 1 (immediately), 10 (after ~0.1s)
 	```
 
 	@param func The function to throttle.
-	@param wait The number of seconds to throttle invocations to.
+	@param options Either the number of seconds to delay, or a table of throttle options:
+		- delay: number? (seconds to throttle; default 0)
+		- leading: boolean? (if true, call at the start of the window; default true)
+		- trailing: boolean? (if true, call at the end of the window; default true)
 	@returns The new throttled function.
-]]
-local function throttle<T>(func: T & (...any) -> ...any, wait: number): T
-	local lastCallTime = 0
-	local delayedCall = nil
-	local lastArgs
+]=]
+
+type ThrottleOptions = {
+	delay: number?,
+	leading: boolean?,
+	trailing: boolean?,
+}
+
+type ThrottleOptionsInternal = {
+	delay: number,
+	leading: boolean,
+	trailing: boolean,
+}
+
+type AnyVoidFunction = (...any) -> ()
+type Throttled<T> = T & AnyVoidFunction
+
+local function throttle<T>(func: T & AnyVoidFunction, options: number | ThrottleOptions): Throttled<T>
+	local defaultOptions: ThrottleOptionsInternal = {
+		delay = 0,
+		leading = true,
+		trailing = true,
+	}
+
+	local resolvedOptions: ThrottleOptionsInternal
+	if type(options) == "number" then
+		resolvedOptions = assign(defaultOptions, { delay = options }) :: ThrottleOptionsInternal
+	elseif type(options) == "table" then
+		resolvedOptions = assign(defaultOptions, options) :: ThrottleOptionsInternal
+	else
+		resolvedOptions = defaultOptions
+	end
+
+	local delay = math.max(0, resolvedOptions.delay)
+	local leading = resolvedOptions.leading
+	local trailing = resolvedOptions.trailing
+
+	local lastExecutionTime = -math.huge
+	local scheduledThread: thread? = nil
+	local lastArgs: { [number]: any, n: number }? = nil
+
+	local function clearScheduled()
+		if scheduledThread then
+			task.cancel(scheduledThread)
+			scheduledThread = nil
+		end
+	end
 
 	local function invoke()
-		lastCallTime = os.clock()
-		delayedCall = nil;
-		(func :: (...any) -> ...any)(table.unpack(lastArgs))
+		lastExecutionTime = os.clock()
+		scheduledThread = nil
+		local args = lastArgs :: { [number]: any, n: number }
+		(func :: AnyVoidFunction)(table.unpack(args, 1, args.n))
 	end
 
 	return (
 		function(...)
-			local currentTime = os.clock()
-			local timeSinceLastCall = currentTime - lastCallTime
-			-- Keep the reference to the latest argument call even though we don't recreated a delayedCall every time
-			lastArgs = { ... }
+			local now = os.clock()
+			lastArgs = table.pack(...)
+			local timeSinceExecution = now - lastExecutionTime
 
-			if timeSinceLastCall >= wait then
+			if leading and timeSinceExecution >= delay then
+				clearScheduled()
 				invoke()
-			elseif not delayedCall then
-				-- Schedule a call at the end of the throttle period
-				local remainingTime = wait - timeSinceLastCall
-				delayedCall = task.delay(remainingTime, invoke)
+				return
+			end
+
+			if trailing and not scheduledThread then
+				local baseTime = (lastExecutionTime == -math.huge) and now or lastExecutionTime
+				local remaining = delay - (now - baseTime)
+				if remaining < 0 then
+					remaining = 0
+				end
+				scheduledThread = task.delay(remaining, invoke)
 			end
 		end :: unknown
-	) :: T
+	) :: Throttled<T>
 end
 
 return throttle

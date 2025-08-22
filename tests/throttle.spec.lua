@@ -101,4 +101,70 @@ describe("throttle", function()
 		throttledFn()
 		expect(mock).toHaveBeenCalledTimes(2)
 	end)
+
+	it("should default to leading and trailing with zero delay", function()
+		local mock = jest.fn()
+		local throttledFn = throttle(function(...)
+			mock(...)
+		end)
+
+		-- With delay=0 and leading=true, this fires immediately on each call
+		throttledFn(1)
+		expect(mock).toHaveBeenCalledTimes(1)
+		throttledFn(2)
+		throttledFn(3)
+		expect(mock).toHaveBeenCalledTimes(3)
+	end)
+
+	it("should support trailing only (no immediate call)", function()
+		local mock = jest.fn()
+		local throttledFn = throttle(function(...)
+			mock(...)
+		end, {
+			delay = 0.1,
+			leading = false,
+			trailing = true,
+		})
+
+		throttledFn("a")
+		expect(mock).toHaveBeenCalledTimes(0)
+		throttledFn("b")
+		throttledFn("c")
+		-- After the window, only one call with latest args
+		task.wait(0.15)
+		expect(mock).toHaveBeenCalledTimes(1)
+		expect(mock).toHaveBeenLastCalledWith("c")
+	end)
+
+	it("should support leading only (no trailing)", function()
+		local mock = jest.fn()
+		local throttledFn = throttle(function(...)
+			mock(...)
+		end, {
+			delay = 0.1,
+			leading = true,
+			trailing = false,
+		})
+
+		throttledFn("x")
+		expect(mock).toHaveBeenCalledTimes(1)
+		-- Burst within the window should not schedule trailing
+		throttledFn("y")
+		throttledFn("z")
+		task.wait(0.15)
+		expect(mock).toHaveBeenCalledTimes(1)
+	end)
+
+	it("should preserve nil arguments when trailing fires", function()
+		local mock = jest.fn()
+		local throttledFn = throttle(function(...)
+			mock(...)
+		end, 0.05)
+
+		throttledFn("a", nil, "c")
+		-- Ensure trailing fires
+		task.wait(0.07)
+		expect(mock).toHaveBeenCalledTimes(1)
+		expect(mock).toHaveBeenCalledWith("a", nil, "c")
+	end)
 end)
