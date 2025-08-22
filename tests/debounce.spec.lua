@@ -74,7 +74,7 @@ describe("debounce", function()
 		local mock = jest.fn()
 		local debouncedFn = debounce(function(...)
 			mock(...)
-		end)
+		end, 0)
 
 		debouncedFn(1, 2, 3)
 		expect(mock).never.toHaveBeenCalled()
@@ -86,13 +86,16 @@ describe("debounce", function()
 
 	it("should support leading only (no trailing)", function()
 		local mock = jest.fn()
-		local debouncedFn = debounce(function(...)
-			mock(...)
-		end, {
-			delay = 0.1,
-			leading = true,
-			trailing = false,
-		})
+		local debouncedFn = debounce(
+			function(...)
+				mock(...)
+			end,
+			0.1,
+			{
+				leading = true,
+				trailing = false,
+			}
+		)
 
 		debouncedFn("a")
 		-- Immediate leading call
@@ -104,13 +107,16 @@ describe("debounce", function()
 
 	it("should support leading and trailing (immediate + trailing once with latest args)", function()
 		local mock = jest.fn()
-		local debouncedFn = debounce(function(...)
-			mock(...)
-		end, {
-			delay = 0.1,
-			leading = true,
-			trailing = true,
-		})
+		local debouncedFn = debounce(
+			function(...)
+				mock(...)
+			end,
+			0.1,
+			{
+				leading = true,
+				trailing = true,
+			}
+		)
 
 		debouncedFn("first")
 		-- Leading fires immediately

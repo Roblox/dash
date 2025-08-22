@@ -2176,18 +2176,20 @@ local debouncedGreeting = debounce(function(name: string)
 end, 0.3)
 debouncedGreeting("Hugh")
 
--- Options object: leading/trailing toggles; delay optional (defaults to 0)
+-- Options as third arg: leading/trailing toggles; wait stays second arg
 local debouncedLeading = debounce(function(v)
 	print("Leading", v)
-end, { delay = 0.2, leading = true, trailing = false })
+end, 0.2, { leading = true, trailing = false })
 
 local debouncedTrailing = debounce(function(v)
 	print("Trailing", v)
-end, { delay = 0.2, leading = false, trailing = true })
+end, 0.2, { leading = false, trailing = true })
 ```
 
 Creates and returns a new debounced version of the passed function which will postpone its execution
 until after `wait` seconds have elapsed since the last time it was invoked.
+
+Defaults: leading = false, trailing = true.
 
 <hr>
 
@@ -2199,19 +2201,17 @@ until after `wait` seconds have elapsed since the last time it was invoked.
 
 ```luau
 -- Numeric delay: immediate then trailing with latest args
-local throttledGreeting = throttle(function(name: string)
-	print(`Hi, {name}!`)
-end, 0.3)
+local throttledGreeting = throttle(function(name: string) print(`Hi, {name}!`) end, 0.3)
 throttledGreeting("Hugh")
 
--- Options object: configure leading/trailing; delay optional (defaults to 0)
+-- Options as third arg: configure leading/trailing; wait stays second arg
 local throttledLeadingOnly = throttle(function(v)
 	print("Leading", v)
-end, { delay = 0.2, leading = true, trailing = false })
+end, 0.2, { leading = true, trailing = false })
 
 local throttledTrailingOnly = throttle(function(v)
 	print("Trailing", v)
-end, { delay = 0.2, leading = false, trailing = true })
+end, 0.2, { leading = false, trailing = true })
 ```
 
 Creates and returns a new throttled version of the passed function which will ensure that the function

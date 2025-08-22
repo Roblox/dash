@@ -2,13 +2,11 @@ local Dash = script.Parent
 local assign = require(Dash.assign)
 
 type ThrottleOptions = {
-	delay: number?,
 	leading: boolean?,
 	trailing: boolean?,
 }
 
 type ThrottleOptionsInternal = {
-	delay: number,
 	leading: boolean,
 	trailing: boolean,
 }
@@ -27,8 +25,8 @@ type Args = { [number]: any, n: number }
 	```
 
 	@param func The function to throttle.
-	@param options Either the number of seconds to delay, or a table of throttle options:
-		- delay: number? (seconds to throttle; default 0)
+	@param wait The number of seconds to throttle invocations to.
+	@param options Optional throttle options:
 		- leading: boolean? (if true, call at the start of the window; default true)
 		- trailing: boolean? (if true, call at the end of the window; default true)
 	@return The new throttled function.
@@ -43,23 +41,20 @@ type Args = { [number]: any, n: number }
 		-- 10
 	```
 ]=]
-local function throttle<T>(func: T & AnyVoidFunction, options: number | ThrottleOptions): Throttled<T>
+local function throttle<T>(func: T & AnyVoidFunction, wait: number, options: ThrottleOptions?): Throttled<T>
 	local defaultOptions: ThrottleOptionsInternal = {
-		delay = 0,
 		leading = true,
 		trailing = true,
 	}
 
 	local resolvedOptions: ThrottleOptionsInternal
-	if type(options) == "number" then
-		resolvedOptions = assign(defaultOptions, { delay = options }) :: ThrottleOptionsInternal
-	elseif type(options) == "table" then
+	if type(options) == "table" then
 		resolvedOptions = assign(defaultOptions, options) :: ThrottleOptionsInternal
 	else
 		resolvedOptions = defaultOptions
 	end
 
-	local delay = math.max(0, resolvedOptions.delay)
+	local delay = math.max(0, wait)
 	local leading = resolvedOptions.leading
 	local trailing = resolvedOptions.trailing
 

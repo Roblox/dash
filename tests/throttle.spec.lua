@@ -106,7 +106,7 @@ describe("throttle", function()
 		local mock = jest.fn()
 		local throttledFn = throttle(function(...)
 			mock(...)
-		end)
+		end, 0)
 
 		-- With delay=0 and leading=true, this fires immediately on each call
 		throttledFn(1)
@@ -118,13 +118,16 @@ describe("throttle", function()
 
 	it("should support trailing only (no immediate call)", function()
 		local mock = jest.fn()
-		local throttledFn = throttle(function(...)
-			mock(...)
-		end, {
-			delay = 0.1,
-			leading = false,
-			trailing = true,
-		})
+		local throttledFn = throttle(
+			function(...)
+				mock(...)
+			end,
+			0.1,
+			{
+				leading = false,
+				trailing = true,
+			}
+		)
 
 		throttledFn("a")
 		expect(mock).toHaveBeenCalledTimes(0)
@@ -138,13 +141,16 @@ describe("throttle", function()
 
 	it("should support leading only (no trailing)", function()
 		local mock = jest.fn()
-		local throttledFn = throttle(function(...)
-			mock(...)
-		end, {
-			delay = 0.1,
-			leading = true,
-			trailing = false,
-		})
+		local throttledFn = throttle(
+			function(...)
+				mock(...)
+			end,
+			0.1,
+			{
+				leading = true,
+				trailing = false,
+			}
+		)
 
 		throttledFn("x")
 		expect(mock).toHaveBeenCalledTimes(1)

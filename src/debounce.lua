@@ -2,13 +2,11 @@ local Dash = script.Parent
 local assign = require(Dash.assign)
 
 type DebounceOptions = {
-	delay: number?,
 	leading: boolean?,
 	trailing: boolean?,
 }
 
 type DebounceOptionsInternal = {
-	delay: number,
 	leading: boolean,
 	trailing: boolean,
 }
@@ -22,29 +20,26 @@ type Debounced<T> = T & AnyVoidFunction
 	_wait_ seconds have elapsed since the last invocation.
 
 	@param func The function to debounce.
-	@param options Either the number of seconds to delay, or a table of debounce options:
-		- delay: number? (seconds to delay; default 0)
+	@param wait The number of seconds to delay.
+	@param options Optional debounce options:
 		- leading: boolean? (if true, call at the start of the delay; default false)
 		- trailing: boolean? (if true, call at the end of the delay; default true)
 	@return The new debounced function.
 ]=]
-local function debounce<T>(func: T & AnyVoidFunction, options: number | DebounceOptions): Debounced<T>
+local function debounce<T>(func: T & AnyVoidFunction, wait: number, options: DebounceOptions?): Debounced<T>
 	local defaultOptions: DebounceOptionsInternal = {
-		delay = 0,
 		leading = false,
 		trailing = true,
 	}
 
 	local resolvedOptions: DebounceOptionsInternal
-	if type(options) == "number" then
-		resolvedOptions = assign(defaultOptions, { delay = options }) :: DebounceOptionsInternal
-	elseif type(options) == "table" then
+	if type(options) == "table" then
 		resolvedOptions = assign(defaultOptions, options) :: DebounceOptionsInternal
 	else
 		resolvedOptions = defaultOptions
 	end
 
-	local delay = math.max(0, resolvedOptions.delay)
+	local delay = math.max(0, wait)
 	local callId = 0
 	local thread: thread? = nil
 	local resetThread: thread? = nil
