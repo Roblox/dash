@@ -9,10 +9,10 @@ local flat = Dash.flat
 
 describe("flat", function()
 	it("should flatten an array correctly", function()
-		local input = { { 10, 20 }, { 30, 40 }, { 50, { 60 } } }
+		local input = { { 10, 20 }, { 30, 40 }, { 50 :: any, { 60 } } }
 		local output = flat(input)
 		expect(output).toEqual({
-			10,
+			10 :: any,
 			20,
 			30,
 			40,

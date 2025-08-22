@@ -1,14 +1,14 @@
---[[
-	Creates a stateful iterator for the _input_ Table, first visting ordered numeric keys 1..n
-	and then the remaining unordered keys in any order.
-
-	@see Dash.iterator - for an iterator that can iterate over an iterable.
-]]
-
 local Dash = script.Parent
 local Types = require(Dash.Types)
 
-local function iterable(input: Types.Table): Types.AnyFunction
+--[=[
+	Creates a stateful iterator for the _input_ table, first visiting ordered numeric keys 1..n and then the remaining unordered keys in any order.
+
+	@param input The table to create an iterator for.
+	@return A stateful iterator function that yields `(key, value)` pairs.
+	@see `Dash.iterator` for an iterator that can iterate over an iterable.
+]=]
+local function iterable(input: {}): Types.AnyFunction
 	local currentIndex = 1
 	local inOrderedKeys = true
 	local currentKey
@@ -21,7 +21,7 @@ local function iterable(input: Types.Table): Types.AnyFunction
 			else
 				local index = currentIndex
 				currentIndex += 1
-				return index, value
+				return index :: number?, value
 			end
 		end
 		while true do

@@ -13,11 +13,13 @@ type DebounceOptionsInternal = {
 	trailing: boolean,
 }
 
+-- `& (...any) -> ...any` in the function type is a funky way to mimick `T extends function`
 type AnyVoidFunction = (...any) -> ()
 type Debounced<T> = T & AnyVoidFunction
 
 --[=[
-	Creates and returns a new debounced version of the passed function which postpones execution until after _wait_ seconds have elapsed since the last invocation.
+	Creates and returns a new debounced version of the passed function which postpones execution until after
+	_wait_ seconds have elapsed since the last invocation.
 
 	@param func The function to debounce.
 	@param options Either the number of seconds to delay, or a table of debounce options:

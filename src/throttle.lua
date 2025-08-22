@@ -1,26 +1,6 @@
 local Dash = script.Parent
 local assign = require(Dash.assign)
 
---[=[
-	Creates and returns a new throttled version of the passed function which ensures the function
-	is called at most once during the specified window. Optionally calls at the start (leading)
-	and/or at the end (trailing) of the window.
-
-	Example:
-	```
-	local throttled = throttle(function(v) print(v) end, 0.1)
-	for i = 1, 10 do throttled(i) end
-	-- prints: 1 (immediately), 10 (after ~0.1s)
-	```
-
-	@param func The function to throttle.
-	@param options Either the number of seconds to delay, or a table of throttle options:
-		- delay: number? (seconds to throttle; default 0)
-		- leading: boolean? (if true, call at the start of the window; default true)
-		- trailing: boolean? (if true, call at the end of the window; default true)
-	@returns The new throttled function.
-]=]
-
 type ThrottleOptions = {
 	delay: number?,
 	leading: boolean?,
@@ -33,9 +13,35 @@ type ThrottleOptionsInternal = {
 	trailing: boolean,
 }
 
+-- `& (...any) -> ...any` in the function type is a funky way to mimick `T extends function`
 type AnyVoidFunction = (...any) -> ()
 type Throttled<T> = T & AnyVoidFunction
 
+--[=[
+	Creates and returns a new throttled version of the passed function which will ensure that the function is
+	called at most once during the specified wait period. If called multiple times during the wait period, only
+	the first call will be executed immediately, and subsequent calls will be ignored until the wait period has elapsed.
+
+	The last call will always be done after the same delay.
+	```
+
+	@param func The function to throttle.
+	@param options Either the number of seconds to delay, or a table of throttle options:
+		- delay: number? (seconds to throttle; default 0)
+		- leading: boolean? (if true, call at the start of the window; default true)
+		- trailing: boolean? (if true, call at the end of the window; default true)
+	@return The new throttled function.
+	@example
+	```luau
+		local throttled = throttle(function(v) print(v) end, 0.1)
+		for i = 1, 10 do
+			throttled(i)
+		end
+		-- Would result in:
+		-- 1
+		-- 10
+	```
+]=]
 local function throttle<T>(func: T & AnyVoidFunction, options: number | ThrottleOptions): Throttled<T>
 	local defaultOptions: ThrottleOptionsInternal = {
 		delay = 0,
