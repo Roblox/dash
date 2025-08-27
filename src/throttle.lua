@@ -65,7 +65,7 @@ local function throttle<T>(func: T & AnyVoidFunction, wait: number, options: Thr
 
 	local function invoke()
 		lastExecutionTime = os.clock()
-		scheduledThread = nil
+		scheduledThread = nil;
 		(func :: AnyVoidFunction)(table.unpack(lastArgs))
 	end
 
