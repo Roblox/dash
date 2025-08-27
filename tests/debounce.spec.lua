@@ -5,11 +5,22 @@ local it = JestGlobals.it
 local describe = JestGlobals.describe
 local expect = JestGlobals.expect
 local jest = JestGlobals.jest
+local beforeEach = JestGlobals.beforeEach
+local afterEach = JestGlobals.afterEach
 
 local Dash = require(Packages.Dash)
 local debounce = Dash.debounce
 
 describe("debounce", function()
+	beforeEach(function()
+		jest.useFakeTimers()
+		jest.setEngineFrameTime(1000 / 60)
+	end)
+
+	afterEach(function()
+		jest.useRealTimers()
+	end)
+
 	it("should call the function after the wait time has passed", function()
 		local mock = jest.fn()
 		local debouncedFn = debounce(function(...)
@@ -18,7 +29,7 @@ describe("debounce", function()
 
 		debouncedFn()
 		expect(mock).never.toHaveBeenCalled()
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledTimes(1)
 	end)
 
@@ -33,7 +44,7 @@ describe("debounce", function()
 		debouncedFn()
 
 		expect(mock).never.toHaveBeenCalled()
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledTimes(1)
 	end)
 
@@ -46,7 +57,7 @@ describe("debounce", function()
 		debouncedFn("Hello", "World")
 		debouncedFn("Goodbye", "World")
 
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledWith("Goodbye", "World")
 	end)
 
@@ -57,16 +68,16 @@ describe("debounce", function()
 		end, 0.1)
 
 		debouncedFn()
-		task.wait(0.05)
+		jest.advanceTimersByTime(50)
 		expect(mock).toHaveBeenCalledTimes(0)
 
 		-- This call should reset the 0.1s timer
 		debouncedFn()
-		task.wait(0.08)
+		jest.advanceTimersByTime(80)
 		expect(mock).toHaveBeenCalledTimes(0)
 
 		-- Wait for the full 0.1s from the *second* call to elapse
-		task.wait(0.03)
+		jest.advanceTimersByTime(30)
 		expect(mock).toHaveBeenCalledTimes(1)
 	end)
 
@@ -79,7 +90,7 @@ describe("debounce", function()
 		debouncedFn(1, 2, 3)
 		expect(mock).never.toHaveBeenCalled()
 		-- Next scheduler tick
-		task.wait()
+		jest.runOnlyPendingTimers()
 		expect(mock).toHaveBeenCalledTimes(1)
 		expect(mock).toHaveBeenCalledWith(1, 2, 3)
 	end)
@@ -101,7 +112,7 @@ describe("debounce", function()
 		-- Immediate leading call
 		expect(mock).toHaveBeenCalledTimes(1)
 		-- No trailing call afterwards
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledTimes(1)
 	end)
 
@@ -125,7 +136,7 @@ describe("debounce", function()
 		debouncedFn("third")
 
 		-- After delay, only one trailing call should fire with the latest args
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledTimes(2)
 		expect(mock).toHaveBeenLastCalledWith("third")
 	end)
@@ -138,7 +149,7 @@ describe("debounce", function()
 
 		debouncedFn("a", nil, "c")
 		-- Wait for trailing
-		task.wait(0.07)
+		jest.advanceTimersByTime(70)
 		expect(mock).toHaveBeenCalledTimes(1)
 		expect(mock).toHaveBeenCalledWith("a", nil, "c")
 	end)

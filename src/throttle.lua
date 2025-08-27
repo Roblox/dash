@@ -14,7 +14,6 @@ type ThrottleOptionsInternal = {
 -- `& (...any) -> ...any` in the function type is a funky way to mimick `T extends function`
 type AnyVoidFunction = (...any) -> ()
 type Throttled<T> = T & AnyVoidFunction
-type Args = { [number]: any, n: number }
 
 --[=[
 	Creates and returns a new throttled version of the passed function which will ensure that the function is
@@ -47,12 +46,7 @@ local function throttle<T>(func: T & AnyVoidFunction, wait: number, options: Thr
 		trailing = true,
 	}
 
-	local resolvedOptions: ThrottleOptionsInternal
-	if type(options) == "table" then
-		resolvedOptions = assign(defaultOptions, options) :: ThrottleOptionsInternal
-	else
-		resolvedOptions = defaultOptions
-	end
+	local resolvedOptions = assign(defaultOptions, options) :: ThrottleOptionsInternal
 
 	local delay = math.max(0, wait)
 	local leading = resolvedOptions.leading
@@ -60,7 +54,7 @@ local function throttle<T>(func: T & AnyVoidFunction, wait: number, options: Thr
 
 	local lastExecutionTime = -math.huge
 	local scheduledThread: thread? = nil
-	local lastArgs: Args? = nil
+	local lastArgs: { unknown }? = nil
 
 	local function clearScheduled()
 		if scheduledThread then
@@ -72,14 +66,20 @@ local function throttle<T>(func: T & AnyVoidFunction, wait: number, options: Thr
 	local function invoke()
 		lastExecutionTime = os.clock()
 		scheduledThread = nil
-		local args = lastArgs :: Args;
-		(func :: AnyVoidFunction)(table.unpack(args, 1, args.n))
+		(func :: AnyVoidFunction)(table.unpack(lastArgs))
 	end
 
 	return (
 		function(...)
 			local now = os.clock()
-			lastArgs = table.pack(...)
+			lastArgs = { ... }
+
+			--[[
+				We calculate timeSinceExecution to determine if enough time has passed since the last execution
+				to allow a new "leading" call. This is important for the very first call, where
+				lastExecutionTime is initialized to -math.huge, so timeSinceExecution will be very large,
+				ensuring the first call is always allowed if leading is enabled.
+			]]
 			local timeSinceExecution = now - lastExecutionTime
 
 			if leading and timeSinceExecution >= delay then
@@ -88,6 +88,16 @@ local function throttle<T>(func: T & AnyVoidFunction, wait: number, options: Thr
 				return
 			end
 
+			--[[
+				For trailing calls, we need to schedule the function to run after the remaining time in the throttle window.
+				We calculate (now - baseTime) separately because:
+				  - On the very first call (lastExecutionTime == -math.huge), we want the trailing call to be scheduled
+				    after the full delay from now, not some huge negative value.
+				  - On subsequent calls, baseTime is lastExecutionTime, so (now - baseTime) gives us the elapsed time
+				    since the last execution, and (delay - (now - baseTime)) is the remaining time to wait.
+				This ensures that the trailing call is always scheduled to run at the end of the throttle window,
+				regardless of when the first or last call happened.
+			]]
 			if trailing and not scheduledThread then
 				local baseTime = (lastExecutionTime == -math.huge) and now or lastExecutionTime
 				local remaining = delay - (now - baseTime)

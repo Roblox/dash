@@ -26,71 +26,59 @@ type Debounced<T> = T & AnyVoidFunction
 		- trailing: boolean? (if true, call at the end of the delay; default true)
 	@return The new debounced function.
 ]=]
+
 local function debounce<T>(func: T & AnyVoidFunction, wait: number, options: DebounceOptions?): Debounced<T>
 	local defaultOptions: DebounceOptionsInternal = {
 		leading = false,
 		trailing = true,
 	}
 
-	local resolvedOptions: DebounceOptionsInternal
-	if type(options) == "table" then
-		resolvedOptions = assign(defaultOptions, options) :: DebounceOptionsInternal
-	else
-		resolvedOptions = defaultOptions
+	local resolvedOptions: DebounceOptionsInternal = assign(defaultOptions, options)
+
+	local callId = 0
+	local scheduledThread: thread? = nil
+	local isLeadingCalled = false
+	local fn = function() end
+
+	if resolvedOptions.trailing then
+		fn = function(currentCallId: number, shouldCallLeading: boolean, ...)
+			if callId == currentCallId then
+				-- Reset leading flag for next cycle
+				isLeadingCalled = false
+				-- Only call if this wasn't already called by leading
+				if not shouldCallLeading then
+					(func :: AnyVoidFunction)(...)
+				end
+			end
+		end
+	-- If trailing is disabled, reset leading flag after delay
+	elseif resolvedOptions.leading then
+		fn = function(currentCallId: number)
+			if callId == currentCallId then
+				isLeadingCalled = false
+			end
+		end
 	end
 
-	local delay = math.max(0, wait)
-	local callId = 0
-	local thread: thread? = nil
-	local resetThread: thread? = nil
-	local isLeadingCalled = false
-
 	return function(...)
-		local args = table.pack(...)
 		callId += 1
 		local currentCallId = callId
-		local leading = resolvedOptions.leading
-		local trailing = resolvedOptions.trailing
-		local shouldCallLeading = leading and not isLeadingCalled
+		local shouldCallLeading = resolvedOptions.leading and not isLeadingCalled
 
 		-- Clear existing timeout
-		if thread then
-			task.cancel(thread)
-			thread = nil
-		end
-		if resetThread then
-			task.cancel(resetThread)
-			resetThread = nil
+		if scheduledThread then
+			task.cancel(scheduledThread)
+			scheduledThread = nil
 		end
 
 		-- Call leading if this is the first call and leading is enabled
 		if shouldCallLeading then
 			isLeadingCalled = true;
-			(func :: AnyVoidFunction)(table.unpack(args, 1, args.n))
+			(func :: AnyVoidFunction)(...)
 		end
 
 		-- Set up trailing call if enabled
-		if trailing then
-			thread = task.delay(delay, function()
-				if callId == currentCallId then
-					-- Reset leading flag for next cycle
-					isLeadingCalled = false
-					-- Only call if this wasn't already called by leading
-					if not shouldCallLeading then
-						(func :: AnyVoidFunction)(table.unpack(args, 1, args.n))
-					end
-				end
-			end)
-		else
-			-- If trailing is disabled, reset leading flag after delay
-			if leading then
-				resetThread = task.delay(delay, function()
-					if callId == currentCallId then
-						isLeadingCalled = false
-					end
-				end)
-			end
-		end
+		scheduledThread = task.delay(wait, fn, currentCallId, shouldCallLeading, ...)
 	end :: Debounced<T>
 end
 

@@ -5,11 +5,22 @@ local it = JestGlobals.it
 local describe = JestGlobals.describe
 local expect = JestGlobals.expect
 local jest = JestGlobals.jest
+local beforeEach = JestGlobals.beforeEach
+local afterEach = JestGlobals.afterEach
 
 local Dash = require(Packages.Dash)
 local throttle = Dash.throttle
 
 describe("throttle", function()
+	beforeEach(function()
+		jest.useFakeTimers()
+		jest.setEngineFrameTime(1000 / 60)
+	end)
+
+	afterEach(function()
+		jest.useRealTimers()
+	end)
+
 	it("should call the function immediately on first invocation", function()
 		local mock = jest.fn()
 		local throttledFn = throttle(function(...)
@@ -32,9 +43,9 @@ describe("throttle", function()
 		throttledFn()
 		throttledFn()
 		throttledFn()
-		task.delay(0.1, throttledFn)
-		task.delay(0.1, throttledFn)
-		task.delay(0.1, throttledFn)
+		throttledFn()
+		throttledFn()
+		throttledFn()
 		expect(mock).toHaveBeenCalledTimes(1)
 	end)
 
@@ -47,7 +58,7 @@ describe("throttle", function()
 		throttledFn()
 		expect(mock).toHaveBeenCalledTimes(1)
 
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		throttledFn()
 		expect(mock).toHaveBeenCalledTimes(2)
 	end)
@@ -64,7 +75,7 @@ describe("throttle", function()
 		throttledFn("Ignored", "Call")
 		throttledFn("Last", "Call")
 
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledWith("Last", "Call")
 		expect(mock).toHaveBeenCalledTimes(2)
 	end)
@@ -82,7 +93,7 @@ describe("throttle", function()
 		throttledFn()
 		throttledFn()
 
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledTimes(2)
 	end)
 
@@ -93,7 +104,7 @@ describe("throttle", function()
 		throttledFn()
 		expect(mock).toHaveBeenCalledTimes(1)
 
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 
 		throttledFn()
 		expect(mock).toHaveBeenCalledTimes(2)
@@ -134,7 +145,7 @@ describe("throttle", function()
 		throttledFn("b")
 		throttledFn("c")
 		-- After the window, only one call with latest args
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledTimes(1)
 		expect(mock).toHaveBeenLastCalledWith("c")
 	end)
@@ -157,7 +168,7 @@ describe("throttle", function()
 		-- Burst within the window should not schedule trailing
 		throttledFn("y")
 		throttledFn("z")
-		task.wait(0.15)
+		jest.advanceTimersByTime(150)
 		expect(mock).toHaveBeenCalledTimes(1)
 	end)
 
@@ -169,7 +180,7 @@ describe("throttle", function()
 
 		throttledFn("a", nil, "c")
 		-- Ensure trailing fires
-		task.wait(0.07)
+		jest.advanceTimersByTime(70)
 		expect(mock).toHaveBeenCalledTimes(1)
 		expect(mock).toHaveBeenCalledWith("a", nil, "c")
 	end)
