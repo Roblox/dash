@@ -54,7 +54,7 @@ local function throttle<T>(func: T & AnyVoidFunction, wait: number, options: Thr
 
 	local lastExecutionTime = -math.huge
 	local scheduledThread: thread? = nil
-	local lastArgs: { unknown }? = nil
+	local lastArgs: { unknown } = {}
 
 	local function clearScheduled()
 		if scheduledThread then
