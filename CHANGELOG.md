@@ -1,3 +1,7 @@
+# V3.1.1
+
+- Added any parameter to the `noop` function
+
 ## V3.0.0
 
 - Fixed exports to preserve types
