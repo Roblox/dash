@@ -5,6 +5,6 @@
 
 	@return Always returns `nil`.
 ]=]
-local function noop() end
+local function noop(...: any) end
 
 return noop
