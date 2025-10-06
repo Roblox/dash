@@ -43,6 +43,7 @@ local Dash = {
 	iterable = require(script.iterable),
 	iterator = require(script.iterator),
 	join = require(script.join),
+	joinArray = require(script.joinArray),
 	joinDeep = require(script.joinDeep),
 	keyBy = require(script.keyBy),
 	keys = require(script.keys),
