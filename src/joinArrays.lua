@@ -7,7 +7,7 @@ local Types = require(Dash.Types)
 	@param ... Any number of arrays to join.
 	@return A new array containing the joined elements.
 ]=]
-local function joinArray(...: {}?): Types.Table
+local function joinArrays(...: {}?): Types.Table
 	local arrays = { ... }
 	local joinedArray = {}
 	for _, array in arrays do
@@ -18,4 +18,4 @@ local function joinArray(...: {}?): Types.Table
 	return joinedArray
 end
 
-return joinArray
+return joinArrays

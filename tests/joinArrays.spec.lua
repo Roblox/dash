@@ -5,11 +5,11 @@ local it = JestGlobals.it
 local expect = JestGlobals.expect
 
 local Dash = require(Packages.Dash)
-local joinArray = Dash.joinArray
+local joinArrays = Dash.joinArrays
 
 describe("join", function()
 	it("should join arrays together", function()
-		expect(joinArray({ "cherry" }, { "apple" }, { "banana", "durian" } :: { unknown })).toEqual({
+		expect(joinArrays({ "cherry" }, { "apple" }, { "banana", "durian" })).toEqual({
 			"cherry",
 			"apple",
 			"banana",
@@ -18,7 +18,7 @@ describe("join", function()
 	end)
 
 	it("should skip nil arguments", function()
-		expect(joinArray({ "apple", "banana" }, nil, nil, { "cherry" })).toEqual({
+		expect(joinArrays({ "apple", "banana" }, nil, nil, { "cherry" })).toEqual({
 			"apple",
 			"banana",
 			"cherry",
@@ -27,7 +27,7 @@ describe("join", function()
 
 	it("should not mutate the original input", function()
 		local input = { "apple", "banana" }
-		expect(joinArray(input, { "cherry" }, { "durian" })).toEqual({
+		expect(joinArrays(input, { "cherry" }, { "durian" })).toEqual({
 			"apple",
 			"banana",
 			"cherry",
