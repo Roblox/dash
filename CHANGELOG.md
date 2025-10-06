@@ -1,4 +1,8 @@
-# V3.1.1
+# V3.2.0
+
+- Added `Dash.joinArrays` to join multiple array-based tables together immutably
+
+## V3.1.1
 
 - Added any parameter to the `noop` function
 
