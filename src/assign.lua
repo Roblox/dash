@@ -51,23 +51,38 @@ local forEachArgs = require(Dash.forEachArgs)
 		}
 	```
 ]=]
-local function assign(target: {}, ...: {}?): Types.Table
-	-- Iterate through the varags in order
-	forEachArgs(function(input: {}?)
-		-- Ignore items which are not defined
-		if input == nil or input == None then
-			return
+
+local function merge(a: {}, b: {}?)
+	if b == nil or b == None then
+		return
+	end
+
+	for key, value in b do
+		if value == None then
+			a[key] = nil
 		else
-			-- Iterate through each key of the input and assign to target at the same key
-			forEach(input, function(value, key)
-				if value == None then
-					target[key] = nil
-				else
-					target[key] = value
-				end
-			end)
+			a[key] = value
 		end
-	end, ...)
+	end
+end
+
+local function assign(target: {}, dict1: {}?, ...: {}?): Types.Table
+	if dict1 ~= nil and dict1 ~= None then
+		merge(target, dict1)
+	end
+
+	local tupleSize = select("#", ...)
+	if tupleSize <= 1 then
+		return target
+	end
+
+	for index = 1, tupleSize do
+		local dict = select(index, ...)
+		if dict and dict ~= None then
+			merge(target, dict)
+		end
+	end
+
 	return target
 end
 

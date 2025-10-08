@@ -21,13 +21,38 @@ local DICT_C = {
 
 local BENCHMARK_ITERATIONS = 10_000
 
-benchmark("Dash.join", BENCHMARK_ITERATIONS, function(targetTable)
+benchmark("Dash.join - 2 dictionaries", BENCHMARK_ITERATIONS, function(targetTable)
+	Dash.join(targetTable, DICT_A)
+end, function()
+	return {}
+end)
+
+benchmark("Cryo.Dictionary.union - 2 dictionaries", BENCHMARK_ITERATIONS, function(targetTable)
+	Cryo.Dictionary.union(targetTable, DICT_A)
+end, function()
+	return {}
+end)
+
+benchmark("Dash.join - 3 dictionaries", BENCHMARK_ITERATIONS, function(targetTable)
+	Dash.join(targetTable, DICT_A, DICT_B)
+end, function()
+	return {}
+end)
+
+benchmark("Cryo.Dictionary.union - 3 dictionaries", BENCHMARK_ITERATIONS, function(targetTable)
+	Cryo.Dictionary.union(targetTable, DICT_A)
+	Cryo.Dictionary.union(targetTable, DICT_B)
+end, function()
+	return {}
+end)
+
+benchmark("Dash.join - 4 dictionaries", BENCHMARK_ITERATIONS, function(targetTable)
 	Dash.join(targetTable, DICT_A, DICT_B, DICT_C)
 end, function()
 	return {}
 end)
 
-benchmark("Cryo.Dictionary.union", BENCHMARK_ITERATIONS, function(targetTable)
+benchmark("Cryo.Dictionary.union - 4 dictionaries", BENCHMARK_ITERATIONS, function(targetTable)
 	Cryo.Dictionary.union(targetTable, DICT_A)
 	Cryo.Dictionary.union(targetTable, DICT_B)
 	Cryo.Dictionary.union(targetTable, DICT_C)
