@@ -1,5 +1,6 @@
 local Packages = game:GetService("ReplicatedStorage").Packages
 local Dash = require(Packages.Dash)
+local Cryo = require(Packages.Dev.Cryo)
 local benchmark = require(script.Parent.benchmark)
 
 local DICT_A = {
@@ -18,6 +19,12 @@ local DICT_C = {
 	durian = 1000,
 }
 
-benchmark("join", 1000, function()
+local BENCHMARK_ITERATIONS = 10_000
+
+benchmark("Cryo.Dictionary.union", BENCHMARK_ITERATIONS, function()
+	Cryo.Dictionary.union(DICT_A, DICT_B, DICT_C)
+end)
+
+benchmark("Dash.join", BENCHMARK_ITERATIONS, function()
 	Dash.join(DICT_A, DICT_B, DICT_C)
 end)
