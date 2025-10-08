@@ -21,10 +21,16 @@ local DICT_C = {
 
 local BENCHMARK_ITERATIONS = 10_000
 
-benchmark("Cryo.Dictionary.union", BENCHMARK_ITERATIONS, function()
-	Cryo.Dictionary.union(DICT_A, DICT_B, DICT_C)
+benchmark("Dash.join", BENCHMARK_ITERATIONS, function(targetTable)
+	Dash.join(targetTable, DICT_A, DICT_B, DICT_C)
+end, function()
+	return {}
 end)
 
-benchmark("Dash.join", BENCHMARK_ITERATIONS, function()
-	Dash.join(DICT_A, DICT_B, DICT_C)
+benchmark("Cryo.Dictionary.union", BENCHMARK_ITERATIONS, function(targetTable)
+	Cryo.Dictionary.union(targetTable, DICT_A)
+	Cryo.Dictionary.union(targetTable, DICT_B)
+	Cryo.Dictionary.union(targetTable, DICT_C)
+end, function()
+	return {}
 end)
