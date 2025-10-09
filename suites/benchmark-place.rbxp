@@ -1,7 +1,7 @@
 {
 	"fileVersion": 1,
 	"instanceHierarchy": {
-		"name": "Dash Test Place",
+		"name": "Dash Benchmark Place",
 		"tree": {
 			"$className": "DataModel",
 			"ReplicatedStorage": {
@@ -11,10 +11,10 @@
 					"Dash": {
 						"$path": "../src",
 						"jest.config": {
-							"$path": "jest-test.config.lua"
+							"$path": "jest-bench.config.lua"
 						},
 						"Tests": {
-							"$path": "../tests"
+							"$path": "../benchmark"
 						}
 					}
 				}

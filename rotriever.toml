@@ -15,3 +15,5 @@ registry_index = true
 [dev_dependencies]
 JestGlobals = "3.8.0"
 Jest = "3.8.0"
+JestBenchmark = "3.11.1"
+Cryo = "1.1.0"
