@@ -988,7 +988,7 @@ The _initial_ value is passed into the first call, and the final value returned 
 **Examples**
 
 ```luau
--- Count occurences of each element in array and output a table of counts
+-- Count occurrences of each element in array and output a table of counts
 -- See Dash.frequencies
 Dash.reduce(
 	{"Red", "Black", "Red", "Red", "Black"},
@@ -1583,7 +1583,7 @@ Returns a new read-only view of _object_ which prevents any values from being ch
 **Parameters**
 
 | Name             | Description                                                    |
-| ---------------- | -------------------------------------------------------------- |
+|------------------|----------------------------------------------------------------|
 | `name`           | The name of the object for improved error message readability. |
 | `throwIfMissing` | If `true` then access to a missing key will also throw.        |
 
@@ -1751,7 +1751,7 @@ Output: {
 joinDeep(source: Types.Map<any, any>, delta: Types.Map<any, any>): Types.Map<any, any>
 ```
 
-Creates a shallow clone of the _source_ Map, and copies the values from the _delta_ Map
+Creates a shallow clone of the _source_ Map and copies the values from the _delta_ Map
 by key, like the join utility.
 
 However, if any of the values are tables themselves, the joinDeep function is called
@@ -1859,7 +1859,7 @@ Returns `true` if the first character of _input_ is a lower-case character.
 Throws if the _input_ is not a string or it is the empty string.
 
 Our current version of Lua unfortunately does not support upper or lower-case detection outside
-the english alphabet. This function has been implemented to return the expected result once
+the English alphabet. This function has been implemented to return the expected result once
 this has been corrected.
 
 **Examples**
@@ -1889,7 +1889,7 @@ Returns `true` if the first character of _input_ is an upper-case character.
 Throws if the _input_ is not a string or it is the empty string.
 
 Our current version of Lua unfortunately does not support upper or lower-case detection outside
-the english alphabet. This function has been implemented to return the expected result once
+the English alphabet. This function has been implemented to return the expected result once
 this has been corrected.
 
 **Examples**
@@ -1982,7 +1982,7 @@ followed by a [Table](#table) of the matched delimiters.
 **Example**
 
 ```luau
-local parts, delimeters = Dash.splitOn(
+local parts, delimiters = Dash.splitOn(
 	"The quick brown fox jumps over the lazy dog",
 	" "
 )
@@ -2002,7 +2002,7 @@ Output: {
 }
 ]]
 
-print(delimeters)
+print(delimiters)
 --[[
 {
 	[1] = " ",
@@ -2180,7 +2180,7 @@ chain(("test"):gmatch("t"), ("test"):gmatch("e"))
 ```
 
 Returns a stateful iterator that returns elements from the first iterable until it is exhausted,
-then proceeds to the next iterator, until all the iterators are exhausted.
+then proceeds to the next iterator until all the iterators are exhausted.
 
 <hr>
 
@@ -2279,14 +2279,14 @@ In native Lua, errors can only be string values. At Roblox, we can take advantag
 error objects to provide structured information about problems that occur.
 
 The tags table stores rich information about an error which can be provided when it is
-thrown, and later passed to a logging endpoint.
+thrown and later passed to a logging endpoint.
 
 Throwing an error instance captures its stack trace, avoiding the need to explicitly use xpcall.
 
 **Fields**
 
 | Name              | Description                                                                          |
-| ----------------- | ------------------------------------------------------------------------------------ |
+|-------------------|--------------------------------------------------------------------------------------|
 | `name: string`    | The name of the error                                                                |
 | `message: string` | A message which will be formatted with [Dash.format](#format) if the error is thrown |
 | `tags: Table`     | A table to store custom rich information about the error                             |
@@ -2295,14 +2295,14 @@ Throwing an error instance captures its stack trace, avoiding the need to explic
 **Methods**
 
 | Name                      | Description                                                                                                                                                                 |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `:joinTags(tags: Table?)` | Return a new error instance containing the tags provided joined to any existing tags of the current error instance.                                                         |
 | `:throw(tags: Table?)`    | Throw an error.<br><br>The stack of the error is captured and stored.<br><br>If tags are provided, a new error is created and thrown with the joined tags of this instance. |
 
 **Static Methods**
 
 | Name                                                | Description                                      |
-| --------------------------------------------------- | ------------------------------------------------ |
+|-----------------------------------------------------|--------------------------------------------------|
 | `.new(name: string, message: string, tags: Table?)` | Returns a new `Error` instance                   |
 | `.is(other: any)`                                   | Returns `true` if _other_ is an `Error` instance |
 
@@ -2321,14 +2321,14 @@ In general, errors should not be used during normal control flow.
 Create a symbol with a specified name. Upper snake-case is recommended as the symbol is a
 constant, unless you are linking the symbol conceptually to a different string.
 
-Symbols are useful when you want a value that isn't equal to any other type, for example if you
+Symbols are useful when you want a value that isn't equal to any other type, for example, if you
 want to store a unique property on an object that won't be accidentally accessed with a simple
 string lookup.
 
 **Static Methods**
 
 | Name                 | Description                                               |
-| -------------------- | --------------------------------------------------------- |
+|----------------------|-----------------------------------------------------------|
 | `.new(name: string)` | Returns a new unique `Symbol` instance with called _name_ |
 | `.is(other: any)`    | Returns `true` if _other_ is a `Symbol` instance          |
 
@@ -2356,7 +2356,7 @@ plain table which will be turned into an instance of _Class_ from a call to `Cla
 **Instance Methods**
 
 | Name                          | Description                                                               |
-| ----------------------------- | ------------------------------------------------------------------------- |
+|-------------------------------|---------------------------------------------------------------------------|
 | `:toString(): string`         | Returns a string representation of the class                              |
 | `:equals(other: any):boolean` | Returns `true` if the instance is equal to _other_                        |
 | `:_init()`                    | A private function which is called once the instance has been initialized |
@@ -2364,7 +2364,7 @@ plain table which will be turned into an instance of _Class_ from a call to `Cla
 **Static Methods**
 
 | Name                               | Description                                           |
-| ---------------------------------- | ----------------------------------------------------- |
+|------------------------------------|-------------------------------------------------------|
 | `.new(...): Table`                 | Returns a new instance of the class                   |
 | `.isInstance(value: any): boolean` | Returns `true` if _value_ is an instance of the class |
 
@@ -2440,7 +2440,7 @@ assertEqual(left: any, right: any, formattedErrorMessage: string?): ()
 
 Performs a simple equality check and throws an error if _left_ is not equal to _right_.
 
-The formatted error message can be customized, which by default provides a serialization of
+The formatted error message can be customized, which by default provides serialization of
 both inputs using [Dash.pretty](#pretty).
 
 The `left` and `right` values are available to be referenced in the formatted message.
@@ -2464,7 +2464,7 @@ Operates on cyclic structures, and returns a Cycles object for a given _value_ b
 **Cycles**
 
 | Name      | Type                 | Description                                         |
-| --------- | -------------------- | --------------------------------------------------- |
+|-----------|----------------------|-----------------------------------------------------|
 | `omit`    | `{ any }`            | An array of keys which should not be visited        |
 | `visited` | `Set<Table>`         | A set of tables which were visited recursively      |
 | `refs`    | `Map<Table, number>` | A map from table to unique index in visit order     |
@@ -2567,7 +2567,7 @@ Optionally use an indented multiline string, limit the depth of tables, omit or 
 **PrettyOptions**
 
 | Name        | Type          | Description                                                                                 |
-| ----------- | ------------- | ------------------------------------------------------------------------------------------- |
+|-------------|---------------|---------------------------------------------------------------------------------------------|
 | `depth`     | `number?`     | The maximum depth of ancestors of a table to display                                        |
 | `omit`      | `{ any }?`    | An array of keys which should not be visited                                                |
 | `multiline` | `boolean?`    | Whether to use multiple lines (default = false)                                             |
