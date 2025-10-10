@@ -1182,6 +1182,10 @@ Output: {
 ]]
 ```
 
+**See**
+
+- [Dash.joinArrays](#joinarrays) for an immutable alternative
+
 <hr>
 
 ### findIndex
@@ -1738,6 +1742,36 @@ Output: {
 **See**
 
 - [Dash.assign](#assign) for a mutable alternative
+
+<hr>
+
+### joinArrays
+
+<span class="tags">
+	[Arrays](#arrays)
+</span>
+
+```lua
+joinArray(...: {}?): { [any]: any }
+```
+
+Output a new array table from merging all the given array tables in left-to-right order.
+
+**Example**
+```luau
+Dash.join(
+	{ "Hello World!", "Sky Blue" },
+	{ "Greetings!", "Indigo"}
+)
+
+--[[
+Output: { "Hello World!", "Sky Blue", "Greetings!", "Indigo" }
+]]
+```
+
+**See**
+
+- [Dash.append](#append) for a mutable alternative
 
 <hr>
 
