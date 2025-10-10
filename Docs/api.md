@@ -707,7 +707,7 @@ the values with new ones returned from the handler.
 
 Values returned by _handler_ must be defined.
 
-**Example**
+**Examples**
 ```luau
 -- Map characters to their ASCII
 Dash.map({"a", "b", "c"}, function(char) return string.byte(char) end)
@@ -719,7 +719,9 @@ Output: {
 	[3] = 99
 }
 ]]
+```
 
+```luau
 -- Map values using their keys
 Dash.map({ a = 1, b = 2, c = 3 }, function(value: number, key: string) return string.byte(key) + value end)
 
