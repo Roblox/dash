@@ -33,4 +33,19 @@ describe("map", function()
 			d = "d=50",
 		})
 	end)
+
+	it("should remove nil elements when creating a new map", function()
+		local input = { a = 10, b = 20, c = 30, d = 50 }
+		local output = map(input, function(value: number, key: string)
+			if key == "c" then
+				return nil
+			end
+			return key .. "=" .. value
+		end)
+		expect(output).toEqual({
+			a = "a=10",
+			b = "b=20",
+			d = "d=50",
+		})
+	end)
 end)

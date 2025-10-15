@@ -10,7 +10,8 @@ export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 	For an array input, the elements are visited in order 1..n.
 	For a Map input, the elements are visited in an arbitrary order.
 
-	Values returned by _handler_ must be defined.
+	If a nil value is returned from the handler, the associated key is _not_ added
+	to the new table.
 
 	@param input The table to iterate over.
 	@param handler Function called as `(value, key)` for each entry.
@@ -21,8 +22,9 @@ local function map(input: {}, handler: MapHandler<any, any, any>): Types.Table
 	local result = {}
 	for key, child in input do
 		local value = handler(child, key)
-		assertEqual(value == nil, false, [[Returned nil from a Dash.map handler]])
-		result[key] = value
+		if value ~= nil then
+			result[key] = value
+		end
 	end
 	return result
 end
