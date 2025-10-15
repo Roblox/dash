@@ -1,6 +1,5 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
-local assertEqual = require(Dash.assertEqual)
 
 export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 
