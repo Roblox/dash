@@ -1,5 +1,6 @@
 local Dash = script.Parent
 local Types = require(Dash.Types)
+local assertEqual = require(Dash.assertEqual)
 
 export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 
@@ -12,19 +13,19 @@ export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 	If a nil value is returned from the handler, the associated key is _not_ added
 	to the new table.
 
+	Values returned by _handler_ must be defined.
+
 	@param input The table to iterate over.
 	@param handler Function called as `(value, key)` for each entry.
 	@return A new table with the same keys but values replaced by handler results.
-	@see `Dash.collectArray` if you want to end up with a contiguous array and return
-	nil values
+	@see `Dash.collectArray` if you want to return nil values.
 ]=]
 local function map(input: {}, handler: MapHandler<any, any, any>): Types.Table
 	local result = {}
 	for key, child in input do
 		local value = handler(child, key)
-		if value ~= nil then
-			result[key] = value
-		end
+		assertEqual(value == nil, false, [[Returned nil from a Dash.map handler]])
+		result[key] = value
 	end
 	return result
 end
