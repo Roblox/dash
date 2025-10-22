@@ -10,9 +10,6 @@ export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 	For an array input, the elements are visited in order 1..n.
 	For a Map input, the elements are visited in an arbitrary order.
 
-	If a nil value is returned from the handler, the associated key is _not_ added
-	to the new table.
-
 	Values returned by _handler_ must be defined.
 
 	@param input The table to iterate over.
