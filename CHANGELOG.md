@@ -1,4 +1,8 @@
-# V3.2.0
+## V3.3.0
+
+- Added `Dash.union` to merge two dictionaries together immutably
+
+## V3.2.0
 
 - Added `Dash.joinArrays` to join multiple array-based tables together immutably
 
