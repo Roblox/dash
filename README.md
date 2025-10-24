@@ -23,5 +23,17 @@ local Dash = require(Packages.Dash)
 local map = Dash.map
 ```
 
+## Testing
+
+To run tests:
+
+`lest -e tests`
+
+## Benchmarking
+
+To run benchmarks:
+
+`lest -e benchmarks`
+
 ## License
 Dash is available under the MIT license. See [LICENSE](LICENSE.txt) for details.
