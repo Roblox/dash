@@ -36,7 +36,7 @@ source = "registry"
 
 [[package]]
 name = "Dash"
-version = "3.2.0"
+version = "3.3.1"
 dependencies = [
     "Cryo Cryo 1.1.0 registry",
     "Jest Jest 3.13.1 registry",
