@@ -1,3 +1,7 @@
+# V3.3.1
+
+- Fixes an issue with static type checking
+
 ## V3.3.0
 
 - Added `Dash.union` to merge two dictionaries together immutably
