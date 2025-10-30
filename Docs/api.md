@@ -1144,6 +1144,32 @@ Output: true
 
 <hr>
 
+### union
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```
+union(map1: T, map2: U): T & U
+```
+
+Returns a new Table by merging all keys in the two Tables in left-to-right order.
+
+The `Dash.None` symbol can be used to remove existing elements.
+
+**Example**
+
+```luau
+union({ a = 1, b = 2 }, { c = 3, d = 4 })
+
+--[[
+Output: { a = 1, b = 2, c = 3, d = 4 }
+]]
+```
+
+<hr>
+
 ### values
 
 <span class="tags">
@@ -1889,6 +1915,47 @@ Output: {
 		}
 	},
 	name = "bike"
+}
+]]
+```
+
+<hr>
+
+### mapNotNil
+
+<span class="tags">
+	[Maps](#maps)
+</span>
+
+```lua
+type MapHandler<Key, Value> = (Value, Key) -> boolean
+
+mapNotNil(input: {}, handler: MapHandler<any, any, any>): Types.Table
+```
+
+Returns a new table by applying the _handler_ to each element of _input_.
+
+If a nil value is returned from the handler, the associated key is _not_ added
+to the new table.
+
+It's useful when you already have a function returning nil for values you do not want to include.
+Otherwise, it's better to use [Dash.collect](#collect) and [Dash.collectArray](#collectArray)
+
+**Example**
+
+```luau
+local output = mapNotNil({ a = 10, b = 20, c = 30, d = 50 }, function(value: number, key: string)
+    if key == "c" then
+        return nil
+    end
+    return key .. "=" .. value
+end)
+
+--[[
+Output: {
+    a = "a=10",
+    b = "b=20",
+    d = "d=50",
 }
 ]]
 ```
