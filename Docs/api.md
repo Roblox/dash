@@ -1939,7 +1939,7 @@ If a nil value is returned from the handler, the associated key is _not_ added
 to the new table.
 
 It's useful when you already have a function returning nil for values you do not want to include.
-Otherwise, it's better to use [Dash.collect](#collect) and [Dash.collectArray](#collectArray)
+Otherwise, it's better to use [Dash.collect](#collect) and [Dash.collectArray](#collectarray)
 
 **Example**
 
@@ -1959,6 +1959,11 @@ Output: {
 }
 ]]
 ```
+
+**See**
+
+- [Dash.collect](#collect) - for mapping and collecting values you need into a new table
+- [Dash.collectArray](#collectarray) - for mapping and collecting values you need into a new array
 
 <hr>
 
