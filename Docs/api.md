@@ -1,13 +1,11 @@
 # API Reference
 
-**Disclaimer**: These are not the official docs and the new functions are not available for use. It would be nice if someone helped me add them though.
-
 ## Types
 
 ### Map
 
-```lua
-Map<Key, Value> = {[Key]: Value}
+```luau
+type Map<Key, Value> = {[Key]: Value}
 ```
 
 A table with keys of type _Key_ and values of type _Value_
@@ -16,7 +14,7 @@ A table with keys of type _Key_ and values of type _Value_
 
 ### Set
 
-```lua
+```luau
 type Set<Key> = {[Key]: boolean}
 ```
 
@@ -26,7 +24,7 @@ A table with keys of a fixed type _Key_ and a boolean value representing members
 
 ### Table
 
-```lua
+```luau
 type Table = {[any]: any}
 ```
 
@@ -36,10 +34,9 @@ A table of any type
 
 ### Class
 
-```lua
+```luau
 type Class<Object> = {
-
-new: () -> Object
+    new: () -> Object
 }
 ```
 
@@ -49,14 +46,17 @@ A class has a constructor returning an instance of _Object_ type
 
 ### Handlers
 
-Some functions such as [filter](#filter) will require handlers. There will be a `Key` and `Value` type to denote whether the key or value argument is passed first, but they are both `any` type unless otherwise specified.
+Some functions such as [filter](#filter) will require handlers. There will be a `Key` and `Value` type to denote whether
+the key or value argument is passed first, but they are both `any` type unless otherwise specified.
 
 <hr>
 
 ### AnyFunction
-```lua
+
+```luau
 type AnyFunction = (...any) -> any
 ```
+
 Represents a function which takes any arguments and returns any value
 
 <hr>
@@ -81,27 +81,29 @@ all(input: types.Table, handler: AllHandler?): boolean
 
 Iterates through all elements of the _input_ [Table](#table).
 
-Calls the _handler_ for each entry and returns `false` if the handler returns falsy for any element which it is called with. Otherwise, all elements were truthy so return `true`.
+Calls the _handler_ for each entry and returns `false` if the handler returns falsy for any element which it is called
+with. Otherwise, all elements were truthy so return `true`.
 
 If the handler is not provided, use the truthiness of the values in the table.
 
 **Examples**
 
-```lua
+```luau
 -- These are the only falsy values in Lua
 Dash.all({nil, false}) --> false
 ```
 
-```lua
+```luau
 Dash.all({true, 0, "0"}) --> true
 ```
 
-```lua
+```luau
 -- Do all words start with 'ro'?
 Dash.all(
-	{"roblox", "roact", "rodux"},
-	function(word) return Dash.startsWith(word, "ro")
-end)
+    {"roblox", "roact", "rodux"},
+    function(word) return Dash.startsWith(word, "ro")
+    end
+)
 --[[
 Output: true
 ]]
@@ -130,10 +132,10 @@ or `nil` if no value should be added.
 
 **Example**
 
-```lua
+```luau
 -- Invert keys and values of a table
 Dash.collect({a = "1", b = "2", c = 3}, function(key, value)
-	return value, key
+    return value, key
 end)
 
 --[[
@@ -167,11 +169,11 @@ if no value should be added.
 
 **Example**
 
-```lua
+```luau
 -- Double all elements, ignoring results that are multiples of three
 Dash.collectArray({1, 2, 3, 4, 5, 6}, function(key, value)
-	local newValue = value * 2
-	return if newValue % 3 == 0 then nil else newValue
+    local newValue = value * 2
+    return if newValue % 3 == 0 then nil else newValue
 end)
 
 --[[
@@ -209,7 +211,8 @@ If _handler_ is not provided, values of `input` are used as elements.
 <hr>
 
 **Examples**
-```lua
+
+```luau
 -- Convert array to Set
 Dash.collectSet({"toast", "bagel", "donut"})
 
@@ -222,10 +225,10 @@ Output: {
 ]]
 ```
 
-```lua
+```luau
 -- Create set of first letters of each word
 Dash.collectSet({"toast", "bagel", "donut", "bread"}, function(key, value)
-	return value:sub(1, 1)
+    return value:sub(1, 1)
 end)
 
 --[[
@@ -251,7 +254,7 @@ Returns a shallow copy of the _input_ Table.
 
 **Example**
 
-```lua
+```luau
 Dash.copy({a = 1, b = 3})
 
 --[[
@@ -261,6 +264,7 @@ Output: {
 }
 ]]
 ```
+
 <hr>
 
 ### count
@@ -277,32 +281,33 @@ count<Key, Value>(input: { [Key]: Value }, handler: CountHandler<Key, Value>?): 
 
 If no _handler_ is provided, return the number of elements in the _input_ [Table](#table).
 
-If the _handler_ is provided, increase the count for each element for which the handler returns true on the `(value, key)` pair.
+If the _handler_ is provided, increase the count for each element for which the handler returns true on the
+`(value, key)` pair.
 
 **Examples**
 
-```lua
+```luau
 Dash.count({1, 2, 3, 4, 5}) --> 5
 ```
 
-```lua
+```luau
 -- Count the number of ids that start with 1
 Dash.count(
-	{[12] = true, [24] = true, [153] = true, [199] = true},
-	function(value, id) return tostring(id):sub(1, 1) == "1"
-end)
+    {[12] = true, [24] = true, [153] = true, [199] = true},
+    function(value, id) return tostring(id):sub(1, 1) == "1"
+    end)
 
 --[[
 Output: 3
 ]]
 ```
 
-```lua
+```luau
 -- Count the number of numbers divisible by 5
 Dash.count(
-	{1, 1, 2, 3, 5, 8, 13, 21, 34, 55},
-	function(num) return num % 5 == 0
-end)
+    {1, 1, 2, 3, 5, 8, 13, 21, 34, 55},
+    function(num) return num % 5 == 0
+    end)
 
 --[[
 Output: 2
@@ -331,12 +336,12 @@ The handler should return truthy to preserve the value in the resulting Table.
 
 **Example**
 
-```lua
+```luau
 -- Take only the elements whose values begin with "r"
 Dash.filter(
-	{place = "roblox", packages = "rotriever", ide = "studio"},
-	function(word) return Dash.startsWith(word, "r")
-end)
+    {place = "roblox", packages = "rotriever", ide = "studio"},
+    function(word) return Dash.startsWith(word, "r")
+    end)
 
 --[[
 Output: {
@@ -370,11 +375,12 @@ For a Map, an arbitrary matching element is returned if it exists.
 
 **Examples**
 
-```lua
+```luau
 -- Check if there's the "ExtraSettings" key and get the value of that key if so
 Dash.find(
-	{Id = 145, IsReady = false, ExtraSettings = {AutoReady = true}},
-	function(value, key) return key == "ExtraSettings" end
+    {Id = 145, IsReady = false, ExtraSettings = {AutoReady = true}},
+    function(value, key) return key == "ExtraSettings"
+    end
 )
 
 --[[
@@ -385,7 +391,8 @@ Output: {
 
 
 Dash.find({Id = 145, IsReady = false},
-	function(value, key) return key == "ExtraSettings" end
+    function(value, key) return key == "ExtraSettings"
+    end
 )
 --[[
 Output: nil
@@ -416,14 +423,28 @@ If the table is a Map, the keys are visited in an arbitrary order.
 Calls the _handler_ for each entry.
 
 **Example**
-```lua
--- Print all values of table
-Dash.forEach({"Item 1", "Item 2", "Item 3"}, function(value) print(value) end)
+
+```luau
+-- Print all values of a table
+Dash.forEach({"Item 1", "Item 2", "Item 3" }, function(value) print(value)
+end)
 
 --[[
 Output: Item 1
 Item 2
 Item 3
+]]
+```
+
+```luau
+-- Print all values joined with keys
+Dash.forEach({ a = "Item", b = "Item", c = "Item" }, function(value: string, key: string) print(value .. key)
+end)
+
+--[[
+Output: Item a
+Item b
+Item c
 ]]
 ```
 
@@ -444,13 +465,15 @@ frequencies<Key, Value, NewKey>(
 ): { [NewKey | Value]: number }
 ```
 
-If no handler is provided, returns a [Map](#map) with keys as unique values of the _input_ [Table](#table) and values as the count of each value.
+If no handler is provided, returns a [Map](#map) with keys as unique values of the _input_ [Table](#table) and values as
+the count of each value.
 
-If a handler is provided, returns a [Map](#map) with keys as unique elements given by the _handler_ and values as the count of each mapped key.
+If a handler is provided, returns a [Map](#map) with keys as unique elements given by the _handler_ and values as the
+count of each mapped key.
 
 **Examples**
 
-```lua
+```luau
 Dash.frequencies({"Red", "Black", "Orange", "Red"})
 
 --[[
@@ -462,17 +485,17 @@ Output:{
 ]]
 ```
 
-```lua
--- Count colors by simple definition of neutral and non-neutral
+```luau
+-- Count colors by a simple definition of neutral and non-neutral
 function toNeutral(color)
-	return if Dash.includes({"Black", "Gray", "White"}, color)
-		then "Neutral"
-		else "Non-neutral"
+    return if Dash.includes({"Black", "Gray", "White"}, color)
+        then "Neutral"
+        else "Non-neutral"
 end
 Dash.frequencies(
-	{"Black", "Orange", "Blue", "Gray", "White"},
-	function(color) return toNeutral(color)
-end)
+    {"Black", "Orange", "Blue", "Gray", "White"},
+    function(color) return toNeutral(color)
+    end)
 
 --[[
 Output: {
@@ -510,23 +533,23 @@ is used directly as the key itself.
 
 **Example**
 
-```lua
+```luau
 local output = groupBy({
-	bike = {
-		name = "bike",
-		color = "blue"
-	},
-	car = {
-		name = "car",
-		color = "red"
-	},
-	van = {
-		name = "van",
-		color = "white"
-	},
-	ghost = {
-		name = "ghost"
-	}
+    bike = {
+        name = "bike",
+        color = "blue"
+    },
+    car = {
+        name = "car",
+        color = "red"
+    },
+    van = {
+        name = "van",
+        color = "white"
+    },
+    ghost = {
+        name = "ghost"
+    }
 }, "color")
 --[[
 Output: {
@@ -567,7 +590,8 @@ includes(source: Types.Table, value: any): boolean
 Returns _true_ if the _item_ exists as a value in the _source_ [Table](#table).
 
 **Example**
-```lua
+
+```luau
 -- Does the table include 100?
 Dash.includes({1, 10, 100, 1000}, 100)
 
@@ -602,25 +626,26 @@ is used directly as the key itself.
 
 **Example**
 
-```lua
+```luau
 local output = keyBy({
-	bike = {
-		name = "bike",
-		color = "blue"
-	},
-	car = {
-		name = "car",
-		color = "red"
-	},
-	van = {
-		name = "van",
-		color = "white"
-	},
-	ghost = {
-		name = "ghost"
-	}
+    bike = {
+        name = "bike",
+        color = "blue"
+    },
+    car = {
+        name = "car",
+        color = "red"
+    },
+    van = {
+        name = "van",
+        color = "white"
+    },
+    ghost = {
+        name = "ghost"
+    }
 }, "color")
-[[
+
+--[[
 Output: {
 	blue = {
 		color = "blue",
@@ -634,7 +659,8 @@ Output: {
 		color = "white",
 		name = "van"
 	}
-}]]
+}
+]]
 ```
 
 <hr>
@@ -656,11 +682,12 @@ If the input is an array, ordering is preserved.
 If the input is a Map, elements are keys in an arbitrary order.
 
 **Example**:
-```lua
+
+```luau
 Dash.keys({
-	Color = "Purple",
-	Type = "Fruit",
-	Shape = "Round"
+    Color = "Purple",
+    Type = "Fruit",
+    Shape = "Round"
 })
 
 --[[
@@ -697,16 +724,32 @@ the values with new ones returned from the handler.
 
 Values returned by _handler_ must be defined.
 
-**Example**
-```lua
+**Examples**
+
+```luau
 -- Map characters to their ASCII
-Dash.map({"a", "b", "c"}, function(char) return string.byte(char) end)
+Dash.map({"a", "b", "c"}, function(char) return string.byte(char)
+end)
 
 --[[
 Output: {
 	[1] = 97,
 	[2] = 98,
 	[3] = 99
+}
+]]
+```
+
+```luau
+-- Map values using their keys
+Dash.map({ a = 1, b = 2, c = 3 }, function(value: number, key: string) return string.byte(key) + value
+end)
+
+--[[
+Output: {
+	a = 98,
+	b = 100,
+	c = 102
 }
 ]]
 ```
@@ -720,7 +763,7 @@ Output: {
 ### mapOne
 
 <span class="tags">
-	[Arrays](#arrays)
+	[Tables](#tables)
 </span>
 
 ```lua
@@ -738,14 +781,14 @@ If _handler_ is `nil`, the first value visited is returned.
 
 **Example**
 
-```lua
+```luau
 -- Get any message that's not hidden and return its id.
 Dash.mapOne({
-	{Id = 1, IsHidden = true},
-	{Id = 3, IsHidden = false},
-	{Id = 2, IsHidden = false},
+    {Id = 1, IsHidden = true},
+    {Id = 3, IsHidden = false},
+    {Id = 2, IsHidden = false},
 }, function(message)
-	return if message.IsHidden then nil else message.Id
+    return if message.IsHidden then nil else message.Id
 end)
 
 --[[
@@ -768,33 +811,38 @@ type MaxHandler = (Value, Key) -> any
 max(input: Types.Table, handler: MaxHandler?, comparator: MaxComparator): any
 ```
 
-Returns the maximum value in the _input_ [Table](#table). By default, this returns the greatest value in the table as defined by the `>` operator.
+Returns the maximum value in the _input_ [Table](#table). By default, this returns the greatest value in the table as
+defined by the `>` operator.
 
-If a _handler_ is provided, elements will first be transformed by `handler(value, key)` before being used for comparison.
+If a _handler_ is provided, elements will first be transformed by `handler(value, key)` before being used for
+comparison.
 
-Elements will be compared using the _comparator_ if it is provided. The comparator should take two elements and return `true` if the first one is greater than the second one, and `false` otherwise.
+Elements will be compared using the _comparator_ if it is provided. The comparator should take two elements and return
+`true` if the first one is greater than the second one, and `false` otherwise.
 
 If the provided _input_ has no elements, return `nil`.
 
 **Examples**
 
-```lua
+```luau
 Dash.max({1, 2, 3}) --> 3
 ```
 
-```lua
+```luau
 Dash.max({"1", "2", "10"}) --> "2"
 ```
 
-```lua
-Dash.max({1, 2, 3}, function(num) return -num end) --> 1
+```luau
+Dash.max({1, 2, 3}, function(num) return -num
+end) --> 1
 ```
 
-```lua
+```luau
 Dash.max(
-	{"blue", "red", "orange"},
-	nil,
-	function(word1, word2) return word1:len() > word2:len() end
+    {"blue", "red", "orange"},
+    nil,
+    function(word1, word2) return word1:len() > word2:len()
+    end
 ) --> "orange"
 ```
 
@@ -813,33 +861,38 @@ type MinHandler = (Value, Key) -> any
 min(input: Types.Table, handler: MinHandler?, comparator: MinComparator): any
 ```
 
-Returns the minimum value in the _input_ [Table](#table). By default, this returns the least value in the table as defined by the `<` operator.
+Returns the minimum value in the _input_ [Table](#table). By default, this returns the least value in the table as
+defined by the `<` operator.
 
-If a _handler_ is provided, elements will first be transformed by `handler(value, key)` before being used for comparison.
+If a _handler_ is provided, elements will first be transformed by `handler(value, key)` before being used for
+comparison.
 
-Elements will be compared using the _comparator_ if it is provided. The comparator should take two elements and return `true` if the first one is less than the second one, and `false` otherwise.
+Elements will be compared using the _comparator_ if it is provided. The comparator should take two elements and return
+`true` if the first one is less than the second one, and `false` otherwise.
 
 If the provided _input_ has no elements, return `nil`.
 
 **Examples**
 
-```lua
+```luau
 Dash.min({1, 2, 3}) --> 1
 ```
 
-```lua
+```luau
 Dash.min({"2", "20", "10"}) --> "10"
 ```
 
-```lua
-Dash.min({3, 2, 1}, function(num) return -num end) --> 3
+```luau
+Dash.min({3, 2, 1}, function(num) return -num
+end) --> 3
 ```
 
-```lua
+```luau
 Dash.min(
-	{"blue", "red", "orange"},
-	nil,
-	function(word1, word2) return word1:len() < word2:len() end
+    {"blue", "red", "orange"},
+    nil,
+    function(word1, word2) return word1:len() < word2:len()
+    end
 ) --> "red"
 ```
 
@@ -863,12 +916,12 @@ If the input is a Map, elements are returned in an arbitrary order.
 
 **Example**
 
-```lua
+```luau
 -- Remove the ShouldShow key/value pair from the table
 Dash.omit({
-	ShouldShow = true,
-	Text = "Hello World!",
-	Title = "Greetings!",
+    ShouldShow = true,
+    Text = "Hello World!",
+    Title = "Greetings!",
 }, {"ShouldShow"})
 
 --[[
@@ -900,10 +953,11 @@ The handler should return truthy to preserve the value in the resulting Table.
 
 **Examples**
 
-```lua
+```luau
 Dash.pick(
-	{10, 20, 30, 40, 50, 60},
-	function(value, _) return value % 20 == 0 end
+    {10, 20, 30, 40, 50, 60},
+    function(value, _) return value % 20 == 0
+    end
 )
 
 --[[
@@ -929,13 +983,13 @@ Functions are executed from left to right.
 
 **Example**
 
-```lua
+```luau
 local function addOne(n)
-	return n + 1
+    return n + 1
 end
 
 local function double(n)
-	return n * 2
+    return n * 2
 end
 
 local addThenDouble = pipe(addOne, double)
@@ -966,19 +1020,19 @@ The _initial_ value is passed into the first call, and the final value returned 
 
 **Examples**
 
-```lua
--- Count occurences of each element in array and output a table of counts
+```luau
+-- Count occurrences of each element in array and output a table of counts
 -- See Dash.frequencies
 Dash.reduce(
-	{"Red", "Black", "Red", "Red", "Black"},
-	function(acc, color)
-		if acc[color] == nil then
-			acc[color] = 1
-		else
-			acc[color] += 1
-		end
-		return acc
-	end, {}
+    {"Red", "Black", "Red", "Red", "Black"},
+    function(acc, color)
+        if acc[color] == nil then
+            acc[color] = 1
+        else
+            acc[color] += 1
+        end
+        return acc
+    end, {}
 )
 
 --[[
@@ -989,14 +1043,14 @@ Output: {
 ]]
 ```
 
-```lua
+```luau
 -- Sum up elements, doubling even indices and halving odd indices
 -- Expected: 0.5 + 4 + 1.5 + 8 + 2.5 = 16.5
 Dash.reduce(
-	{1, 2, 3, 4, 5},
-	function(acc, num, index)
-		return acc + if index % 2 == 0 then num * 2 else num / 2
-	end, 0
+    {1, 2, 3, 4, 5},
+    function(acc, num, index)
+        return acc + if index % 2 == 0 then num * 2 else num / 2
+    end, 0
 )
 --[[
 Output: 16.5
@@ -1020,13 +1074,13 @@ inputs are tables, and all their keys are equal.
 
 **Examples**
 
-```lua
+```luau
 Dash.shallowEqual({
-	A = 1,
-	B = 2
+    A = 1,
+    B = 2
 }, {
-	A = 1,
-	B = 2,
+    A = 1,
+    B = 2,
 })
 
 --[[
@@ -1034,15 +1088,15 @@ Output: true
 ]]
 ```
 
-```lua
+```luau
 Dash.shallowEqual({
-	A = 1,
-	B = 2,
-	C = 3
+    A = 1,
+    B = 2,
+    C = 3
 }, {
-	A = 1,
-	B = 2,
-	D = 3
+    A = 1,
+    B = 2,
+    D = 3
 })
 
 --[[
@@ -1071,19 +1125,46 @@ element which it is called with.
 
 **Example**
 
-```lua
+```luau
 -- Does there exist a red fruit?
 Dash.some(
-	{
-		{Type = "Cherry", Color = "Red"},
-		{Type = "Strawberry", Color = "Red"},
-		{Type = "Blueberry", Color = "Blue"}
-	},
-	function(fruit) return fruit.Color == "Red" end
+    {
+        {Type = "Cherry", Color = "Red"},
+        {Type = "Strawberry", Color = "Red"},
+        {Type = "Blueberry", Color = "Blue"}
+    },
+    function(fruit) return fruit.Color == "Red"
+    end
 )
 
 --[[
 Output: true
+]]
+```
+
+<hr>
+
+### union
+
+<span class="tags">
+	[Tables](#tables)
+</span>
+
+```
+union(map1: T, map2: U): T & U
+```
+
+Returns a new Table by merging all keys in the two Tables in left-to-right order.
+
+The `Dash.None` symbol can be used to remove existing elements.
+
+**Example**
+
+```luau
+union({ a = 1, b = 2 }, { c = 3, d = 4 })
+
+--[[
+Output: { a = 1, b = 2, c = 3, d = 4 }
 ]]
 ```
 
@@ -1106,12 +1187,13 @@ If the input is an array, ordering is preserved.
 If the input is a Map, values are returned in an arbitrary order.
 
 **Example**
-```lua
+
+```luau
 Dash.values({
-	Type = "Cherry",
-	Color = "Red",
-	Price = "Expensive",
-	EnjoymentLevel = "High"
+    Type = "Cherry",
+    Color = "Red",
+    Price = "Expensive",
+    EnjoymentLevel = "High"
 })
 
 --[[
@@ -1147,7 +1229,8 @@ Adds new elements to the _target_ array from subsequent array arguments in left-
 Arguments which are `nil` or None are skipped.
 
 **Example**
-```lua
+
+```luau
 Dash.append({1, 2}, {3, 4}, {5})
 
 --[[
@@ -1160,6 +1243,10 @@ Output: {
 }
 ]]
 ```
+
+**See**
+
+- [Dash.joinArrays](#joinarrays) for an immutable alternative
 
 <hr>
 
@@ -1182,11 +1269,12 @@ Returns nil if no entries satisfy the condition.
 
 **Examples**
 
-```lua
+```luau
 -- Find index of "Clementine" fruit if it exists in the array
 Dash.findIndex(
-	{"Apple", "Banana", "Clementine"},
-	function(fruit) return fruit == "Clementine" end
+    {"Apple", "Banana", "Clementine"},
+    function(fruit) return fruit == "Clementine"
+    end
 )
 
 --[[
@@ -1194,10 +1282,11 @@ Output: 3
 ]]
 ```
 
-```lua
+```luau
 Dash.findIndex(
-	{"Apple", "Banana"},
-	function(fruit) return fruit == "Clementine" end
+    {"Apple", "Banana"},
+    function(fruit) return fruit == "Clementine"
+    end
 )
 
 --[[
@@ -1222,11 +1311,11 @@ Outputs a new array of elements merged from the _input_ array arguments in left-
 
 **Example**
 
-```lua
+```luau
 -- Flatten a partition of numbers in the range 1-5
 Dash.flat({
-	{1, 2, 3},
-	{4, 5}
+    {1, 2, 3},
+    {4, 5}
 })
 
 --[[
@@ -1239,6 +1328,37 @@ Output:  {
 }
 ]]
 ```
+
+<hr>
+
+### joinArrays
+
+<span class="tags">
+	[Arrays](#arrays)
+</span>
+
+```lua
+joinArray(...: {}?): { [any]: any }
+```
+
+Output a new array table from merging all the given array tables in left-to-right order.
+
+**Example**
+
+```luau
+Dash.join(
+    { "Hello World!", "Sky Blue" },
+    { "Greetings!", "Indigo"}
+)
+
+--[[
+Output: { "Hello World!", "Sky Blue", "Greetings!", "Indigo" }
+]]
+```
+
+**See**
+
+- [Dash.append](#append) for a mutable alternative
 
 <hr>
 
@@ -1263,7 +1383,7 @@ If handler is not defined, the function simply returns the last element of the a
 
 **Examples**
 
-```lua
+```luau
 Dash.last({3, 2, 1})
 
 --[[
@@ -1271,9 +1391,10 @@ Output: 1
 ]]
 ```
 
-```lua
+```luau
 -- Get last odd number
-Dash.last({4, 3, 2}, function(num) return num % 2 == 1 end)
+Dash.last({4, 3, 2}, function(num) return num % 2 == 1
+end)
 
 --[[
 Output: 3
@@ -1301,13 +1422,13 @@ If all returned from the _handler_ values are `nil`, `nil` is returned.
 
 **Example**
 
-```lua
+```luau
 -- Get first color that's 6 letters and return its first letter
 Dash.mapFirst(
-	{"Red", "Yellow", "Orange", "Blue"},
-	function(color)
-		return if color:len() == 6 then color:sub(1, 1) else nil
-	end
+    {"Red", "Yellow", "Orange", "Blue"},
+    function(color)
+        return if color:len() == 6 then color:sub(1, 1) else nil
+    end
 )
 
 --[[
@@ -1336,13 +1457,13 @@ If all returned from the _handler_ values are `nil`, `nil` is returned.
 
 **Example**
 
-```lua
+```luau
 -- Get last color that's 6 letters and return its first letter
 Dash.mapLast(
-	{"Red", "Yellow", "Orange", "Blue"},
-	function(color)
-		return if color:len() == 6 then color:sub(1, 1) else nil
-	end
+    {"Red", "Yellow", "Orange", "Blue"},
+    function(color)
+        return if color:len() == 6 then color:sub(1, 1) else nil
+    end
 )
 
 --[[
@@ -1367,7 +1488,8 @@ Multiplies together all the numbers in the _input_ array.
 If the _input_ has no elements, return `1`.
 
 **Example**
-```lua
+
+```luau
 Dash.product({3, 3, 2}) --> 18
 ```
 
@@ -1386,7 +1508,8 @@ reverse<T>(input: { T }): { T }
 Reverse the order of the elements in the _input_ array.
 
 **Example**
-```lua
+
+```luau
 Dash.reverse({3, 2, 1})
 
 --[[
@@ -1422,7 +1545,8 @@ If _right_ is `-n`, the slice ends with the element `n` places from the last one
 An empty array is returned if the slice has no or negative length.
 
 **Examples**
-```lua
+
+```luau
 Dash.slice({1, 2, 3, 4, 5}, 2, 4)
 
 --[[
@@ -1434,7 +1558,7 @@ Output: {
 ]]
 ```
 
-```lua
+```luau
 Dash.slice({1, 2, 3, 4, 5}, 3)
 
 --[[
@@ -1446,7 +1570,7 @@ Output: {
 ]]
 ```
 
-```lua
+```luau
 Dash.slice({1, 2, 3, 4, 5}, nil, -1)
 
 --[[
@@ -1476,7 +1600,8 @@ Adds together all the numbers in the _input_ array.
 If the input array has no elements, return `0`.
 
 **Example**
-```lua
+
+```luau
 Dash.sum({3, 2, 1}) --> 6
 ```
 
@@ -1502,27 +1627,27 @@ Adds new values to _target_ from subsequent [Table](#table) arguments in left-to
 
 **Examples**
 
-```lua
+```luau
 local characters = {
-	Frodo = {
-		name = "Frodo Baggins",
-		team = "blue"
-	},
-	Boromir = {
-		score = 5
-	}
+    Frodo = {
+        name = "Frodo Baggins",
+        team = "blue"
+    },
+    Boromir = {
+        score = 5
+    }
 }
 local otherCharacters = {
-	Frodo = {
-		team = "red",
-		score = 10
-	},
-	Bilbo = {
-		team = "yellow",
-	},
-	Boromir = {
-		score = {1, 2, 3}
-	}
+    Frodo = {
+        team = "red",
+        score = 10
+    },
+    Bilbo = {
+        team = "yellow",
+    },
+    Boromir = {
+        score = {1, 2, 3}
+    }
 }
 local result = assign(characters, otherCharacters)
 print(result) --[[
@@ -1562,20 +1687,21 @@ Returns a new read-only view of _object_ which prevents any values from being ch
 **Parameters**
 
 | Name             | Description                                                    |
-| ---------------- | -------------------------------------------------------------- |
+|------------------|----------------------------------------------------------------|
 | `name`           | The name of the object for improved error message readability. |
 | `throwIfMissing` | If `true` then access to a missing key will also throw.        |
 
 **Notes**
 
-Unfortunately you cannot iterate using `pairs` or `ipairs` on frozen objects because Luau doesn't support defining these custom iterators in metatables.
+Unfortunately you cannot iterate using `pairs` or `ipairs` on frozen objects because Luau doesn't support defining these
+custom iterators in metatables.
 
 **Example**
 
-```lua
+```luau
 local drink = freeze("Ice Cream", {
-	flavor = "mint",
-	topping = "sprinkles"
+    flavor = "mint",
+    topping = "sprinkles"
 }, true)
 print(drink.flavor) --> "mint"
 drink.flavor = "vanilla"
@@ -1602,7 +1728,7 @@ The path should be an array of keys (e.g. `{ "a", "b", "c" }`, `{ "test", "test.
 
 **Examples**
 
-```lua
+```luau
 local object = {
     a = {
         b = {
@@ -1614,7 +1740,7 @@ Dash.get(object, { "a", "b", "c" }) --> 3
 Dash.get(object, { "x", "y", "z" }, "default") --> "default"
 ```
 
-```lua
+```luau
 -- Array indexing
 local object = {
     items = {
@@ -1625,7 +1751,7 @@ local object = {
 Dash.get(object, { "items", 1, "name" }) --> "first"
 ```
 
-```lua
+```luau
 -- Keys with dots
 local object = {
     test = {
@@ -1638,6 +1764,7 @@ Dash.get(object, { "test", "test.test", 0 }) --> "value"
 ```
 
 **See**
+
 - [Dash.getOrSet](#getOrSet) - for getting a value with a default generator function
 
 <hr>
@@ -1660,11 +1787,12 @@ added to the _input_ [Table](#table) and returned.
 
 **Examples**
 
-```lua
+```luau
 Dash.getOrSet(
-	{Item = "Gummy Bear", Color = "Lime"},
-	"Color",
-	function() return "Yellow" end
+    {Item = "Gummy Bear", Color = "Lime"},
+    "Color",
+    function() return "Yellow"
+    end
 )
 
 --[[
@@ -1672,11 +1800,12 @@ Output: Lime
 ]]
 ```
 
-```lua
+```luau
 Dash.getOrSet(
-	{Item = "Gummy Bear"},
-	"Color",
-	function() return "Yellow" end
+    {Item = "Gummy Bear"},
+    "Color",
+    function() return "Yellow"
+    end
 )
 
 --[[
@@ -1699,10 +1828,11 @@ join<Key, Value>(...: Types.Map<Key, Value>): Types.Map<Key, Value>
 Output a new [Map](#map) from merging all the keys in the [Map](#map) arguments in left-to-right order.
 
 **Example**
-```lua
+
+```luau
 Dash.join(
-	{Text = "Hello World!", Color = "Sky Blue"},
-	{Title = "Greetings!", Color = "Indigo"}
+    {Text = "Hello World!", Color = "Sky Blue"},
+    {Title = "Greetings!", Color = "Indigo"}
 )
 
 --[[
@@ -1730,7 +1860,7 @@ Output: {
 joinDeep(source: Types.Map<any, any>, delta: Types.Map<any, any>): Types.Map<any, any>
 ```
 
-Creates a shallow clone of the _source_ Map, and copies the values from the _delta_ Map
+Creates a shallow clone of the _source_ Map and copies the values from the _delta_ Map
 by key, like the join utility.
 
 However, if any of the values are tables themselves, the joinDeep function is called
@@ -1745,30 +1875,30 @@ creation operations as possible, making it appropriate for updating state in a r
 
 **Example**
 
-```lua
+```luau
 local source = {
-	name = "car",
-	lights = {
-		front = 2,
-		back = 2,
-		indicators = {
-			color = "orange"
-		},
-		brake = {
-			color = "red"
-		}
-	},
-	tyres = 4
+    name = "car",
+    lights = {
+        front = 2,
+        back = 2,
+        indicators = {
+            color = "orange"
+        },
+        brake = {
+            color = "red"
+        }
+    },
+    tyres = 4
 }
 local delta = {
-	name = "bike",
-	lights = {
-		front = 3,
-		indicators = {
-			rate = 20
-		}
-	},
-	tyres = None
+    name = "bike",
+    lights = {
+        front = 3,
+        indicators = {
+            rate = 20
+        }
+    },
+    tyres = None
 }
 local output = joinDeep(source, delta)
 [[
@@ -1788,6 +1918,52 @@ Output: {
 }
 ]]
 ```
+
+<hr>
+
+### mapNotNil
+
+<span class="tags">
+	[Maps](#maps)
+</span>
+
+```lua
+type MapHandler<Key, Value> = (Value, Key) -> boolean
+
+mapNotNil(input: {}, handler: MapHandler<any, any, any>): Types.Table
+```
+
+Returns a new table by applying the _handler_ to each element of _input_.
+
+If a nil value is returned from the handler, the associated key is _not_ added
+to the new table.
+
+It's useful when you already have a function returning nil for values you do not want to include.
+Otherwise, it's better to use [Dash.collect](#collect) and [Dash.collectArray](#collectarray)
+
+**Example**
+
+```luau
+local output = mapNotNil({ a = 10, b = 20, c = 30, d = 50 }, function(value: number, key: string)
+    if key == "c" then
+        return nil
+    end
+    return key .. "=" .. value
+end)
+
+--[[
+Output: {
+    a = "a=10",
+    b = "b=20",
+    d = "d=50",
+}
+]]
+```
+
+**See**
+
+- [Dash.collect](#collect) - for mapping and collecting values you need into a new table
+- [Dash.collectArray](#collectarray) - for mapping and collecting values you need into a new array
 
 <hr>
 
@@ -1813,11 +1989,11 @@ Checks if _input_ ends with the string _suffix_.
 
 **Examples**
 
-```lua
+```luau
 endsWith("Fun Roblox Games", "Games") --> true
 ```
 
-```lua
+```luau
 endsWith("Bad Roblox Memes", "Games") --> false
 ```
 
@@ -1838,16 +2014,16 @@ Returns `true` if the first character of _input_ is a lower-case character.
 Throws if the _input_ is not a string or it is the empty string.
 
 Our current version of Lua unfortunately does not support upper or lower-case detection outside
-the english alphabet. This function has been implemented to return the expected result once
+the English alphabet. This function has been implemented to return the expected result once
 this has been corrected.
 
 **Examples**
 
-```lua
+```luau
 Dash.isLowercase("abcdef") --> true
 ```
 
-```lua
+```luau
 Dash.isLowercase("Title") --> false
 ```
 
@@ -1868,16 +2044,16 @@ Returns `true` if the first character of _input_ is an upper-case character.
 Throws if the _input_ is not a string or it is the empty string.
 
 Our current version of Lua unfortunately does not support upper or lower-case detection outside
-the english alphabet. This function has been implemented to return the expected result once
+the English alphabet. This function has been implemented to return the expected result once
 this has been corrected.
 
 **Examples**
 
-```lua
+```luau
 Dash.isUppercase("ABCDEF") --> true
 ```
 
-```lua
+```luau
 Dash.isUppercase("rObLoX") --> false
 ```
 
@@ -1901,15 +2077,15 @@ Makes a string of `length` from `input` by repeating characters from `prefix` at
 
 **Examples**
 
-```lua
+```luau
 leftPad("toast", 6) --> " toast"
 ```
 
-```lua
+```luau
 leftPad("2", 2, "0") --> "02"
 ```
 
-```lua
+```luau
 leftPad("toast", 10, ":)") --> ":):):toast"
 ```
 
@@ -1931,15 +2107,15 @@ By default, suffix is `" "`.
 
 **Examples**
 
-```lua
+```luau
 rightPad("toast", 6) --> "toast "
 ```
 
-```lua
+```luau
 rightPad("2", 2, "!") --> "2!"
 ```
 
-```lua
+```luau
 rightPad("toast", 10, ":)") --> "toast:):):"
 ```
 
@@ -1960,10 +2136,10 @@ followed by a [Table](#table) of the matched delimiters.
 
 **Example**
 
-```lua
-local parts, delimeters = Dash.splitOn(
-	"The quick brown fox jumps over the lazy dog",
-	" "
+```luau
+local parts, delimiters = Dash.splitOn(
+    "The quick brown fox jumps over the lazy dog",
+    " "
 )
 
 print(parts)
@@ -1981,7 +2157,7 @@ Output: {
 }
 ]]
 
-print(delimeters)
+print(delimiters)
 --[[
 {
 	[1] = " ",
@@ -2012,11 +2188,11 @@ Checks if _input_ starts with the string _start_.
 
 **Examples**
 
-```lua
+```luau
 startsWith("Fun Roblox Games", "Fun") --> true
 ```
 
-```lua
+```luau
 startsWith("Chess", "Fun") --> false
 ```
 
@@ -2035,7 +2211,8 @@ trim(input: string): string
 Remove any whitespace at the start and end of the _input_ string.
 
 **Example**
-```lua
+
+```luau
 Dash.trim("\n\t\rhello world   ") --> "hello world"
 ```
 
@@ -2059,11 +2236,12 @@ type ResolverFunction = (...any) -> string
 memoize(func: Types.AnyFunction, resolver: ResolverFunction?): Types.AnyFunction
 ```
 
-Creates a function that memoizes the result of `func`. The memoized function will cache results based on the arguments provided. If a resolver function is provided, it will be used to generate the cache key from the arguments.
+Creates a function that memoizes the result of `func`. The memoized function will cache results based on the arguments
+provided. If a resolver function is provided, it will be used to generate the cache key from the arguments.
 
 **Examples**
 
-```lua
+```luau
 local function add(a, b)
     return a + b
 end
@@ -2108,7 +2286,7 @@ Calls the _handler_ for each entry.
 	[Functions](#functions)
 </span>
 
-```lua
+```luau
 identity(...)
 ```
 
@@ -2138,7 +2316,7 @@ Returns `true` if the value can be called i.e. you can write `value(...)`.
 	[Functions](#functions)
 </span>
 
-```lua
+```luau
 noop()
 ```
 
@@ -2154,12 +2332,12 @@ Can be used to make it clear that a handler has no function.
 	[Functions](#functions)
 </span>
 
-```lua
-chain("test":gmatch("t"), "test":gmatch("e"))
+```luau
+chain(("test"):gmatch("t"), ("test"):gmatch("e"))
 ```
 
 Returns a stateful iterator that returns elements from the first iterable until it is exhausted,
-then proceeds to the next iterator, until all the iterators are exhausted.
+then proceeds to the next iterator until all the iterators are exhausted.
 
 <hr>
 
@@ -2172,17 +2350,17 @@ then proceeds to the next iterator, until all the iterators are exhausted.
 ```luau
 -- Numeric delay: trailing by default
 local debouncedGreeting = debounce(function(name: string)
-	print(`Hi, {name}!`)
+    print(`Hi, {name}!`)
 end, 0.3)
 debouncedGreeting("Hugh")
 
 -- Options as third arg: leading/trailing toggles; wait stays second arg
 local debouncedLeading = debounce(function(v)
-	print("Leading", v)
+    print("Leading", v)
 end, 0.2, { leading = true, trailing = false })
 
 local debouncedTrailing = debounce(function(v)
-	print("Trailing", v)
+    print("Trailing", v)
 end, 0.2, { leading = false, trailing = true })
 ```
 
@@ -2201,34 +2379,40 @@ Defaults: leading = false, trailing = true.
 
 ```luau
 -- Numeric delay: immediate then trailing with latest args
-local throttledGreeting = throttle(function(name: string) print(`Hi, {name}!`) end, 0.3)
+local throttledGreeting = throttle(function(name: string) print(`Hi, {name}!`)
+end, 0.3)
 throttledGreeting("Hugh")
 
 -- Options as third arg: configure leading/trailing; wait stays second arg
 local throttledLeadingOnly = throttle(function(v)
-	print("Leading", v)
+    print("Leading", v)
 end, 0.2, { leading = true, trailing = false })
 
 local throttledTrailingOnly = throttle(function(v)
-	print("Trailing", v)
+    print("Trailing", v)
 end, 0.2, { leading = false, trailing = true })
 ```
 
 Creates and returns a new throttled version of the passed function which will ensure that the function
 is called at most once during the specified wait period. If called multiple times during the wait period,
-only the first call will be executed immediately, and subsequent calls will be ignored until the wait period has elapsed.
+only the first call will be executed immediately, and subsequent calls will be ignored until the wait period has
+elapsed.
 
 - Leading=true triggers immediately when outside the throttle window.
 - Trailing=true schedules a single call at the end of the window with the latest args.
 
 The last call will always be done after the same delay. e.g.
+
 ```luau
-local throttled = throttle(function(v) print(v) end, 0.1)
+local throttled = throttle(function(v) print(v)
+end, 0.1)
 for i = 1, 10 do
     throttled(i)
 end
 ```
+
 would result in
+
 ```
 1
 10
@@ -2258,14 +2442,14 @@ In native Lua, errors can only be string values. At Roblox, we can take advantag
 error objects to provide structured information about problems that occur.
 
 The tags table stores rich information about an error which can be provided when it is
-thrown, and later passed to a logging endpoint.
+thrown and later passed to a logging endpoint.
 
 Throwing an error instance captures its stack trace, avoiding the need to explicitly use xpcall.
 
 **Fields**
 
 | Name              | Description                                                                          |
-| ----------------- | ------------------------------------------------------------------------------------ |
+|-------------------|--------------------------------------------------------------------------------------|
 | `name: string`    | The name of the error                                                                |
 | `message: string` | A message which will be formatted with [Dash.format](#format) if the error is thrown |
 | `tags: Table`     | A table to store custom rich information about the error                             |
@@ -2274,14 +2458,14 @@ Throwing an error instance captures its stack trace, avoiding the need to explic
 **Methods**
 
 | Name                      | Description                                                                                                                                                                 |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `:joinTags(tags: Table?)` | Return a new error instance containing the tags provided joined to any existing tags of the current error instance.                                                         |
 | `:throw(tags: Table?)`    | Throw an error.<br><br>The stack of the error is captured and stored.<br><br>If tags are provided, a new error is created and thrown with the joined tags of this instance. |
 
 **Static Methods**
 
 | Name                                                | Description                                      |
-| --------------------------------------------------- | ------------------------------------------------ |
+|-----------------------------------------------------|--------------------------------------------------|
 | `.new(name: string, message: string, tags: Table?)` | Returns a new `Error` instance                   |
 | `.is(other: any)`                                   | Returns `true` if _other_ is an `Error` instance |
 
@@ -2300,20 +2484,20 @@ In general, errors should not be used during normal control flow.
 Create a symbol with a specified name. Upper snake-case is recommended as the symbol is a
 constant, unless you are linking the symbol conceptually to a different string.
 
-Symbols are useful when you want a value that isn't equal to any other type, for example if you
+Symbols are useful when you want a value that isn't equal to any other type, for example, if you
 want to store a unique property on an object that won't be accidentally accessed with a simple
 string lookup.
 
 **Static Methods**
 
 | Name                 | Description                                               |
-| -------------------- | --------------------------------------------------------- |
+|----------------------|-----------------------------------------------------------|
 | `.new(name: string)` | Returns a new unique `Symbol` instance with called _name_ |
 | `.is(other: any)`    | Returns `true` if _other_ is a `Symbol` instance          |
 
 **Example**
 
-```lua
+```luau
 local CHEESE = Symbol.new("CHEESE")
 local FAKE_CHEESE = Symbol.new("CHEESE")
 print(CHEESE == CHEESE) --> true
@@ -2335,7 +2519,7 @@ plain table which will be turned into an instance of _Class_ from a call to `Cla
 **Instance Methods**
 
 | Name                          | Description                                                               |
-| ----------------------------- | ------------------------------------------------------------------------- |
+|-------------------------------|---------------------------------------------------------------------------|
 | `:toString(): string`         | Returns a string representation of the class                              |
 | `:equals(other: any):boolean` | Returns `true` if the instance is equal to _other_                        |
 | `:_init()`                    | A private function which is called once the instance has been initialized |
@@ -2343,30 +2527,30 @@ plain table which will be turned into an instance of _Class_ from a call to `Cla
 **Static Methods**
 
 | Name                               | Description                                           |
-| ---------------------------------- | ----------------------------------------------------- |
+|------------------------------------|-------------------------------------------------------|
 | `.new(...): Table`                 | Returns a new instance of the class                   |
 | `.isInstance(value: any): boolean` | Returns `true` if _value_ is an instance of the class |
 
 **Examples**
 
-```lua
+```luau
 -- Create a simple Vehicle class
 local Vehicle = class("Vehicle", function(wheelCount: number) return
-	{
-		speed = 0,
-		wheelCount = wheelCount
-	}
+    {
+        speed = 0,
+        wheelCount = wheelCount
+    }
 end)
 function Vehicle:drive(speed)
-	self.speed = speed
+    self.speed = speed
 end
 -- Create a car instance
 local car = Vehicle.new(4)
-car.wheelCount --> 4
-car.speed --> 0
+-- car.wheelCount --> 4
+-- car.speed --> 0
 -- Drive the car
 car:drive(10)
-car.speed --> 10
+-- car.speed --> 10
 ```
 
 **Usage**
@@ -2419,7 +2603,7 @@ assertEqual(left: any, right: any, formattedErrorMessage: string?): ()
 
 Performs a simple equality check and throws an error if _left_ is not equal to _right_.
 
-The formatted error message can be customized, which by default provides a serialization of
+The formatted error message can be customized, which by default provides serialization of
 both inputs using [Dash.pretty](#pretty).
 
 The `left` and `right` values are available to be referenced in the formatted message.
@@ -2443,7 +2627,7 @@ Operates on cyclic structures, and returns a Cycles object for a given _value_ b
 **Cycles**
 
 | Name      | Type                 | Description                                         |
-| --------- | -------------------- | --------------------------------------------------- |
+|-----------|----------------------|-----------------------------------------------------|
 | `omit`    | `{ any }`            | An array of keys which should not be visited        |
 | `visited` | `Set<Table>`         | A set of tables which were visited recursively      |
 | `refs`    | `Map<Table, number>` | A map from table to unique index in visit order     |
@@ -2478,24 +2662,25 @@ in Rust.
 
   **Examples**
 
-```lua
+```luau
 local props = {"teeth", "claws", "whiskers", "tail"}
 format("{} is in {:#?}", "whiskers", props)
 --> [[whiskers is in {"teeth", "claws", "whiskers", "tail"}]]
 ```
 
-```lua
-format("The time is {:02}:{:02}", 2, 4) -> "The time is 02:04"
+```luau
+format("The time is {:02}:{:02}", 2, 4) --> "The time is 02:04"
 ```
 
-```lua
-format("The color blue is #{:06X}", 255) -> "The color blue is #0000FF"
+```luau
+format("The color blue is #{:06X}", 255) --> "The color blue is #0000FF"
 ```
 
 **Usage**
 
 - Escape `{` with `{{` and `}` similarly with `}}`.
-- See [https://developer.roblox.com/articles/Format-String](https://developer.roblox.com/articles/Format-String) for complete list of formating options and further use cases.
+- See [https://developer.roblox.com/articles/Format-String](https://developer.roblox.com/articles/Format-String) for a
+  complete list of formating options and further use cases.
 
 <hr>
 
@@ -2513,11 +2698,11 @@ Format a specific _value_ using the specified _displayString_.
 
 **Examples**
 
-```lua
+```luau
 formatValue(255, "06X") --> "0000FF"
 ```
 
-```lua
+```luau
 formatValue(255.5) --> "255.5"
 ```
 
@@ -2546,7 +2731,7 @@ Optionally use an indented multiline string, limit the depth of tables, omit or 
 **PrettyOptions**
 
 | Name        | Type          | Description                                                                                 |
-| ----------- | ------------- | ------------------------------------------------------------------------------------------- |
+|-------------|---------------|---------------------------------------------------------------------------------------------|
 | `depth`     | `number?`     | The maximum depth of ancestors of a table to display                                        |
 | `omit`      | `{ any }?`    | An array of keys which should not be visited                                                |
 | `multiline` | `boolean?`    | Whether to use multiple lines (default = false)                                             |
