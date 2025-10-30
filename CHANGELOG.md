@@ -1,4 +1,8 @@
-# V3.3.1
+## 3.4.0
+
+- Added `mapNotNil` to simplify map/filter combination. You can still use `collect` and `collectArray` for more complex cases.
+
+## V3.3.1
 
 - Fixes an issue with static type checking
 
