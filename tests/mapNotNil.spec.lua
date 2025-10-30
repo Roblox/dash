@@ -7,7 +7,7 @@ local expect = JestGlobals.expect
 local Dash = require(Packages.Dash)
 local mapNotNil = Dash.mapNotNil
 
-describe("map", function()
+describe("mapNotNil", function()
 	it("should map elements into a new array", function()
 		local input = { 10, 20, 30, 50 }
 		local output = mapNotNil(input, function(value, key)

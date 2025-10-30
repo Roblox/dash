@@ -6,7 +6,6 @@ export type MapHandler<Key, Value, NewValue> = (Value, Key) -> NewValue
 --[=[
 	Returns a new table by applying the _handler_ to each element of _input_.
 
-	For an array input, the elements are visited in order 1..n.
 	For a Map input, the elements are visited in an arbitrary order.
 
 	If a nil value is returned from the handler, the associated key is _not_ added
